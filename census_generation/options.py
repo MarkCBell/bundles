@@ -47,7 +47,7 @@ class options():
 		### Files and folders:
 		# The assumed file structure is: (We will make sure all required folders exist before running.)
 		#	working_dir\\
-		#		Census\\
+		#		Output\\
 		#			Parts\\
 		#				Word\\
 		#				Good\\
@@ -60,33 +60,32 @@ class options():
 		#			not_problem_words.txt
 		#			problem_words.txt
 		#			solutions.txt
-		#		Python\\
-		#			census_generation\\
-		#				extensions\\
-		#					c_automorph\\
-		#						???
-		#					c_FSM\\
-		#						???
-		#					c_matrix\\
-		#						???
-		#				__init__.py
-		#				Aut_Fn.py
-		#				census_generators.py
-		#				fat_graphs.py
-		#				fileio.py
-		#				FSM.py
-		#				imultiprocessing.py
-		#				options.py
-		#				ordering.py
-		#				RAAG.py
-		#				relators.py
-		#				table_generators.py
-		#				word_generators.py
+		#		census_generation\\
+		#			extensions\\
+		#				c_automorph\\
+		#					???
+		#				c_FSM\\
+		#					???
+		#				c_matrix\\
+		#					???
+		#			__init__.py
+		#			Aut_Fn.py
+		#			census_generators.py
+		#			fat_graphs.py
+		#			fileio.py
+		#			FSM.py
+		#			imultiprocessing.py
+		#			options.py
+		#			ordering.py
+		#			RAAG.py
+		#			relators.py
+		#			table_generators.py
+		#			word_generators.py
 		
 		# Where everything happens.
-		self.working_dir = os.path.normpath(os.path.join(__file__, '..', '..', '..'))
+		self.working_dir = os.path.normpath(os.path.join(__file__, '..', '..'))
 		# -------------------------
-		self.census_dir = os.path.join(self.working_dir, 'Census')
+		self.census_dir = os.path.join(self.working_dir, 'output')
 		self.parts_dir = os.path.join(self.census_dir, 'Parts')
 		
 		# Where to save parts of the census that have been built.
