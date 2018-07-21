@@ -1,5 +1,5 @@
 
-''' This module contains ordering system classes. Eventually this will / should 
+''' This module contains ordering system classes. Eventually this will / should
 contain many different orderings. However, for now we are only using short_lex.'''
 
 ##### Required modules:
@@ -11,7 +11,7 @@ except ImportError:
 	maketrans = str.maketrans
 
 class short_lex:
-	''' This class acts as an ordering system for the ordering 'short lexicographical' 
+	''' This class acts as an ordering system for the ordering 'short lexicographical'
 	with respect to the ordered alphabet provided at initialisation. '''
 	def __init__(self, alphabet):
 		if len(alphabet) > len(ascii_lowercase):

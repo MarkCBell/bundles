@@ -7,12 +7,12 @@ See:
 We use these as the mapping class group of a surface is an Artin group,
 therefore we may ignore any relations that are not commutators and obtain
 a RAAG. If two words are equivalent in the group then they are equivalent
-in the MCG; this helps us to discard words. However, the converse is not 
+in the MCG; this helps us to discard words. However, the converse is not
 true and so we may miss many equivalences. Thus this only helps our standard
-tests and is not a substitue for them. 
+tests and is not a substitute for them.
 
 TO DO:
-	Replace this module with one that works on Artin Groups (possibly of 
+	Replace this module with one that works on Artin Groups (possibly of
 small or finite type).
 '''
 
@@ -155,6 +155,6 @@ if __name__ == '__main__':
 	import cProfile
 	def test():
 		G = RAAG('abcd', [('a','d'), ('b','c'), ('b','d')])
-		for i in range(100000): 
-			G.normalise('BBDcbdabAbbD') 
+		for i in range(100000):
+			G.normalise('BBDcbdabAbbD')
 	cProfile.run('test()', sort='time')

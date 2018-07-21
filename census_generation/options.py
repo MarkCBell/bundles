@@ -9,7 +9,7 @@ class options():
 		
 		# These affect how the script runs.
 		self.LARGEST_CLASS = 20			# Largest class of words to generate (0 == all).
-		self.LARGEST_CLASS_PREFIX = 50		# Largest class of prefixes to generate (0 == all). 
+		self.LARGEST_CLASS_PREFIX = 50		# Largest class of prefixes to generate (0 == all).
 		self.MAX_RANDOMIZE = 50			# The maximum number of times to try and load a manifold.
 		self.MULTIPROCESS_GROW = False		# Use multiprocessing in the grow stage?
 		self.MULTIPROCESS_LOAD = False		# Use multiprocessing in the load stage?
@@ -25,7 +25,7 @@ class options():
 		self.SHOW_WARNINGS = False			# Print out warnings.
 		self.SHOW_ERRORS = True				# Print out errors.
 		self.PROGRESS_RATE_GROW = 100		# How often to update the progress displays.
-		self.PROGRESS_RATE_LOAD = 10		# 0 = All, 1 = Less, 2 = Lesser, ..., 100 = Little. 
+		self.PROGRESS_RATE_LOAD = 10		# 0 = All, 1 = Less, 2 = Lesser, ..., 100 = Little.
 		self.PROGRESS_RATE_THIN = 10		# Warning: Showing progress costs time.
 		self.PROGRESS_RATE_VALIDATE = 10	# Warning: Using multiprocessing can corrupt the progress shown.
 		

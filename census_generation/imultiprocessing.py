@@ -15,7 +15,7 @@ def _worker_thread(jobs, answers=None):
 		jobs.task_done()
 
 def imap(function, iterable, num_workers=1, return_results=True):
-	''' Uses a number of worker threads to apply function to each element 
+	''' Uses a number of worker threads to apply function to each element
 	of iterable and return the results as a list if requested.
 	
 	Importantly, unlike multiprocessing.Pool.map, this will work on iterables
@@ -26,7 +26,7 @@ def imap(function, iterable, num_workers=1, return_results=True):
 	
 	try:  # Create and start some workers.
 		workers = [Process(target=_worker_thread, args=(jobs, answers)) for i in range(num_workers)]
-		for worker in workers: 
+		for worker in workers:
 			worker.daemon = True
 			worker.start()
 	except ValueError:

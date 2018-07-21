@@ -6,12 +6,12 @@ from random import randint
 import census_generation.ordering as ordering
 
 # Solution types:
-Abbrev = {'not attempted' : 'not attempted', 
-			'all tetrahedra positively oriented' : 'pos', 
-			'contains negatively oriented tetrahedra' : 'neg', 
-			'contains flat tetrahedra' : 'flat', 
-			'contains degenerate tetrahedra' : 'deg', 
-			'unrecognized solution type' : 'unrec', 
+Abbrev = {'not attempted' : 'not attempted',
+			'all tetrahedra positively oriented' : 'pos',
+			'contains negatively oriented tetrahedra' : 'neg',
+			'contains flat tetrahedra' : 'flat',
+			'contains degenerate tetrahedra' : 'deg',
+			'unrecognized solution type' : 'unrec',
 			'no solution found' : 'none found'}
 
 get_volume = lambda m: m[2]
@@ -58,7 +58,7 @@ class table_generator:
 				problem_words.append(word)
 			elif self.option.ACCEPTABLE_VOLUMES and all(abs(M.volume() - v) > self.option.VOLUME_ERROR for v in self.option.ACCEPTABLE_VOLUMES):
 				filtered_words.append(word)
-			elif not self.manifold_filter(self, M): 
+			elif not self.manifold_filter(self, M):
 				filtered_words.append(word)
 			else:
 				table.append([word, M, float(M.volume()), str(M.homology())])  # Could put more invariants here.
@@ -69,8 +69,8 @@ class table_generator:
 		return table, problem_words, filtered_words
 	
 	def remove_duplicates_table(self, table):
-		''' None's out rows of the table to leave one representative of each isotopy class. 
-		Assumes that each line of the table given to it is in the format 
+		''' None's out rows of the table to leave one representative of each isotopy class.
+		Assumes that each line of the table given to it is in the format
 			[word, manifold_object, volume, homology...] '''
 		if self.option.SHOW_PROGRESS: print('Thinning table.')
 		

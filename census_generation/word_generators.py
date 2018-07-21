@@ -35,7 +35,7 @@ def extract_surface_information(surface_file_contents, MCG_generators):
 	for generator in MCG_generators:
 		for other_generator in MCG_generators:
 			if generator == other_generator:
-				intersection[generator][other_generator] = -1 
+				intersection[generator][other_generator] = -1
 			else:
 				intersection[generator][other_generator] = len(d[generator]['intersections'].intersection(d[other_generator]['intersections']))
 	
@@ -209,14 +209,14 @@ class word_generator():
 	
 	def H_1_action(self, w, len_w):
 		''' Uses divide and conquer to compute the product of the matrices
-		specified by w. Stores the product of words smaller than the 
-		Homology_Cache_Threshold in the Homology_Cache to speed up later 
+		specified by w. Stores the product of words smaller than the
+		Homology_Cache_Threshold in the Homology_Cache to speed up later
 		computations. '''
 		
 		threshold = self.option.H_1_CACHE_THRESHOLD
 		
 		if len_w <= threshold:
-			if w in self.Homology_Cache: 
+			if w in self.Homology_Cache:
 				return self.Homology_Cache[w].copy()
 			
 			len_w2 = len_w // 2
@@ -233,24 +233,24 @@ class word_generator():
 		return abs(A.determinant())
 	
 	def first_in_class(self, word, max_tree_size=0, prefix=False):
-		''' Determines if a word is lex first in its class. 
+		''' Determines if a word is lex first in its class.
 		
-		Uses relators and automorphs to find alternative representatives. Gives up after finding 
-		max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all 
+		Uses relators and automorphs to find alternative representatives. Gives up after finding
+		max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all
 		equivalent words of the same length in which case the result returned is absolutly correct.
 		
 		If prefix == True, only prefix stable stable moves are performed, i.e. if it is discovered
-		that u ~ v then uw ~ vw for all words w. 
+		that u ~ v then uw ~ vw for all words w.
 		
 		This function is the heart of the grow phase, speed is critical here.'''
 		
 		len_word = len(word)  # Let's save some highly used data.
 		
 		# If it contains any bad prefix or simplification then it can be (trivially) made better.
-		if self.bad_prefix_FSM.evaluate(word) < 0: 
+		if self.bad_prefix_FSM.evaluate(word) < 0:
 			return False
 		
-		if self.simpler_FSM.evaluate(word) < 0: 
+		if self.simpler_FSM.evaluate(word) < 0:
 			return False
 		
 		# Modify the word if it is a prefix.
@@ -285,7 +285,7 @@ class word_generator():
 				
 				if next_word not in Total:  # Only consider new words.
 					# Test for trivial simplifications.
-					if self.simpler_FSM.evaluate(next_word[:-1] if prefix else next_word + next_word[0]) < 0: 
+					if self.simpler_FSM.evaluate(next_word[:-1] if prefix else next_word + next_word[0]) < 0:
 						return False
 					
 					if not self.c_auto.before_automorphs(translated_word, next_word.translate(self.translate_rule), len_word, prefix):
@@ -314,7 +314,7 @@ class word_generator():
 			if all(y.isupper() or (p, y) in self.commutors for y in self.MCG_generators[d:] for p in word_lower_without_last_set):
 				return False
 		
-		# Divide up word into: start|middle|end. 
+		# Divide up word into: start|middle|end.
 		# If end[0] < middle[0] and start and middle commute then this is not a valid prefix.
 		# By earlier instances of this test it is sufficient to check when len(end) == 1.
 		d = self.MCG_ordering.lookup[word[-1]]
@@ -325,7 +325,7 @@ class word_generator():
 				if all((a, b) in self.commutors for a in word_prime.lower() for b in word_double_prime.lower()):
 					return False
 		
-		if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.option.LARGEST_CLASS_PREFIX, True): 
+		if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.option.LARGEST_CLASS_PREFIX, True):
 			return False
 		
 		return True

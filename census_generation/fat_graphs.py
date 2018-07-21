@@ -6,7 +6,7 @@ try:
 except ImportError:
 	from queue import Queue
 
-# This module is quite a mess. At some point this should 
+# This module is quite a mess. At some point this should
 # be tidied up and replaced with a more rigid structure.
 
 # doing m (mod n) right.

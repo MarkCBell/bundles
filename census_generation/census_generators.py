@@ -135,7 +135,7 @@ class census_generator:
 	
 	def build_census(self, depth, prebuilt=0, skip=0):
 		''' Builds a census of hyperbolic surface bundles over the circle.
-		The census is built to depth 'depth' and we assume that there is a 
+		The census is built to depth 'depth' and we assume that there is a
 		prebuilt structure specified by 'prebuilt':
 			'prebuilt' == 0 ==> Assumes nothing (default),
 			'prebuilt' == 1 ==> Assumes any existing word blocks are correct,
@@ -145,7 +145,7 @@ class census_generator:
 			'prebuilt' == 5 ==> Assumes any existing census blocks are correct.
 		'''
 		
-		if depth == 0: 
+		if depth == 0:
 			print(self.build_census.__doc__.replace('\t', ' '))
 			exit(0)
 		
@@ -157,7 +157,7 @@ class census_generator:
 		all_words, good_words, distinct_words = 0, 0, 0
 		
 		# Note: Most of this is now avoided by working with generator expressions. However,
-		# as we can't use multiprocessing.Pool.map over a generator we use my custom 
+		# as we can't use multiprocessing.Pool.map over a generator we use my custom
 		# imultiprocessing library instead now.
 		
 		start = time()
@@ -252,7 +252,7 @@ class census_generator:
 		
 		return
 
-# In order to be able to multiprocess these we need to be able to refer 
+# In order to be able to multiprocess these we need to be able to refer
 # to various functions globally. Otherwise it would just be
 # an instance copy of the function and so lost when the objects are passed
 # around by pickling.

@@ -140,7 +140,7 @@ def find_simpler_relators(old_relators, alphabet, n, max_len, order):
 				# if r2[0][-k:] == r[0][:k]:
 					# o1 = r2[1] + r[0][k:]  # Longer.
 					# o2 = r2[0][:-k] + r[1]  # Shorter.
-					# if o1 != o2: 
+					# if o1 != o2:
 						# new_r = (o1, o2)
 						# if new_r not in shorter_relators:
 							# if len(shorter_relators) == n: return [x for (x, y) in shorter_relators]
