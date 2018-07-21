@@ -2,10 +2,11 @@
 from __future__ import print_function
 import os
 from time import time
+from itertools import islice
 try:
-	from itertools import ifilter as itterator_filter
+	from itertools import ifilter as iterator_filter
 except ImportError:
-	itterator_filter = filter
+	iterator_filter = filter
 
 from census_generation.word_generators import word_generator
 from census_generation.table_generators import table_generator
@@ -19,16 +20,7 @@ def basic_filter(X, Y): return True
 
 def dropfirst(n, iterable):
 	''' Drops the first n elements of the iterable. '''
-	iterable = iter(iterable)
-	try:
-		iterable_next = iterable.next
-	except AttributeError:
-		iterable_next = iterable.__next__
-	
-	for i in range(n):
-		iterable_next()
-	
-	return iterable
+	return islice(iterable, n, None)
 
 def print_summary(all_words, good_words, distinct_words, \
 					grow_time, load_time, thin_time, check_time):
@@ -178,7 +170,7 @@ class census_generator:
 			print_words_to_file(prefixes, self.option.word_parts + ' prefixes')
 		
 		if prebuilt < 2:
-			load_inputs = itterator_filter(lambda I: not os.path.isfile(self.option.word_parts + I[1]), dropfirst(skip, self.get_prefix_blocks(depth)))
+			load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.word_parts + I[1]), dropfirst(skip, self.get_prefix_blocks(depth)))
 			skip = 0
 			
 			if self.option.MULTIPROCESS_GROW:
@@ -206,7 +198,7 @@ class census_generator:
 			clean_folder(self.option.filtered_parts_dir)
 		
 		if prebuilt < 4:
-			load_inputs = itterator_filter(lambda I: not os.path.isfile(self.option.good_parts + I[1]), self.get_word_blocks(all_words))
+			load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.good_parts + I[1]), self.get_word_blocks(all_words))
 			skip = 0
 			
 			if self.option.MULTIPROCESS_LOAD:
@@ -235,7 +227,7 @@ class census_generator:
 			clean_folder(self.option.not_problem_parts_dir)
 		
 		if prebuilt < 6:
-			load_inputs = itterator_filter(lambda I: not os.path.isfile(self.option.census_parts + I[1]), self.get_census_blocks(good_words))
+			load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.census_parts + I[1]), self.get_census_blocks(good_words))
 			skip = 0
 			
 			if self.option.MULTIPROCESS_THIN:
