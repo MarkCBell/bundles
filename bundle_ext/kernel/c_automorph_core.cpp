@@ -343,7 +343,7 @@ static PyTypeObject c_automorph_Type = {
 #if PY_MAJOR_VERSION < 3
 	0,                         /*ob_size*/
 #endif
-	"c_automorph.c_automorph",               /*tp_name*/
+	"bundle_ext.c_automorph",               /*tp_name*/
 	sizeof(c_automorph),              /*tp_basicsize*/
 	0,                         /*tp_itemsize*/
 	(destructor)c_automorph_dealloc,  /*tp_dealloc*/

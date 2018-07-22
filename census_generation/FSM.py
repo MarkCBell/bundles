@@ -4,24 +4,24 @@ try:
 	from Queue import Queue
 except ImportError:
 	from queue import Queue
-from c_FSM import build_c_FSM
+from bundle_ext import build_c_FSM
 
-# We now use the cFSM class implemented in C++. This is about 
-# 4 - 6 - 35x faster depending on if you are searching, 
+# We now use the cFSM class implemented in C++. This is about
+# 4 - 6 - 35x faster depending on if you are searching,
 # evaluating or looking for cycles.
 
 def word_accepting_FSM(alphabet, acceptable_words):
-	''' Given an alphabet and a list of acceptable_words in that alphabet, this 
-		builds a FSM that returns -1 iff they contain one or more of the 
+	''' Given an alphabet and a list of acceptable_words in that alphabet, this
+		builds a FSM that returns -1 iff they contain one or more of the
 		acceptable_words.
 		
 		Uses the Aho-Corasick string matching algorithm.
 		
-		Example: word_accepting_FSM('aAbB', ['ab', 'bb', 'BB']) returns 
-		a FSM that takes words from the alphabet 'aAbB' and returns -1 iff they 
+		Example: word_accepting_FSM('aAbB', ['ab', 'bb', 'BB']) returns
+		a FSM that takes words from the alphabet 'aAbB' and returns -1 iff they
 		contain 'ab', 'bb' or 'BB' as a substring. '''
 	
-	if '' in acceptable_words: 
+	if '' in acceptable_words:
 		print('Error: Empty word cannot be acceptable.')
 		return
 	
@@ -49,7 +49,7 @@ def word_accepting_FSM(alphabet, acceptable_words):
 				if next_word[-i-1:] in acceptable_words_prefixes_set:
 					state[letter] = next_word[-i-1:]
 					
-					if state[letter] not in all_states: 
+					if state[letter] not in all_states:
 						tree.put(state[letter])
 						all_states.add(state[letter])
 					

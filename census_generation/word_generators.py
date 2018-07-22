@@ -15,8 +15,7 @@ from census_generation.FSM import word_accepting_FSM
 from census_generation.RAAG import RAAG
 from census_generation.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
 from census_generation.ordering import short_lex
-from c_matrix import convert_action_to_matrix
-from c_automorph import c_automorph
+from bundle_ext import convert_action_to_matrix, c_automorph
 
 def extract_surface_information(surface_file_contents, MCG_generators):
 	# Convention: A curve intersects itself -1 times.

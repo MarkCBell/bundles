@@ -33,7 +33,7 @@ class short_lex:
 			return False
 		else:
 			if not A_Translated: A = A.translate(self.translate_rule)
-			if not B_Translated: B = B.translate(self.translate_rule) 
+			if not B_Translated: B = B.translate(self.translate_rule)
 			return A < B
 	
 	def ordered_cyclic(self, A, B, len_A=None, A_Translated=False, B_Translated=False):
@@ -46,7 +46,7 @@ class short_lex:
 		if len_A < len(B): return True
 		
 		if not A_Translated: A = A.translate(self.translate_rule)
-		if not B_Translated: B = B.translate(self.translate_rule) 
+		if not B_Translated: B = B.translate(self.translate_rule)
 		
 		B2 = B * 2
 		for i in range(len_A):
@@ -63,8 +63,8 @@ class short_lex:
 		return best
 	
 	def cyclic_first_permutation(self, *words):
-		''' Returns the first cyclic permutation of any of words. 
-		Assumes that all words are the same length. 
+		''' Returns the first cyclic permutation of any of words.
+		Assumes that all words are the same length.
 		
 		Usage: self.cyclic_first_permutation('foo', 'bar', 'bob') returns
 		'arb' when the alphabet is 'abfo'. '''
@@ -81,7 +81,7 @@ class short_lex:
 			
 			j = -1
 			for i in range_len_word:
-				if word_translated2[i:i+len_word] < start: 
+				if word_translated2[i:i+len_word] < start:
 					start = word_translated2[i:i+len_word]
 					j = i
 			if j > -1: best = (word*2)[j:j+len_word]
