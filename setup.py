@@ -7,19 +7,19 @@ requirements = [
 ]
 
 core_FSM = Extension(
-    name = 'bundle_ext.c_FSM_core',
-    sources = ['./bundle_ext/c_FSM_core.cpp'],
+    name = 'bundler.extensions.c_FSM_core',
+    sources = ['./bundler/extensions/c_FSM_core.cpp'],
     language='c++'
     )
 core_matrix = Extension(
-    name = 'bundle_ext.c_matrix_core',
-    sources = ['./bundle_ext/c_matrix_core.cpp'],
+    name = 'bundler.extensions.c_matrix_core',
+    sources = ['./bundler/extensions/c_matrix_core.cpp'],
     language='c++'
     )
 
 core_automorph = Extension(
-    name = 'bundle_ext.c_automorph_core',
-    sources = ['./bundle_ext/c_automorph_core.cpp'],
+    name = 'bundler.extensions.c_automorph_core',
+    sources = ['./bundler/extensions/c_automorph_core.cpp'],
     language='c++'
     )
 

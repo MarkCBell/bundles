@@ -7,7 +7,7 @@ try:
 except ImportError:
 	from queue import Queue
 from bundler.ordering import short_lex
-from bundle_ext import build_c_FSM
+from bundler.extensions import build_c_FSM
 
 class Aut_Fn():
 	''' This stores a collection of automorphisms of a free group F_n. When S is a punctured

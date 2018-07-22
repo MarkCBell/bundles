@@ -15,7 +15,7 @@ from bundler.FSM import word_accepting_FSM
 from bundler.RAAG import RAAG
 from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
 from bundler.ordering import short_lex
-from bundle_ext import convert_action_to_matrix, c_automorph
+from bundler.extensions import convert_action_to_matrix, c_automorph
 
 def extract_surface_information(surface_file_contents, MCG_generators):
 	# Convention: A curve intersects itself -1 times.

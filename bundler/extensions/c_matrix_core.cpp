@@ -285,7 +285,7 @@ PyTypeObject c_matrix_Type = {
 #if PY_MAJOR_VERSION < 3
 	0,                         /*ob_size*/
 #endif
-	"bundle_ext.c_matrix",               /*tp_name*/
+	"bundler.extensions.c_matrix",               /*tp_name*/
 	sizeof(c_matrix),              /*tp_basicsize*/
 	0,                         /*tp_itemsize*/
 	(destructor)c_matrix_dealloc,  /*tp_dealloc*/

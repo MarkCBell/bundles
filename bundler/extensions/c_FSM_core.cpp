@@ -262,7 +262,7 @@ static PyTypeObject c_FSM_Type = {
 #if PY_MAJOR_VERSION < 3
 	0,                         /*ob_size*/
 #endif
-	"bundle_ext.c_FSM",               /*tp_name*/
+	"bundler.extensions.c_FSM",               /*tp_name*/
 	sizeof(c_FSM),              /*tp_basicsize*/
 	0,                         /*tp_itemsize*/
 	(destructor)c_FSM_dealloc,  /*tp_dealloc*/

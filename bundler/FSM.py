@@ -4,7 +4,7 @@ try:
 	from Queue import Queue
 except ImportError:
 	from queue import Queue
-from bundle_ext import build_c_FSM
+from bundler.extensions import build_c_FSM
 
 # We now use the cFSM class implemented in C++. This is about
 # 4 - 6 - 35x faster depending on if you are searching,
