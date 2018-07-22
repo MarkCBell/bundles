@@ -59,26 +59,6 @@ class options():
 		#			good_words.txt
 		#			not_problem_words.txt
 		#			problem_words.txt
-		#			solutions.txt
-		#		bundler\\
-		#			extensions\\
-		#				c_automorph
-		#				c_FSM
-		#				c_matrix
-		#				__init__.py
-		#			__init__.py
-		#			Aut_Fn.py
-		#			census_generators.py
-		#			fat_graphs.py
-		#			fileio.py
-		#			FSM.py
-		#			imultiprocessing.py
-		#			options.py
-		#			ordering.py
-		#			RAAG.py
-		#			relators.py
-		#			table_generators.py
-		#			word_generators.py
 		
 		# Where everything happens.
 		self.working_dir = '.'
