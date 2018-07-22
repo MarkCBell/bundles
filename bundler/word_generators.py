@@ -70,8 +70,8 @@ class word_generator():
 		self.stop_character_translated = self.stop_character.translate(self.translate_rule)
 		
 		# Now construct a machine for performing automorphisms.
-		self.MCG_automorphisms_always_translated = [output.translate(self.translate_rule) + self.stop_character_translated for missing, output in self.MCG_automorphisms if missing is None]
-		self.MCG_automorphisms_missing_translated = [(missing.translate(self.translate_rule), output.translate(self.translate_rule) + self.stop_character_translated) for missing, output in self.MCG_automorphisms if missing is not None]
+		self.MCG_automorphisms_always_translated = [output.translate(self.translate_rule) + self.stop_character_translated for missing, output in self.MCG_automorphisms if not missing]
+		self.MCG_automorphisms_missing_translated = [(missing.translate(self.translate_rule), output.translate(self.translate_rule) + self.stop_character_translated) for missing, output in self.MCG_automorphisms if missing]
 		self.c_auto = c_automorph(self.symmetric_generators, self.MCG_generators_extended.translate(self.translate_rule), self.MCG_generators_extended.swapcase().translate(self.translate_rule), self.MCG_automorphisms_always_translated, self.MCG_automorphisms_missing_translated)
 		
 		# We now extract the curve types and the intersections of the MCG_generators from the surface file.
