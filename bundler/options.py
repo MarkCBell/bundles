@@ -62,12 +62,10 @@ class options():
 		#			solutions.txt
 		#		bundler\\
 		#			extensions\\
-		#				c_automorph\\
-		#					???
-		#				c_FSM\\
-		#					???
-		#				c_matrix\\
-		#					???
+		#				c_automorph
+		#				c_FSM
+		#				c_matrix
+		#				__init__.py
 		#			__init__.py
 		#			Aut_Fn.py
 		#			census_generators.py

@@ -19,10 +19,10 @@ get_volume = lambda m: m[2]
 ### Is there a better way?
 def isometry_test(M, N):
 	for i in range(1):
-		# M.randomize()
-		# N.randomize()
 		if M.is_isometric_to(N):
 			return True
+		# M.randomize()
+		# N.randomize()
 	
 	return False
 

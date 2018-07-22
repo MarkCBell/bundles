@@ -13,7 +13,7 @@ class Aut_Fn():
 	''' This stores a collection of automorphisms of a free group F_n. When S is a punctured
 	surface then \pi_1(S) is a free group and MCG(S) acts on \pi_1(S) by automorphisms.
 	
-	If S isn't punctured then \pi_1(S) isn't free and canonical may not produce a canonical 
+	If S isn't punctured then \pi_1(S) isn't free and canonical may not produce a canonical
 	representative, however:
 		1) It 'rarely' fails to produce the canonical representative for a word.
 		2) generate_FSM_info below doesn't actually require canonical representatives for every word.
@@ -161,7 +161,7 @@ def generate_FSM_info(MCG_generators, seeds, depth, Pi_1_action):
 	reduced_seeds = [Pi_1_action.canonical(w) for w in seeds]
 	Loop_names = set()
 	Unexplored = Queue()
-	for seed in reduced_seeds: 
+	for seed in reduced_seeds:
 		if seed not in Loop_names:
 			Unexplored.put(seed)
 			Loop_names.add(seed)
@@ -194,12 +194,12 @@ def test():
 	print(G.word_generator.Twist_actions_on_pi_1)
 	# Pi_1 = Nielsen_presentation(4)
 	
-	Sol_Type = {'not attempted' : 0, 
-			'all tetrahedra positively oriented' : 0, 
-			'contains negatively oriented tetrahedra' : 0, 
-			'contains flat tetrahedra' : 0, 
-			'contains degenerate tetrahedra' : 0, 
-			'unrecognized solution type' : 0, 
+	Sol_Type = {'not attempted' : 0,
+			'all tetrahedra positively oriented' : 0,
+			'contains negatively oriented tetrahedra' : 0,
+			'contains flat tetrahedra' : 0,
+			'contains degenerate tetrahedra' : 0,
+			'unrecognized solution type' : 0,
 			'no solution found' : 0}
 	
 	seed(200)
@@ -214,7 +214,7 @@ def test():
 		W2 = Pi_1.decompose(D, 1, 3)
 		D2 = Pi_1.word_compose(W2)
 		print(i, W, W2, D == D2)
-		if D == D2: 
+		if D == D2:
 			c += 1
 		else:
 			# pass
