@@ -15,7 +15,7 @@ except ImportError:
 def load_experiment(name):
     with open('censuses.json') as sources:
         experiment = json.load(sources)[name]
-
+    
     return census_generator(
         experiment['generators'],
         experiment['arc_neighbours'],
@@ -33,25 +33,25 @@ if __name__ == '__main__':
     parser.add_argument('--skip', type=int, default=0, help='')
     parser.add_argument('--find', type=str, help='')
     args = parser.parse_args()
-
+    
     G = load_experiment(args.name)
-
+    
     if args.find is not None:
         manifolds = load_words_from_file(args.find)
         G.option.ACCEPTABLE_HOMOLOGY_ORDERS = [reduce(mul, Manifold(name).homology().coefficients[:-1], 1) for name in manifolds]
         G.option.ACCEPTABLE_VOLUMES = [float(Manifold(name).volume()) for name in manifolds]
         G.option.tidy()
-
+    
     G.build_census(args.depth, args.prebuilt, args.skip)
-
+    
     if args.find is not None:
         manifold_table = [[name, Manifold(name), Manifold(name).volume(), Manifold(name).homology()] for name in manifolds]
         results_file = os.path.join(G.option.census_dir, 'matches.txt')
         clean_files(results_file)
-
+        
         print('%d words to check.' % line_count(G.option.census_file))
         word_blocks = chunk(load_words_from_file(G.option.census_file), G.option.CHUNKSIZE_LOAD)
-
+        
         c = 0
         for i in range(len(word_blocks)):
             print('Loading block %d / %d.' % (i+1, len(word_blocks)))
