@@ -87,3 +87,4 @@ class short_lex:
 			if j > -1: best = (word*2)[j:j+len_word]
 		
 		return best
+

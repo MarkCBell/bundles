@@ -145,16 +145,3 @@ class RAAG:
 		
 		return False
 
-if __name__ == '__main__':
-	G = RAAG('abcd', [('a','d'), ('b','c'), ('b','d')])
-	print(G.normalise('BBDcbdabAbbD', cyclic_reduce=False))
-	print(G.normalise('a', cyclic_reduce=False))
-	print(G.normalise('BBDcbdabAbbD'))
-	print(G.normalise('a'))
-	
-	import cProfile
-	def test():
-		G = RAAG('abcd', [('a','d'), ('b','c'), ('b','d')])
-		for i in range(100000):
-			G.normalise('BBDcbdabAbbD')
-	cProfile.run('test()', sort='time')

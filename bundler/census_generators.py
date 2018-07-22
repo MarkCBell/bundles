@@ -321,3 +321,4 @@ def remove_duplicates_words_map(X):
 	concatinate_files([self.option.census_parts + label + ' - ' + str(i) for i in range(block_count)], self.option.census_parts + label, delete_input_files_after=True)
 	
 	return
+

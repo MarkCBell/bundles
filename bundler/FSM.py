@@ -59,8 +59,3 @@ def word_accepting_FSM(alphabet, acceptable_words):
 	
 	return build_c_FSM(alphabet, machine, accepting_states)
 
-if __name__ == '__main__':
-	M = word_accepting_FSM('aAbBcCxX', ['aaaabac', 'ab', 'aab'])
-	print(M.evaluate('abcabCCCxCCXXabBac'))
-	for a, b in M.yield_evaluate('abcabCCCxCCXXabBac'):
-		print(a, b)

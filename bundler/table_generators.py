@@ -163,3 +163,4 @@ class table_generator:
 				print('Error with %s' % table[i][0])
 		
 		return -1
+

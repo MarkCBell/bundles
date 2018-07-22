@@ -376,3 +376,4 @@ class word_generator():
 				strn = self.backtrack(strn)
 		
 		return output_words, output_prefixes
+

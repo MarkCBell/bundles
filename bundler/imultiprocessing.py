@@ -62,26 +62,3 @@ def imap(function, iterable, num_workers=1, return_results=True):
 		for worker in workers: worker.terminate()
 		return None
 
-def test_f(x): return x+7
-def test_g(x): return 2*x + 1
-def test_h(x): return x
-
-def test():
-	# Some basic checks, a lot of the time imap should be the same as map.
-	assert imap(test_f, range(10)) == list(map(test_f, range(10)))
-	assert imap(test_f, range(10), num_workers=4) == list(map(test_f, range(10)))
-	assert imap(test_g, imap(test_f, range(1000), num_workers=4), num_workers=4) == list(map(test_g, map(test_f, range(1000))))
-	assert imap(test_f, []) == []
-	assert imap(test_g, [], num_workers=4) == []
-	
-	assert len(imap(test_h, range(10000), num_workers=4)) == 10000
-	
-	# We can also call functions for which we expect no feedback.
-	assert imap(test_h, range(10000), num_workers=4, return_results=False) is None
-	
-	# What happens if functon(item) throws an error?
-	assert imap(test_f, [1,2,4,None,7,1,2], num_workers=1) == [8,9,11,None,14,8,9]
-	
-	return True
-
-if __name__ == '__main__': print(test())

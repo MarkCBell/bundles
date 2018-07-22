@@ -185,17 +185,3 @@ def find_simpler_relators(old_relators, alphabet, n, max_len, order):
 	# RW = rewriting_system(order, extended_relators)
 	# return [x for (x,y) in RW.find_new_relators(n, max_len) if len(x) > len(y)]
 
-def test():
-	from ordering import short_lex
-	RW = rewriting_system(short_lex('xXyY'), [('xxx',''), ('yyy',''), ('xyxyxy','')])
-	print(RW.find_new_relators(100, 8))
-	RW = rewriting_system(short_lex('xXyY'), [('xyXY',''), ('xX',''), ('Xx',''), ('yY',''), ('Yy','')])
-	print(RW.find_new_relators(100, 8))
-	RW = rewriting_system(short_lex('xXyYzZwW'), [('xyzwXYZW',''), ('xX',''), ('Xx',''), ('yY',''), ('Yy',''), ('zZ',''), ('Zz',''), ('wW',''), ('Ww','')])
-	print(RW.find_new_relators(300, 8))
-
-if __name__ == '__main__':
-	import cProfile
-	import ordering
-	print('##############################')
-	cProfile.run("test()", sort="cum")

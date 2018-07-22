@@ -129,3 +129,4 @@ class options():
 		''' If you make any changes to the options after initialisation then call this to optimise and tidy up the parameters set. '''
 		self.ACCEPTABLE_VOLUMES = sorted(self.ACCEPTABLE_VOLUMES)
 		self.ACCEPTABLE_HOMOLOGY_ORDERS = set(self.ACCEPTABLE_HOMOLOGY_ORDERS)  # Acceptable values of |Tor(H_1(M))|.
+

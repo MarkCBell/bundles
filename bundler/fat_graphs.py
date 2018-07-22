@@ -628,24 +628,3 @@ class fat_graph:
 	def Pi_1_generators(self):
 		return ''.join(g + g.swapcase() for g in self.fundamental_group_generators)
 
-if __name__ == '__main__':
-	G = load_fat_graph(''.join(open('..\\..\\Twister\\lib\\surfaces\\S_1_2', 'r').readlines()))
-	
-	print(G.vertex_orders)
-	print(G.edge_connections)
-	
-	print(G.tree)
-	print(G.fundamental_group)
-	
-	for e in range(G.num_edges):
-		if G.fundamental_group[0][e]:
-			print(e, G.generator_path(e))
-	
-	Action = G.actions('aAbBcCxX')
-	
-	print('\n\n')
-	for R in Action:
-		print(R, Action[R])
-	
-	print(G.annuli)
-	print(G.possible_seeds())
