@@ -6,7 +6,7 @@ try:
 	from Queue import Queue
 except ImportError:
 	from queue import Queue
-from census_generation.ordering import short_lex
+from bundler.ordering import short_lex
 from bundle_ext import build_c_FSM
 
 class Aut_Fn():

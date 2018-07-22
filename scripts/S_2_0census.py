@@ -1,9 +1,9 @@
 
 ##### Required modules:
 # Some custom modules.
-from census_generation.options import options
-from census_generation.census_generators import census_generator
-from census_generation.fileio import pad_list
+from bundler.options import options
+from bundler.census_generators import census_generator
+from bundler.fileio import pad_list
 
 surface_name = 'S_2'
 MCG_generators = 'aAbBcCdDeE'

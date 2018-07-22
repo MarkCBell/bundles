@@ -9,12 +9,12 @@ try:
 except ImportError:
 	maketrans = str.maketrans
 
-from census_generation.Aut_Fn import generate_FSM_info, Aut_Fn
-from census_generation.fat_graphs import load_fat_graph
-from census_generation.FSM import word_accepting_FSM
-from census_generation.RAAG import RAAG
-from census_generation.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
-from census_generation.ordering import short_lex
+from bundler.Aut_Fn import generate_FSM_info, Aut_Fn
+from bundler.fat_graphs import load_fat_graph
+from bundler.FSM import word_accepting_FSM
+from bundler.RAAG import RAAG
+from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
+from bundler.ordering import short_lex
 from bundle_ext import convert_action_to_matrix, c_automorph
 
 def extract_surface_information(surface_file_contents, MCG_generators):

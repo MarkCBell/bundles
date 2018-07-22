@@ -3,7 +3,7 @@ from __future__ import print_function
 import os
 from random import randint
 
-import census_generation.ordering as ordering
+import bundler.ordering as ordering
 
 # Solution types:
 Abbrev = {'not attempted' : 'not attempted',

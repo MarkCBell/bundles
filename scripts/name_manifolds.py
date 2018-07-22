@@ -8,8 +8,8 @@ from functools import reduce
 from operator import mul
 
 # Some custom modules:
-from census_generation.fileio import load_words_from_file, print_table_to_file, clean_files
-from census_generation.fileio import pad_list, line_count, chunk
+from bundler.fileio import load_words_from_file, print_table_to_file, clean_files
+from bundler.fileio import pad_list, line_count, chunk
 from snappy import Manifold
 
 if __name__ == '__main__':

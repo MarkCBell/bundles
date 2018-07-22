@@ -60,7 +60,7 @@ class options():
 		#			not_problem_words.txt
 		#			problem_words.txt
 		#			solutions.txt
-		#		census_generation\\
+		#		bundler\\
 		#			extensions\\
 		#				c_automorph\\
 		#					???

@@ -8,13 +8,13 @@ try:
 except ImportError:
 	iterator_filter = filter
 
-from census_generation.word_generators import word_generator
-from census_generation.table_generators import table_generator
-import census_generation.imultiprocessing as imultiprocessing
-# from census_generation.fileio import *
-from census_generation.fileio import line_count, print_words_to_file, print_table_to_file, concatinate_files, merge_sorted_files
-from census_generation.fileio import clean_folder, clean_files
-from census_generation.fileio import chunk, dechunk
+from bundler.word_generators import word_generator
+from bundler.table_generators import table_generator
+import bundler.imultiprocessing as imultiprocessing
+# from bundler.fileio import *
+from bundler.fileio import line_count, print_words_to_file, print_table_to_file, concatinate_files, merge_sorted_files
+from bundler.fileio import clean_folder, clean_files
+from bundler.fileio import chunk, dechunk
 
 def basic_filter(X, Y): return True
 

@@ -3,8 +3,8 @@ from __future__ import print_function
 from time import time
 import os
 
-from census_generation.Aut_Fn import generate_FSM_info
-from census_generation.fileio import load_words_from_file, print_words_to_file
+from bundler.Aut_Fn import generate_FSM_info
+from bundler.fileio import load_words_from_file, print_words_to_file
 #--------------------------------------------------------------
 
 def verify_problem_words(S, n=5):
