@@ -93,7 +93,7 @@ class table_generator:
 				
 				try:
 					if isometry_test(RI[1], RJ[1]):
-						table[j if self.MCG_ordering.ordered(RI[0], RJ[0]) else i] = None
+						table[j if self.MCG_ordering(RI[0], RJ[0]) else i] = None
 						break
 				except:
 					if self.option.SHOW_WARNINGS: print('%s ?~ %s' % (RI[0], RJ[0]))

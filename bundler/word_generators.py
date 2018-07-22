@@ -65,7 +65,7 @@ class word_generator():
 		self.MCG_generators_last = self.MCG_generators[-1]
 		self.MCG_generators_first = self.MCG_generators[0]
 		first_valid = self.MCG_ordering.first(self.MCG_must_contain_pure+self.MCG_must_contain_pure.upper()) if self.MCG_must_contain_pure else self.MCG_generators_last
-		self.valid_starting_characters = set(letter for letter in self.MCG_generators if not self.MCG_ordering.ordered(first_valid, letter))
+		self.valid_starting_characters = set(letter for letter in self.MCG_generators if not self.MCG_ordering(first_valid, letter))
 		self.MCG_generators_translated = self.MCG_generators.translate(self.translate_rule)
 		self.stop_character_translated = self.stop_character.translate(self.translate_rule)
 		

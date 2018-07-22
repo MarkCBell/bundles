@@ -34,7 +34,7 @@ class rewriting_system:
 	
 	# This needs a LOT of work!
 	def find_new_relators(self, n, max_len=None):
-		self.equations = set((e1, e2) if self.order.ordered(e2, e1) else (e2, e1) for e1, e2 in self.relations)
+		self.equations = set((e1, e2) if self.order(e2, e1) else (e2, e1) for e1, e2 in self.relations)
 		self.reductions = set()
 		
 		while self.equations and len(self.reductions) < n:
@@ -46,7 +46,7 @@ class rewriting_system:
 			e1, e2 = self._normalise(e[0]), self._normalise(e[1])
 			if e1 != e2:
 				# Order equation.
-				r = (e1, e2) if self.order.ordered(e2, e1) else (e2, e1)
+				r = (e1, e2) if self.order(e2, e1) else (e2, e1)
 				# ===============
 				
 				# Normalise reductions.
@@ -65,7 +65,7 @@ class rewriting_system:
 							o2 = self._normalise(r[0][:-k] + r2[1])
 							if o1 != o2:
 								if max_len is None or (len(o1) < max_len and len(o2) < max_len):
-									self.equations.add((o1, o2) if self.order.ordered(o2, o1) else (o2, o1))
+									self.equations.add((o1, o2) if self.order(o2, o1) else (o2, o1))
 							break
 					for k in range(1, min(len(r[0]), len(r2[0])) + 1):
 						if r2[0][-k:] == r[0][:k]:
@@ -73,7 +73,7 @@ class rewriting_system:
 							o2 = self._normalise(r2[0][:-k] + r[1])
 							if o1 != o2:
 								if max_len is None or (len(o1) < max_len and len(o2) < max_len):
-									self.equations.add((o1, o2) if self.order.ordered(o2, o1) else (o2, o1))
+									self.equations.add((o1, o2) if self.order(o2, o1) else (o2, o1))
 							break
 				# ===============
 				

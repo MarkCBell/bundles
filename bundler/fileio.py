@@ -111,9 +111,6 @@ def merge_sorted_files(input_paths, output_path, key=lambda x: x, split=lambda x
 	
 	return
 
-def pad_list(L, required_length, padding=0, function=lambda x: x):
-	return [function(x) for x in L + [padding] * max(required_length - len(L), 0)][:required_length]
-
 def chunk(iterable, n):
 	return [iterable[i:i+n] for i in range(0, len(iterable), n)]
 
