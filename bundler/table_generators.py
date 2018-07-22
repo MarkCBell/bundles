@@ -52,7 +52,6 @@ class table_generator:
 		for index, word in enumerate(words):
 			if self.option.SHOW_PROGRESS and not randint(0,self.option.PROGRESS_RATE_LOAD): print('\rLoading: %d / %d.     ' % (index+1, len(words)), end='')
 			
-			
 			M = self.build_manifold(word)
 			if Abbrev[M.solution_type()] != 'pos':
 				problem_words.append(word)
@@ -133,10 +132,10 @@ class table_generator:
 	def check_existance_table(self, table, M):
 		''' Checks that the manifold M appears in table. '''
 		table.sort(key=get_volume)
-		V = M.volume()
+		volume = M.volume()
 		
-		V_low = V - self.option.VOLUME_ERROR
-		V_high = V + self.option.VOLUME_ERROR
+		volume_low = volume - self.option.VOLUME_ERROR
+		volume_high = volume + self.option.VOLUME_ERROR
 		
 		# Use a binary search to find a small range to check quickly.
 		low_x, low_y = 0, len(table)
@@ -144,16 +143,16 @@ class table_generator:
 		
 		while abs(low_x - low_y) > 2:
 			mid = int((low_x + low_y) / 2)
-			if table[mid][2] < V_low:
+			if table[mid][2] < volume_low:
 				low_x = mid
-			elif table[mid][2] > V_low:
+			elif table[mid][2] > volume_low:
 				low_y = mid
 		
 		while abs(high_x - high_y) > 2:
 			mid = int((high_x + high_y) / 2)
-			if table[mid][2] < V_high:
+			if table[mid][2] < volume_high:
 				high_x = mid
-			elif table[mid][2] > V_high:
+			elif table[mid][2] > volume_high:
 				high_y = mid
 		
 		for i in range(low_x, high_y):

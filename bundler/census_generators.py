@@ -51,9 +51,9 @@ class census_generator:
 	
 	# We first define some generators for getting words, blocks and census blocks.
 	def get_prefix_blocks(self, depth, num_lines=None):
-		if num_lines is None: num_lines = line_count(self.option.word_parts + ' prefixes')
+		if num_lines is None: num_lines = line_count(self.option.word_parts + 'prefixes')
 		
-		for index, line in enumerate(open(self.option.word_parts + ' prefixes', 'r')):
+		for index, line in enumerate(open(self.option.word_parts + 'prefixes', 'r')):
 			yield (self, '%d - %d' % (index, num_lines), line.strip(), depth)
 		
 		return
@@ -166,8 +166,8 @@ class census_generator:
 			clean_folder(self.option.word_parts_dir)
 			words, prefixes = self.word_generator.valid_suffixes(self.option.MASTER_PREFIX, self.option.PREFIX_DEPTH, depth)
 			if self.option.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-			print_words_to_file(words, self.option.word_parts + ' start_words')
-			print_words_to_file(prefixes, self.option.word_parts + ' prefixes')
+			print_words_to_file(words, self.option.word_parts + 'start_words')
+			print_words_to_file(prefixes, self.option.word_parts + 'prefixes')
 		
 		if prebuilt < 2:
 			load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.word_parts + I[1]), dropfirst(skip, self.get_prefix_blocks(depth)))
@@ -183,7 +183,7 @@ class census_generator:
 			
 			if self.option.SHOW_PROGRESS: print('Combining files.')
 			labels = [I[1] for I in self.get_prefix_blocks(depth)]
-			concatinate_files([self.option.word_parts + ' start_words'] + [self.option.word_parts + label for label in labels], self.option.word_file)
+			concatinate_files([self.option.word_parts + 'start_words'] + [self.option.word_parts + label for label in labels], self.option.word_file)
 		
 		grow_time = time() - start
 		all_words = line_count(self.option.word_file)

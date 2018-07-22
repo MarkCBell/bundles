@@ -81,25 +81,25 @@ class options():
 		#			word_generators.py
 		
 		# Where everything happens.
-		self.working_dir = os.path.normpath(os.path.join(__file__, '..', '..'))
+		self.working_dir = '.'
 		# -------------------------
 		self.census_dir = os.path.join(self.working_dir, 'output')
-		self.parts_dir = os.path.join(self.census_dir, 'Parts')
+		self.parts_dir = os.path.join(self.census_dir, 'parts')
 		
 		# Where to save parts of the census that have been built.
-		self.word_parts_dir = os.path.join(self.parts_dir, 'Word')
-		self.good_parts_dir = os.path.join(self.parts_dir, 'Good')
-		self.problem_parts_dir = os.path.join(self.parts_dir, 'Problem')
-		self.filtered_parts_dir = os.path.join(self.parts_dir, 'Filtered')
-		self.census_parts_dir = os.path.join(self.parts_dir, 'Census')
-		self.not_problem_parts_dir = os.path.join(self.parts_dir, 'Not_Problem')
+		self.word_parts_dir = os.path.join(self.parts_dir, 'word')
+		self.good_parts_dir = os.path.join(self.parts_dir, 'good')
+		self.problem_parts_dir = os.path.join(self.parts_dir, 'problem')
+		self.filtered_parts_dir = os.path.join(self.parts_dir, 'filtered')
+		self.census_parts_dir = os.path.join(self.parts_dir, 'census')
+		self.not_problem_parts_dir = os.path.join(self.parts_dir, 'not_problem')
 		
-		self.word_parts = os.path.join(self.word_parts_dir, 'Part.txt')
-		self.good_parts = os.path.join(self.good_parts_dir, 'Part.txt')
-		self.problem_parts = os.path.join(self.problem_parts_dir, 'Part.txt')
-		self.filtered_parts = os.path.join(self.filtered_parts_dir, 'Part.txt')
-		self.census_parts = os.path.join(self.census_parts_dir, 'Part.txt')
-		self.not_problem_parts = os.path.join(self.not_problem_parts_dir, 'Part.txt')
+		self.word_parts = os.path.join(self.word_parts_dir, 'part ')
+		self.good_parts = os.path.join(self.good_parts_dir, 'part ')
+		self.problem_parts = os.path.join(self.problem_parts_dir, 'part ')
+		self.filtered_parts = os.path.join(self.filtered_parts_dir, 'part ')
+		self.census_parts = os.path.join(self.census_parts_dir, 'part ')
+		self.not_problem_parts = os.path.join(self.not_problem_parts_dir, 'part ')
 		
 		# Where to output information to.
 		self.census_file = os.path.join(self.census_dir, 'census.txt')
