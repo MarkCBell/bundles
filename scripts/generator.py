@@ -2,7 +2,7 @@
 from bundler.options import options
 from bundler.census_generators import census_generator
 from bundler.fileio import load_words_from_file, print_table_to_file, clean_files
-from bundler.fileio import pad_list, line_count, chunk
+from bundler.fileio import line_count, chunk
 import json
 from snappy import Manifold
 from operator import mul

@@ -72,27 +72,34 @@ def line_count(path):
 	
 	return c
 
-def merge_sorted_files(input_paths, output_path, key=lambda x: x, split=lambda x: x.split('\t'), delete_input_files_after=False):
-	''' Merges several files of sorted data into a single file using minimal memory. '''
+def merge_sorted_csv(input_paths, output_path, key=lambda x: x, delete_input_files_after=False):
+	''' Merges several sorted csv files into a single file using minimal memory.
+	
+	All files must have the same header. '''
 	
 	MAX_OPEN_FILES = 100  # Python can only open so many file handles.
 	
 	num_files = len(input_paths)
 	if num_files <= MAX_OPEN_FILES:
 		files = [open(path, 'r') for path in input_paths]
+		output_file = open(output_path, 'w')
+		
+		# Remove header.
+		for i in range(num_files):
+			header = files[i].readline()
+		output_file.write(header)
 		
 		Q = PriorityQueue()
 		for i in range(num_files):
 			R = files[i].readline()
-			if R: Q.put((key(split(R)), R, i))
+			if R: Q.put((key(R), R, i))
 		
-		output_file = open(output_path, 'w')
 		while not Q.empty():
 			V, R, i = Q.get()
 			
 			output_file.write(R)
 			new_R = files[i].readline()
-			if new_R: Q.put((key(split(new_R)), new_R, i))
+			if new_R: Q.put((key(new_R), new_R, i))
 		
 		output_file.close()
 		for i in range(num_files):
@@ -102,10 +109,10 @@ def merge_sorted_files(input_paths, output_path, key=lambda x: x, split=lambda x
 		for i in range(0, num_files, MAX_OPEN_FILES):
 			f, output = mkstemp()
 			os.close(f)
-			merge_sorted_files(input_paths[i:i+MAX_OPEN_FILES], output, key)
+			merge_sorted_csv(input_paths[i:i+MAX_OPEN_FILES], output, key)
 			temp_outputs.append(output)
 		
-		merge_sorted_files(temp_outputs, output_path, key, delete_input_files_after=True)
+		merge_sorted_csv(temp_outputs, output_path, key, delete_input_files_after=True)
 	
 	if delete_input_files_after: clean_files(*input_paths)
 	
