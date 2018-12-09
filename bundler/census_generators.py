@@ -46,7 +46,6 @@ def print_summary(all_words, good_words, distinct_words, \
 
 class census_generator:
     def __init__(self, MCG_generators, arc_neighbours, automorph, MCG_must_contain, option, word_filter=basic_filter, manifold_filter=basic_filter):
-        
         self.word_generator = word_generator(MCG_generators, arc_neighbours, automorph, MCG_must_contain, word_filter, option)
         self.table_generator = TableGenerator(MCG_generators, manifold_filter, option)
         self.ordering = ordering.short_lex(MCG_generators)
@@ -84,7 +83,7 @@ class census_generator:
         if num_lines is None: num_lines=line_count(self.option.good_file)
         
         num_census_blocks = num_lines // self.option.CHUNKSIZE_THIN + 1
-        for index, df in enumerate(pd.read_csv(self.option.good_file, chunksize=self.option.CHUNKSIZE_THIN, index_col='word')):
+        for index, df in enumerate(pd.read_csv(self.option.good_file, chunksize=self.option.CHUNKSIZE_THIN)):
             yield (self, Table(self.ordering, self.option, df), '%d-%d' % (index+1, num_census_blocks))
         
         return
@@ -165,7 +164,7 @@ class census_generator:
             
             if self.option.SHOW_PROGRESS: print('Combining files.')
             labels = [I[1] for I in self.get_word_blocks(all_words)]
-            merge_sorted_csv([self.option.good_parts + label for label in labels], self.option.good_file, key=lambda row: float(row.split(',')[3]))
+            merge_sorted_csv([self.option.good_parts + label for label in labels], self.option.good_file, key=lambda row: float(row.split(',')[5]))
         
         load_time = time() - start
         good_words = line_count(self.option.good_file)
@@ -191,7 +190,7 @@ class census_generator:
             
             if self.option.SHOW_PROGRESS: print('Combining files.')
             labels = [I[2] for I in self.get_census_blocks(good_words)]
-            merge_sorted_csv([self.option.census_parts + label for label in labels], self.option.census_file, key=lambda row: float(row.split(',')[3]))
+            merge_sorted_csv([self.option.census_parts + label for label in labels], self.option.census_file, key=lambda row: float(row.split(',')[5]))
         
         thin_time = time() - start
         distinct_words = line_count(self.option.census_file)

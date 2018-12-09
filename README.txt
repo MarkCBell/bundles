@@ -14,6 +14,9 @@ so although these lists are complete they likely contain duplicates.
 
 To generate a new census, compile the packages extensions and install it by
 running:
+    $ pip install .
+or:
     $ python setup.py install
 Then start one by doing, for example:
-    $ python ./scripts/S_1_2census.py 6
+    $ cd ./scripts
+    $ python generators.py S_1_2 6

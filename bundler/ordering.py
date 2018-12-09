@@ -25,6 +25,9 @@ class short_lex:
     def __call__(self, A, B):
         return self.ordered(A, B)
     
+    def key(self, A):
+        return '$' * len(A) + A.translate(self.translate_rule)
+    
     def ordered(self, A, B, A_Translated=False, B_Translated=False):
         ''' Return True iff A is strictly before B. '''
         if len(A) < len(B):
