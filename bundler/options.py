@@ -13,7 +13,6 @@ class options():
         self.MAX_RANDOMIZE = 50            # The maximum number of times to try and load a manifold.
         self.MULTIPROCESS_GROW = False        # Use multiprocessing in the grow stage?
         self.MULTIPROCESS_LOAD = False        # Use multiprocessing in the load stage?
-        self.MULTIPROCESS_THIN = False        # Use multiprocessing in the thin stage?
         self.NUM_PROCESSES = min(40, multiprocessing.cpu_count() // 2)    # Number of processes to spawn (if multiprocessing).
         self.PREFIX_DEPTH = 6                # Length of the prefix blocks.
         self.CHUNKSIZE_LOAD = 500    # How many chunks to hand to each process.
