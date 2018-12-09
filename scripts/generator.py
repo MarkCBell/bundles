@@ -1,7 +1,6 @@
 
 from bundler.options import Options
 from bundler.census_generators import CensusGenerator
-from bundler.fileio import load_words_from_file
 import json
 from operator import mul
 import os
@@ -13,7 +12,7 @@ import pandas as pd
 from snappy import Manifold
 
 def load_experiment(name, *args, **kwargs):
-    with open('censuses.json') as sources:
+    with open(os.path.join(os.path.dirname(__file__), 'censuses.json')) as sources:
         experiment = json.load(sources)[name]
     
     return CensusGenerator(
@@ -36,7 +35,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     if args.find is not None:
-        manifolds = load_words_from_file(args.find)
+        with open(args.find, 'r') as source:
+            manifolds = [line for line in source]
         
         ACCEPTABLE_HOMOLOGY_ORDERS = set(reduce(mul, Manifold(name).homology().coefficients[:-1], 1) for name in manifolds)
         def word_filter(self, word):

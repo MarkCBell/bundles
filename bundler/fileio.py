@@ -12,14 +12,6 @@ def print_words_to_file(table, file, write_method='w'):
     
     return
 
-def load_words_from_file(file):
-    ''' Loads a list of words from a file. '''
-    
-    if os.path.exists(file):
-        return [data[0] for data in (line.strip().split('\t') for line in open(file, 'r')) if data[0] != '' and data[0][0] != '#']
-    else:
-        return []
-
 def clean_files(paths):
     ''' Removes requested files (if they exist). '''
     

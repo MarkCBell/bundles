@@ -3,17 +3,13 @@ from setuptools import setup, find_packages, Extension
 requirements = [
     'pandas',
     'numpy',
+    'sympy',
     'decorator'
 ]
 
 core_FSM = Extension(
     name = 'bundler.extensions.c_FSM_core',
     sources = ['./bundler/extensions/c_FSM_core.cpp'],
-    language='c++'
-    )
-core_matrix = Extension(
-    name = 'bundler.extensions.c_matrix_core',
-    sources = ['./bundler/extensions/c_matrix_core.cpp'],
     language='c++'
     )
 
@@ -32,7 +28,7 @@ setup(
     url='https://github.com/MarkCBell/bundles',
     packages=find_packages(),
     install_requires=requirements,
-    ext_modules=[core_FSM, core_matrix, core_automorph],
+    ext_modules=[core_FSM, core_automorph],
     license='MIT License',
     zip_safe=False,
     keywords='bundler',

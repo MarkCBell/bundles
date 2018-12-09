@@ -18,5 +18,4 @@ running:
 or:
     $ python setup.py install
 Then start one by doing, for example:
-    $ cd ./scripts
-    $ python generators.py S_1_2 6
+    $ python scripts/generators.py S_1_2 6

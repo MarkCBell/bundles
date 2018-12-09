@@ -9,12 +9,14 @@ try:
 except ImportError:
     maketrans = str.maketrans
 
+from sympy import Matrix, eye
+
 import bundler
 from bundler.Aut_Fn import generate_FSM_info
 from bundler.fat_graphs import load_fat_graph
 from bundler.FSM import word_accepting_FSM
 from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
-from bundler.extensions import convert_action_to_matrix, c_automorph
+from bundler.extensions import c_automorph
 
 def extract_surface_information(surface_file_contents, MCG_generators):
     # Convention: A curve intersects itself -1 times.
@@ -38,6 +40,11 @@ def extract_surface_information(surface_file_contents, MCG_generators):
                 intersection[generator][other_generator] = len(d[generator]['intersections'].intersection(d[other_generator]['intersections']))
     
     return curve_type, intersection
+
+def convert_action_to_matrix(generators_and_inverses, action):
+    generators = [n for n in generators_and_inverses if n.islower()]
+    num_generators = len(generators)
+    return Matrix([[action[generators[i]].count(generators[j]) - action[generators[i]].count(generators[j].swapcase()) for j in range(num_generators)] for i in range(num_generators) if generators[i] in action])
 
 class WordGenerator():
     def __init__(self, MCG_generators, arc_neighbours, MCG_automorphisms, MCG_must_contain, word_filter, options, symmetric_generators=True):
@@ -227,6 +234,8 @@ class WordGenerator():
     
     def homology_order(self, word):
         A = self.H_1_action(word[::-1], len(word))
+        A = A - eye(A.shape[0])
+        return int(abs(A.det()))
         A.add_diagonal(-1)
         return abs(A.determinant())
     
