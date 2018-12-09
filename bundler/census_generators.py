@@ -9,12 +9,17 @@ import numpy as np
 import os
 import pandas as pd
 try:
-    from itertools import ifilter as iterator_filter
+    from itertools import ifilter
 except ImportError:
-    iterator_filter = filter
+    ifilter = filter
 
 import bundler
-from bundler.fileio import line_count, print_words_to_file, concatinate_files, clean_files
+
+def clean_files(paths):
+    ''' Removes requested files (if they exist). '''
+    
+    for path in paths:
+        if os.path.exists(path): os.remove(path)
 
 def basic_filter(self, x): return True
 
@@ -28,14 +33,14 @@ class CensusGenerator():
     
     # We first define some generators for getting words, blocks and census blocks.
     def get_prefix_blocks(self, depth, num_lines=None):
-        if num_lines is None: num_lines = line_count(self.options.word_parts.format('prefixes'))
+        df = pd.read_csv(self.options.word_parts.format('prefixes'))
         
-        for index, line in enumerate(open(self.options.word_parts.format('prefixes'), 'r')):
-            yield (self, '%d - %d' % (index, num_lines), line.strip(), depth)
+        for index, row in df.iterrows():
+            yield (self, '%d - %d' % (index+1, len(df)), row.word, depth)
     
     def get_word_blocks(self):
-        for index, df in enumerate(pd.read_csv(self.options.word_file, names=['word'], chunksize=self.options.CHUNKSIZE_LOAD)):
-            yield (self, str(index), list(df.word))
+        for index, df in enumerate(pd.read_csv(self.options.word_file, chunksize=self.options.CHUNKSIZE_LOAD)):
+            yield (self, str(index), df)
     
     def build_census(self, depth, prebuilt=0):
         ''' Builds a census of hyperbolic surface bundles over the circle.
@@ -56,7 +61,7 @@ class CensusGenerator():
         
         # These will store the total running times
         # and the number of words at each stage.
-        time_words, time_good, time_census = 'SKIPPED', 'SKIPPED', 'SKIPPED'
+        time_words, time_good, time_census = 0, 0, 0
         num_words, num_good, num_acceptable, num_census = 'SKIPPED', 'SKIPPED', 'SKIPPED', 'SKIPPED'
         
         # Note: Most of this is now avoided by working with generator expressions. However,
@@ -69,11 +74,11 @@ class CensusGenerator():
             clean_files(glob(self.options.word_parts.format('*')))
             words, prefixes = self.word_generator.valid_suffixes(self.options.MASTER_PREFIX, self.options.PREFIX_DEPTH, depth)
             if self.options.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-            print_words_to_file(words, self.options.word_parts.format('start'))
-            print_words_to_file(prefixes, self.options.word_parts.format('prefixes'))
+            pd.DataFrame({'word':words}).to_csv(self.options.word_parts.format('0'), index=False)
+            pd.DataFrame({'word':prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         if prebuilt < 2:
-            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.options.word_parts.format('*')), self.get_prefix_blocks(depth))
+            load_inputs = ifilter(lambda I: not os.path.isfile(self.options.word_parts.format('*')), self.get_prefix_blocks(depth))
             
             if self.options.CORES == 1:
                 for I in load_inputs:
@@ -83,17 +88,15 @@ class CensusGenerator():
                 P.map(valid_suffixes_map, load_inputs)
                 P.close()
                 P.join()
-                
-                # bundler.imap(valid_suffixes_map, load_inputs, self.options.CORES, return_results=False)
             
             if self.options.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
             
             if self.options.SHOW_PROGRESS: print('Combining files.')
-            labels = [I[1] for I in self.get_prefix_blocks(depth)]
-            concatinate_files([self.options.word_parts.format('start')] + [self.options.word_parts.format(label) for label in labels], self.options.word_file)
+            word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if path[-12:] != 'prefixes.csv'], ignore_index=True)
+            word_table.to_csv(self.options.word_file, index=False)
             
             time_words = time() - start
-            num_words = line_count(self.options.word_file)
+            num_words = len(word_table)
             if self.options.SHOW_TIMINGS: print('Grow time: %fs' % time_words)
             if self.options.SHOW_PROGRESS: print('\t%d possible words to check.' % num_words)
         
@@ -103,7 +106,7 @@ class CensusGenerator():
             clean_files(glob(self.options.good_parts.format('*')))
         
         if prebuilt < 4:
-            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.options.good_parts.format(I[1])), self.get_word_blocks())
+            load_inputs = ifilter(lambda I: not os.path.isfile(self.options.good_parts.format(I[1])), self.get_word_blocks())
             
             if self.options.CORES == 1:
                 for I in load_inputs:
@@ -171,36 +174,40 @@ def valid_suffixes_map(X):
     self, label, prefix, depth = X
     if self.options.SHOW_PROGRESS: print('\rLoading suffixes of prefix %s' % label)
     
-    words, prefixes = self.word_generator.valid_suffixes(prefix, depth)
-    print_words_to_file(words, self.options.word_parts.format(label))
+    words, _ = self.word_generator.valid_suffixes(prefix, depth)
+    pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format(label), index=False)
 
 
 def determine_properties_map(X):
-    self, label, words = X
+    self, label, table = X
     if self.options.SHOW_PROGRESS: print('\rCollecting properties from block: %s' % label)
     
-    Properties = namedtuple('Properties', ('volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
-    Data = namedtuple('Data', ('loadable', 'acceptable', 'word', 'key_word') + Properties._fields)
-
-    Unloadable = lambda word: Data(False, False, word, '', 0.0, '', 0, 0, 0)
+    Properties = namedtuple('Properties', ('word', 'loadable', 'acceptable', 'volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym', 'key_word'))
+    Unloadable = lambda word: Properties(word, False, False, 0.0, '', 0, 0, 0, '')
     
     def properties(word):
-        ''' Return the Data associated with the mapping class `word`. '''
+        ''' Return the properties associated with the mapping class `word`. '''
+        word = word.word
         M = self.options.BASE_SURFACE.bundle(monodromy='*'.join(word))
         for i in self.options.MAX_RANDOMIZE_RANGE:  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
             if M.solution_type() =='all tetrahedra positively oriented' : break
             M.randomize()  # There needs to be a better way to do this.
         else:
-            return Unloadable(word)  # Couldn't find positive structure.
+            return pd.Series(Unloadable(word))  # Couldn't find positive structure.
         G = M.symmetry_group()
         
-        return Data(True, self.manifold_filter(self, M), word, self.ordering.key(word),
-            float(M.volume()), str(M.isometry_signature()), str(M.homology()), int(G.order()), str(G.abelianization()))
+        return pd.Series(Properties(
+            word,
+            True,
+            self.manifold_filter(self, M),
+            float(M.volume()),
+            str(M.isometry_signature()),
+            str(M.homology()),
+            int(G.order()),
+            str(G.abelianization()),
+            self.ordering.key(word)))
     
-    table = pd.DataFrame(index=np.arange(len(words)), columns=Data._fields)
-    for index, word in enumerate(words):
-        if self.options.SHOW_PROGRESS and not randint(0,self.options.PROGRESS_RATE_LOAD): print('\rLoading: %d / %d.     ' % (index+1, len(words)), end='')
-        table.iloc[index] = properties(word)
+    table[list(Properties._fields)] = table.apply(properties, axis=1)
     table.sort_values('volume', inplace=True)
     table.to_csv(self.options.good_parts.format(label), index=False)
 
