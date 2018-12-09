@@ -19,22 +19,22 @@ from bundler.fileio import line_count, print_words_to_file, concatinate_files, c
 def basic_filter(self, x): return True
 
 class CensusGenerator():
-    def __init__(self, MCG_generators, arc_neighbours, automorph, MCG_must_contain, option, word_filter=basic_filter, manifold_filter=basic_filter):
-        self.word_generator = bundler.WordGenerator(MCG_generators, arc_neighbours, automorph, MCG_must_contain, word_filter, option)
+    def __init__(self, MCG_generators, arc_neighbours, automorph, MCG_must_contain, options, word_filter=basic_filter, manifold_filter=basic_filter):
+        self.word_generator = bundler.WordGenerator(MCG_generators, arc_neighbours, automorph, MCG_must_contain, word_filter, options)
         self.ordering = bundler.ShortLex(MCG_generators)
-        self.option = option
+        self.options = options
         self.word_filter = word_filter
         self.manifold_filter = manifold_filter
     
     # We first define some generators for getting words, blocks and census blocks.
     def get_prefix_blocks(self, depth, num_lines=None):
-        if num_lines is None: num_lines = line_count(self.option.word_parts.format('prefixes'))
+        if num_lines is None: num_lines = line_count(self.options.word_parts.format('prefixes'))
         
-        for index, line in enumerate(open(self.option.word_parts.format('prefixes'), 'r')):
+        for index, line in enumerate(open(self.options.word_parts.format('prefixes'), 'r')):
             yield (self, '%d - %d' % (index, num_lines), line.strip(), depth)
     
     def get_word_blocks(self):
-        for index, df in enumerate(pd.read_csv(self.option.word_file, names=['word'], chunksize=self.option.CHUNKSIZE_LOAD)):
+        for index, df in enumerate(pd.read_csv(self.options.word_file, names=['word'], chunksize=self.options.CHUNKSIZE_LOAD)):
             yield (self, str(index), list(df.word))
     
     def build_census(self, depth, prebuilt=0):
@@ -64,91 +64,91 @@ class CensusGenerator():
         # imultiprocessing library instead now.
         
         start = time()
-        if self.option.SHOW_PROGRESS: print('Generating words.')
+        if self.options.SHOW_PROGRESS: print('Generating words.')
         if prebuilt < 1:
-            clean_files(glob(self.option.word_parts.format('*')))
-            words, prefixes = self.word_generator.valid_suffixes(self.option.MASTER_PREFIX, self.option.PREFIX_DEPTH, depth)
-            if self.option.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-            print_words_to_file(words, self.option.word_parts.format('start'))
-            print_words_to_file(prefixes, self.option.word_parts.format('prefixes'))
+            clean_files(glob(self.options.word_parts.format('*')))
+            words, prefixes = self.word_generator.valid_suffixes(self.options.MASTER_PREFIX, self.options.PREFIX_DEPTH, depth)
+            if self.options.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
+            print_words_to_file(words, self.options.word_parts.format('start'))
+            print_words_to_file(prefixes, self.options.word_parts.format('prefixes'))
         
         if prebuilt < 2:
-            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.word_parts.format('*')), self.get_prefix_blocks(depth))
+            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.options.word_parts.format('*')), self.get_prefix_blocks(depth))
             
-            if self.option.CORES == 1:
+            if self.options.CORES == 1:
                 for I in load_inputs:
                     valid_suffixes_map(I)
             else:
-                P = Pool(processes=self.option.CORES)
+                P = Pool(processes=self.options.CORES)
                 P.map(valid_suffixes_map, load_inputs)
                 P.close()
                 P.join()
                 
-                # bundler.imap(valid_suffixes_map, load_inputs, self.option.CORES, return_results=False)
+                # bundler.imap(valid_suffixes_map, load_inputs, self.options.CORES, return_results=False)
             
-            if self.option.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
+            if self.options.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
             
-            if self.option.SHOW_PROGRESS: print('Combining files.')
+            if self.options.SHOW_PROGRESS: print('Combining files.')
             labels = [I[1] for I in self.get_prefix_blocks(depth)]
-            concatinate_files([self.option.word_parts.format('start')] + [self.option.word_parts.format(label) for label in labels], self.option.word_file)
+            concatinate_files([self.options.word_parts.format('start')] + [self.options.word_parts.format(label) for label in labels], self.options.word_file)
             
             time_words = time() - start
-            num_words = line_count(self.option.word_file)
-            if self.option.SHOW_TIMINGS: print('Grow time: %fs' % time_words)
-            if self.option.SHOW_PROGRESS: print('\t%d possible words to check.' % num_words)
+            num_words = line_count(self.options.word_file)
+            if self.options.SHOW_TIMINGS: print('Grow time: %fs' % time_words)
+            if self.options.SHOW_PROGRESS: print('\t%d possible words to check.' % num_words)
         
         start = time()
-        if self.option.SHOW_PROGRESS: print('Collecting properties.')
+        if self.options.SHOW_PROGRESS: print('Collecting properties.')
         if prebuilt < 3:
-            clean_files(glob(self.option.good_parts.format('*')))
+            clean_files(glob(self.options.good_parts.format('*')))
         
         if prebuilt < 4:
-            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.good_parts.format(I[1])), self.get_word_blocks())
+            load_inputs = iterator_filter(lambda I: not os.path.isfile(self.options.good_parts.format(I[1])), self.get_word_blocks())
             
-            if self.option.CORES == 1:
+            if self.options.CORES == 1:
                 for I in load_inputs:
                     determine_properties_map(I)
             else:
-                P = Pool(processes=self.option.CORES)
+                P = Pool(processes=self.options.CORES)
                 P.map(determine_properties_map, load_inputs)
                 P.close()
                 P.join()
             
-            if self.option.SHOW_PROGRESS: print('\rCollecting properties: DONE          ')
+            if self.options.SHOW_PROGRESS: print('\rCollecting properties: DONE          ')
             
-            if self.option.SHOW_PROGRESS: print('Combining files.')
-            good_table = pd.concat([pd.read_csv(path) for path in glob(self.option.good_parts.format('*'))], ignore_index=True)
+            if self.options.SHOW_PROGRESS: print('Combining files.')
+            good_table = pd.concat([pd.read_csv(path) for path in glob(self.options.good_parts.format('*'))], ignore_index=True)
             good_table.sort_values('volume', inplace=True)
-            good_table.to_csv(self.option.good_file, index=False)
+            good_table.to_csv(self.options.good_file, index=False)
         
             time_good = time() - start
             num_good = good_table.loadable.sum()
             num_acceptable = good_table.acceptable.sum()
-            if self.option.SHOW_TIMINGS: print('Load time: %fs' % time_good)
-            if self.option.SHOW_PROGRESS: print('\t%d good words.' % num_good)
-            if self.option.SHOW_PROGRESS: print('\t%d acceptable words.' % num_acceptable)
+            if self.options.SHOW_TIMINGS: print('Load time: %fs' % time_good)
+            if self.options.SHOW_PROGRESS: print('\t%d good words.' % num_good)
+            if self.options.SHOW_PROGRESS: print('\t%d acceptable words.' % num_acceptable)
         
         start = time()
-        if self.option.SHOW_PROGRESS: print('Thinning blocks.')
+        if self.options.SHOW_PROGRESS: print('Thinning blocks.')
         
         if prebuilt < 5:
-            if self.option.SHOW_PROGRESS: print('Removing duplicates.')
+            if self.options.SHOW_PROGRESS: print('Removing duplicates.')
             
-            census_table = pd.read_csv(self.option.good_file)
+            census_table = pd.read_csv(self.options.good_file)
             census_table = census_table[census_table.acceptable]
             census_table = census_table.groupby('isom_sig').apply(lambda df: df[df.key_word == df.key_word.min()])
             census_table.reset_index(inplace=True, drop=True)
             census_table.sort_values('volume', inplace=True)
-            census_table.to_csv(self.option.census_file, index=False)
+            census_table.to_csv(self.options.census_file, index=False)
             
-            if self.option.SHOW_PROGRESS: print('Thinning: DONE          ')
+            if self.options.SHOW_PROGRESS: print('Thinning: DONE          ')
             
             time_census = time() - start
             num_census = len(census_table)
-            if self.option.SHOW_TIMINGS: print('Thin time: %fs' % time_census)
-            if self.option.SHOW_PROGRESS: print('\t%d distinct words.' % num_census)
+            if self.options.SHOW_TIMINGS: print('Thin time: %fs' % time_census)
+            if self.options.SHOW_PROGRESS: print('\t%d distinct words.' % num_census)
         
-        if self.option.SHOW_TIMINGS:
+        if self.options.SHOW_TIMINGS:
             print('\nSummary:')
             print('\tStatistics:')
             print('\t\tTotal words:\t%s' % num_words)
@@ -169,15 +169,15 @@ class CensusGenerator():
 # around by pickling.
 def valid_suffixes_map(X):
     self, label, prefix, depth = X
-    if self.option.SHOW_PROGRESS: print('\rLoading suffixes of prefix %s' % label)
+    if self.options.SHOW_PROGRESS: print('\rLoading suffixes of prefix %s' % label)
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth)
-    print_words_to_file(words, self.option.word_parts.format(label))
+    print_words_to_file(words, self.options.word_parts.format(label))
 
 
 def determine_properties_map(X):
     self, label, words = X
-    if self.option.SHOW_PROGRESS: print('\rCollecting properties from block: %s' % label)
+    if self.options.SHOW_PROGRESS: print('\rCollecting properties from block: %s' % label)
     
     Properties = namedtuple('Properties', ('volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
     Data = namedtuple('Data', ('loadable', 'acceptable', 'word', 'key_word') + Properties._fields)
@@ -186,8 +186,8 @@ def determine_properties_map(X):
     
     def properties(word):
         ''' Return the Data associated with the mapping class `word`. '''
-        M = self.option.BASE_SURFACE.bundle(monodromy='*'.join(word))
-        for i in self.option.MAX_RANDOMIZE_RANGE:  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
+        M = self.options.BASE_SURFACE.bundle(monodromy='*'.join(word))
+        for i in self.options.MAX_RANDOMIZE_RANGE:  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
             if M.solution_type() =='all tetrahedra positively oriented' : break
             M.randomize()  # There needs to be a better way to do this.
         else:
@@ -199,8 +199,8 @@ def determine_properties_map(X):
     
     table = pd.DataFrame(index=np.arange(len(words)), columns=Data._fields)
     for index, word in enumerate(words):
-        if self.option.SHOW_PROGRESS and not randint(0,self.option.PROGRESS_RATE_LOAD): print('\rLoading: %d / %d.     ' % (index+1, len(words)), end='')
+        if self.options.SHOW_PROGRESS and not randint(0,self.options.PROGRESS_RATE_LOAD): print('\rLoading: %d / %d.     ' % (index+1, len(words)), end='')
         table.iloc[index] = properties(word)
     table.sort_values('volume', inplace=True)
-    table.to_csv(self.option.good_parts.format(label), index=False)
+    table.to_csv(self.options.good_parts.format(label), index=False)
 

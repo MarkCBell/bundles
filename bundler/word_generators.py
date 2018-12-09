@@ -40,14 +40,14 @@ def extract_surface_information(surface_file_contents, MCG_generators):
     return curve_type, intersection
 
 class WordGenerator():
-    def __init__(self, MCG_generators, arc_neighbours, MCG_automorphisms, MCG_must_contain, word_filter, option, symmetric_generators=True):
+    def __init__(self, MCG_generators, arc_neighbours, MCG_automorphisms, MCG_must_contain, word_filter, options, symmetric_generators=True):
         
         self.MCG_generators = MCG_generators
         self.arc_neighbours = arc_neighbours
         self.MCG_automorphisms = MCG_automorphisms
         self.MCG_must_contain = [contain.lower() for contain in MCG_must_contain]
         self.word_filter = word_filter
-        self.option = option
+        self.options = options
         self.symmetric_generators = symmetric_generators
         
         # Set up rules for what a word must contain.
@@ -74,11 +74,11 @@ class WordGenerator():
         self.c_auto = c_automorph(self.symmetric_generators, self.MCG_generators_extended.translate(self.translate_rule), self.MCG_generators_extended.swapcase().translate(self.translate_rule), self.MCG_automorphisms_always_translated, self.MCG_automorphisms_missing_translated)
         
         # We now extract the curve types and the intersections of the MCG_generators from the surface file.
-        self.curve_type, self.intersection = extract_surface_information(self.option.SURFACE_FILE_CONTENTS, self.MCG_generators)
+        self.curve_type, self.intersection = extract_surface_information(self.options.SURFACE_FILE_CONTENTS, self.MCG_generators)
         
         # And get information about the induced action on pi_1 using a fat graph.
-        if self.option.SHOW_PROGRESS: print('Generating fat graphs.')
-        G = load_fat_graph(self.option.SURFACE_FILE_CONTENTS)
+        if self.options.SHOW_PROGRESS: print('Generating fat graphs.')
+        G = load_fat_graph(self.options.SURFACE_FILE_CONTENTS)
         self.Pi_1_generators = G.Pi_1_generators()
         self.Twist_actions_on_pi_1 = G.actions(self.MCG_generators)
         self.Twist_actions_on_H_1 = dict((g, convert_action_to_matrix(self.Pi_1_generators, self.Twist_actions_on_pi_1[g])) for g in self.MCG_generators)
@@ -90,7 +90,7 @@ class WordGenerator():
         
         # We use this information to automatically generate some databases:
         # These are (some of) the major relators:
-        if self.option.SHOW_PROGRESS: print('Listing relators.')
+        if self.options.SHOW_PROGRESS: print('Listing relators.')
         self.relators = []
         self.commutors = set()
         for a in self.MCG_generators:
@@ -137,19 +137,19 @@ class WordGenerator():
         # Any word which contains one such input cannot be first_in_class.
         # Secondly, the bad_prefix FSM detects relations whose output is earlier than its input.
         # These cannot appear in any first_in_class word or prefix.
-        if self.option.SHOW_PROGRESS: print('Finding new relators.')
+        if self.options.SHOW_PROGRESS: print('Finding new relators.')
         bad_prefix = find_bad_prefix_relators(self.relators, self.MCG_generators, 100, 6, self.MCG_ordering)
         simpler = find_simpler_relators(self.relators, self.MCG_generators, 100, 6, self.MCG_ordering)
         self.simpler_FSM = word_accepting_FSM(self.MCG_generators, simpler)
         self.bad_prefix_FSM = word_accepting_FSM(self.MCG_generators, bad_prefix)
         
-        if self.option.SHOW_PROGRESS: print('Building FSM.')
+        if self.options.SHOW_PROGRESS: print('Building FSM.')
         self.fundamental_group_action = bundler.AutFn(self.Pi_1_generators, self.Twist_actions_on_pi_1)
-        self.loop_invariant_FSM = generate_FSM_info(self.MCG_generators, self.loop_invariant_FSM_seed, self.option.LOOP_INVARIANT_FSM_DEPTH, self.fundamental_group_action)
+        self.loop_invariant_FSM = generate_FSM_info(self.MCG_generators, self.loop_invariant_FSM_seed, self.options.LOOP_INVARIANT_FSM_DEPTH, self.fundamental_group_action)
         
         # Now build some dictionaries for looking up the next characters in MCG_generators.
-        if option.SHOW_PROGRESS: print('Constructing suffix tree.')
-        self.good_words_collated = [[''.join(p) for p in product(self.MCG_generators, repeat=i) if self.bad_prefix_FSM.evaluate(''.join(p)) >= 0] for i in range(self.option.SUFFIX_DEPTH+1)]
+        if self.options.SHOW_PROGRESS: print('Constructing suffix tree.')
+        self.good_words_collated = [[''.join(p) for p in product(self.MCG_generators, repeat=i) if self.bad_prefix_FSM.evaluate(''.join(p)) >= 0] for i in range(self.options.SUFFIX_DEPTH+1)]
         self.good_words_collated_translated = [[w.translate(self.translate_rule) for w in L] for L in self.good_words_collated]
         all_good_words = [w for L in self.good_words_collated for w in L]
         
@@ -187,10 +187,10 @@ class WordGenerator():
     def backtrack(self, word):
         ''' Gets the next feasable vertex in the tree of words based on suffix (DFT). '''
         while True:
-            suffix = word[-self.option.SUFFIX_DEPTH:]
+            suffix = word[-self.options.SUFFIX_DEPTH:]
             if suffix not in self.next_suffix: self.next_suffix[suffix] = self.next_good_suffix(suffix)
             n = self.next_suffix[suffix]
-            word = word[:-self.option.SUFFIX_DEPTH] + n
+            word = word[:-self.options.SUFFIX_DEPTH] + n
             if n != '' or word == '': return word
     
     def greedy_shuffle(self, word):
@@ -211,7 +211,7 @@ class WordGenerator():
         Homology_Cache_Threshold in the Homology_Cache to speed up later
         computations. '''
         
-        threshold = self.option.H_1_CACHE_THRESHOLD
+        threshold = self.options.H_1_CACHE_THRESHOLD
         
         if len_w <= threshold:
             if w in self.Homology_Cache:
@@ -323,7 +323,7 @@ class WordGenerator():
                 if all((a, b) in self.commutors for a in word_prime.lower() for b in word_double_prime.lower()):
                     return False
         
-        if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.option.LARGEST_CLASS_PREFIX, True):
+        if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.options.LARGEST_CLASS_PREFIX, True):
             return False
         
         return True
@@ -334,10 +334,10 @@ class WordGenerator():
         
         if any(letter not in word_lower_set for letter in self.MCG_must_contain_pure): return False
         if any(all(letter not in word_lower_set for letter in contain) for contain in self.MCG_must_contain_impure): return False
-        if self.loop_invariant_FSM.has_cycle(word, self.option.BASIC_SEARCH_RANGE): return False  # Note: word forms a cycle iff word[::-1] does.
+        if self.loop_invariant_FSM.has_cycle(word, self.options.BASIC_SEARCH_RANGE): return False  # Note: word forms a cycle iff word[::-1] does.
         
         if not self.word_filter(self, word): return False
-        if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.option.LARGEST_CLASS, False): return False
+        if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.options.LARGEST_CLASS, False): return False
         
         return True
     
@@ -353,9 +353,9 @@ class WordGenerator():
         output_prefixes = []
         
         prefix_len = len(prefix)
-        strn = prefix + self.next_addable_character[prefix[-self.option.SUFFIX_DEPTH:]]
+        strn = prefix + self.next_addable_character[prefix[-self.options.SUFFIX_DEPTH:]]
         while strn and strn[:prefix_len] == prefix:
-            if self.option.SHOW_PROGRESS and not randint(0,self.option.PROGRESS_RATE_GROW): print('\rTraversing word tree: %s          ' % strn, end='')
+            if self.options.SHOW_PROGRESS and not randint(0,self.options.PROGRESS_RATE_GROW): print('\rTraversing word tree: %s          ' % strn, end='')
             
             # Testing validity is the slowest bit.
             strn_valid_word = self.valid_word(strn)
@@ -369,7 +369,7 @@ class WordGenerator():
                     output_prefixes.append(strn)
                     strn = self.backtrack(strn)
                 else:
-                    strn += self.next_addable_character[strn[-self.option.SUFFIX_DEPTH:]]
+                    strn += self.next_addable_character[strn[-self.options.SUFFIX_DEPTH:]]
             else:
                 strn = self.backtrack(strn)
         
