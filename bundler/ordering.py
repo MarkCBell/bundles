@@ -26,7 +26,7 @@ class short_lex:
         return self.ordered(A, B)
     
     def key(self, A):
-        return '$' * len(A) + A.translate(self.translate_rule)
+        return '~' * len(A) + A.translate(self.translate_rule)
     
     def ordered(self, A, B, A_Translated=False, B_Translated=False):
         ''' Return True iff A is strictly before B. '''

@@ -63,28 +63,23 @@ class options():
         self.parts_dir = os.path.join(self.census_dir, 'parts')
         
         # Where to save parts of the census that have been built.
-        self.word_parts_dir = os.path.join(self.parts_dir, 'word')
-        self.good_parts_dir = os.path.join(self.parts_dir, 'good')
-        self.census_parts_dir = os.path.join(self.parts_dir, 'census')
-        
-        self.word_parts = os.path.join(self.word_parts_dir, 'part ')
-        self.good_parts = os.path.join(self.good_parts_dir, 'part ')
-        self.census_parts = os.path.join(self.census_parts_dir, 'part ')
+        self.word_parts = os.path.join(self.parts_dir, 'word {}.csv')
+        self.good_parts = os.path.join(self.parts_dir, 'good {}.csv')
         
         # Where to output information to.
-        self.census_file = os.path.join(self.census_dir, 'census.txt')
-        self.good_file = os.path.join(self.census_dir, 'good.txt')
-        self.word_file = os.path.join(self.census_dir, 'words.txt')
+        self.census_file = os.path.join(self.census_dir, 'census.csv')
+        self.good_file = os.path.join(self.census_dir, 'good.csv')
+        self.word_file = os.path.join(self.census_dir, 'words.csv')
         
         # Make any missing directories / files.
-        all_directories = [self.census_dir, self.parts_dir, self.word_parts_dir, self.good_parts_dir, self.census_parts_dir]
+        all_directories = [self.census_dir, self.parts_dir]
         all_files = [self.word_file, self.good_file, self.census_file]
         for path in all_directories:
             if not os.path.exists(path):
                 os.makedirs(path)
         for path in all_files:
             if not os.path.isfile(path):
-                open(path, 'w')
+                open(path, 'w').close()
         
         self.BASE_SURFACE = Surface(self.surface)
         self.SURFACE_FILE_CONTENTS = self.BASE_SURFACE.surface_contents
