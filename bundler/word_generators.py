@@ -337,7 +337,6 @@ class word_generator():
         if any(all(letter not in word_lower_set for letter in contain) for contain in self.MCG_must_contain_impure): return False
         if self.loop_invariant_FSM.has_cycle(word, self.option.BASIC_SEARCH_RANGE): return False  # Note: word forms a cycle iff word[::-1] does.
         
-        if self.option.ACCEPTABLE_HOMOLOGY_ORDERS and self.homology_order(word) not in self.option.ACCEPTABLE_HOMOLOGY_ORDERS: return False
         if not self.word_filter(self, word): return False
         if not self.first_in_class(word, max_tree_size if max_tree_size is not None else self.option.LARGEST_CLASS, False): return False
         

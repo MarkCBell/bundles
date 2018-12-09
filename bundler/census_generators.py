@@ -1,8 +1,7 @@
-##### Required modules:
+
 from __future__ import print_function
 import os
 from time import time
-from itertools import islice
 from glob import glob
 from collections import namedtuple
 from random import randint
@@ -14,15 +13,13 @@ except ImportError:
     iterator_filter = filter
 
 from bundler.word_generators import word_generator
-# from bundler.table_generators import TableGenerator, Table
 import bundler.ordering as ordering
 import bundler.imultiprocessing as imultiprocessing
-# from bundler.fileio import *
 from bundler.fileio import line_count, print_words_to_file, concatinate_files
 from bundler.fileio import clean_files
 
 
-def basic_filter(X, Y): return True
+def basic_filter(self, x): return True
 
 class census_generator:
     def __init__(self, MCG_generators, arc_neighbours, automorph, MCG_must_contain, option, word_filter=basic_filter, manifold_filter=basic_filter):
@@ -53,7 +50,6 @@ class census_generator:
             'prebuilt' == 2 ==> Assumes word list is complete,
             'prebuilt' == 3 ==> Assumes any existing volume blocks are correct,
             'prebuilt' == 4 ==> Assumes volume list is complete,
-            'prebuilt' == 5 ==> Assumes any existing census blocks are correct.
         '''
         
         if depth == 0:
@@ -65,7 +61,7 @@ class census_generator:
         # These will store the total running times
         # and the number of words at each stage.
         time_words, time_good, time_census = 'SKIPPED', 'SKIPPED', 'SKIPPED'
-        num_words, num_good, num_census = 'SKIPPED', 'SKIPPED', 'SKIPPED'
+        num_words, num_good, num_acceptable, num_census = 'SKIPPED', 'SKIPPED', 'SKIPPED', 'SKIPPED'
         
         # Note: Most of this is now avoided by working with generator expressions. However,
         # as we can't use multiprocessing.Pool.map over a generator we use my custom
@@ -83,11 +79,11 @@ class census_generator:
         if prebuilt < 2:
             load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.word_parts.format('*')), self.get_prefix_blocks(depth))
             
-            if self.option.MULTIPROCESS_GROW:
-                imultiprocessing.imap(valid_suffixes_map, load_inputs, self.option.NUM_PROCESSES, return_results=False)
-            else:
+            if self.option.CORES == 1:
                 for I in load_inputs:
                     valid_suffixes_map(I)
+            else:
+                imultiprocessing.imap(valid_suffixes_map, load_inputs, self.option.CORES, return_results=False)
             
             if self.option.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
             
@@ -108,22 +104,25 @@ class census_generator:
         if prebuilt < 4:
             load_inputs = iterator_filter(lambda I: not os.path.isfile(self.option.good_parts.format(I[1])), self.get_word_blocks())
             
-            if self.option.MULTIPROCESS_LOAD:
-                imultiprocessing.imap(determine_properties_map, load_inputs, self.option.NUM_PROCESSES, return_results=False)
-            else:
+            if self.option.CORES == 1:
                 for I in load_inputs:
                     determine_properties_map(I)
+            else:
+                imultiprocessing.imap(determine_properties_map, load_inputs, self.option.CORES, return_results=False)
             
             if self.option.SHOW_PROGRESS: print('\rCollecting properties: DONE          ')
             
             if self.option.SHOW_PROGRESS: print('Combining files.')
             good_table = pd.concat([pd.read_csv(path) for path in glob(self.option.good_parts.format('*'))], ignore_index=True)
+            good_table.sort_values('volume', inplace=True)
             good_table.to_csv(self.option.good_file, index=False)
         
             time_good = time() - start
-            num_good = len(good_table)
+            num_good = good_table.loadable.sum()
+            num_acceptable = good_table.acceptable.sum()
             if self.option.SHOW_TIMINGS: print('Load time: %fs' % time_good)
-            if self.option.SHOW_PROGRESS: print('\t%d good words loaded.' % num_good)
+            if self.option.SHOW_PROGRESS: print('\t%d good words.' % num_good)
+            if self.option.SHOW_PROGRESS: print('\t%d acceptable words.' % num_acceptable)
         
         start = time()
         if self.option.SHOW_PROGRESS: print('Thinning blocks.')
@@ -150,6 +149,7 @@ class census_generator:
             print('\tStatistics:')
             print('\t\tTotal words:\t%s' % num_words)
             print('\t\tGood words:\t%s' % num_good)
+            print('\t\tAcceptable words:\t%s' % num_acceptable)
             print('\t\t------------------------------')
             print('\t\tDistinct words:\t%s' % num_census)
             print('\t\t------------------------------')
@@ -157,6 +157,7 @@ class census_generator:
             print('\t\tGrow time:\t%fs' % time_words)
             print('\t\tLoad time:\t%fs' % time_good)
             print('\t\tThin time:\t%fs' % time_census)
+
 
 # In order to be able to multiprocess these we need to be able to refer
 # to various functions globally. Otherwise it would just be
@@ -168,6 +169,7 @@ def valid_suffixes_map(X):
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth)
     print_words_to_file(words, self.option.word_parts.format(label))
+
 
 def determine_properties_map(X):
     self, label, words = X
@@ -188,8 +190,7 @@ def determine_properties_map(X):
             return Unloadable(word)  # Couldn't find positive structure.
         G = M.symmetry_group()
         
-        acceptable = (not self.option.ACCEPTABLE_VOLUMES or any(abs(M.volume() - v) <= self.option.VOLUME_ERROR for v in self.option.ACCEPTABLE_VOLUMES)) and self.manifold_filter(self, M)
-        return Data(True, acceptable, word, self.ordering.key(word),
+        return Data(True, self.manifold_filter(self, M), word, self.ordering.key(word),
             float(M.volume()), str(M.isometry_signature()), str(M.homology()), int(G.order()), str(G.abelianization()))
     
     table = pd.DataFrame(index=np.arange(len(words)), columns=Data._fields)

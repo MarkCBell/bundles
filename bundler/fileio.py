@@ -38,9 +38,5 @@ def concatinate_files(inputs, output):
 def line_count(path):
     ''' Returns the number of non-empty lines in a file. '''
     
-    c = 0
-    for line in open(path, 'r'):
-        if line != '\n':
-            c += 1
-    
-    return c
+    with open(path, 'r') as source:
+        return sum(line != '\n' for line in source)

@@ -12,7 +12,7 @@ except ImportError:
 import pandas as pd
 from snappy import Manifold
 
-def load_experiment(name):
+def load_experiment(name, *args, **kwargs):
     with open('censuses.json') as sources:
         experiment = json.load(sources)[name]
     
@@ -21,7 +21,9 @@ def load_experiment(name):
         experiment['arc_neighbours'],
         experiment['automorphisms'],
         experiment['MCG_must_contain'],
-        options(experiment['surface'])
+        options(experiment['surface']),
+        *args,
+        **kwargs
         )
 
 if __name__ == '__main__':
@@ -33,14 +35,23 @@ if __name__ == '__main__':
     parser.add_argument('--find', type=str, help='path to a file containing mondromies to find')
     args = parser.parse_args()
     
-    G = load_experiment(args.name)
-    
     if args.find is not None:
         manifolds = load_words_from_file(args.find)
-        G.option.ACCEPTABLE_HOMOLOGY_ORDERS = [reduce(mul, Manifold(name).homology().coefficients[:-1], 1) for name in manifolds]
-        G.option.ACCEPTABLE_VOLUMES = [float(Manifold(name).volume()) for name in manifolds]
-        G.option.tidy()
+        
+        ACCEPTABLE_HOMOLOGY_ORDERS = set(reduce(mul, Manifold(name).homology().coefficients[:-1], 1) for name in manifolds)
+        def word_filter(self, word):
+            return self.homology_order(word) in ACCEPTABLE_HOMOLOGY_ORDERS
+        
+        ACCEPTABLE_VOLUMES = [float(Manifold(name).volume()) for name in manifolds]
+        def manifold_filter(self, M):
+            if not any(abs(M.volume() - v) <= self.option.VOLUME_ERROR for v in ACCEPTABLE_VOLUMES):
+                return False
+            return True
+        kwargs = {'word_filter': word_filter, 'manifold_filter': manifold_filter}
+    else:
+        kwargs = dict()
     
+    G = load_experiment(args.name, **kwargs)
     G.build_census(args.depth, args.prebuilt)
     
     if args.find is not None:
