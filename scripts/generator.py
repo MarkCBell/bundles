@@ -1,6 +1,6 @@
 
-from bundler.options import options
-from bundler.census_generators import census_generator
+from bundler.options import Options
+from bundler.census_generators import CensusGenerator
 from bundler.fileio import load_words_from_file
 import json
 from operator import mul
@@ -16,12 +16,12 @@ def load_experiment(name, *args, **kwargs):
     with open('censuses.json') as sources:
         experiment = json.load(sources)[name]
     
-    return census_generator(
+    return CensusGenerator(
         experiment['generators'],
         experiment['arc_neighbours'],
         experiment['automorphisms'],
         experiment['MCG_must_contain'],
-        options(experiment['surface']),
+        Options(experiment['surface']),
         *args,
         **kwargs
         )

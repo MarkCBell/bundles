@@ -24,7 +24,7 @@ from collections import deque
 flip = lambda x: (x[1], x[0])
 diagonalise = lambda x: (x, x)
 
-class RAAG:
+class RAAG():
     def __init__(self, alphabet, commuters, alphabet_inverse=None):
         if alphabet_inverse is None: alphabet_inverse = alphabet.swapcase()
         

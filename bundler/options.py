@@ -1,9 +1,9 @@
-##### Required modules:
+
 import os
 import multiprocessing
 from snappy.twister import Surface
 
-class options():
+class Options():
     def __init__(self, surface):
         self.surface = surface
         
@@ -11,7 +11,7 @@ class options():
         self.LARGEST_CLASS = 20  # Largest class of words to generate (0 == all).
         self.LARGEST_CLASS_PREFIX = 50  # Largest class of prefixes to generate (0 == all).
         self.MAX_RANDOMIZE = 50  # The maximum number of times to try and load a manifold.
-        self.CORES = 1  # Number of processes to spawn (if multiprocessing).
+        self.CORES = 2  # Number of processes to spawn (if multiprocessing).
         self.PREFIX_DEPTH = 6  # Length of the prefix blocks.
         self.CHUNKSIZE_LOAD = 500  # How many chunks to hand to each process.
         self.CHUNKSIZE_THIN = 500  # How many chunks to hand to each process.

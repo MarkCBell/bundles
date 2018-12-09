@@ -1,6 +1,6 @@
+
 ''' This module is for manipulating and finding relators of a group. '''
 
-##### Required modules:
 from __future__ import print_function
 try:
     from Queue import Queue
@@ -9,7 +9,7 @@ except ImportError:
 
 from itertools import product, combinations
 
-class rewriting_system:
+class RewritingSystem():
     def __init__(self, order, relations):
         self.relations = relations
         self.order = order
@@ -106,7 +106,7 @@ def shuffle_relators(relators):
 
 def find_bad_prefix_relators(old_relators, alphabet, n, max_len, order):
     extended_relators = old_relators + [(letter+letter.swapcase(), '') for letter in alphabet]
-    RW = rewriting_system(order, extended_relators)
+    RW = RewritingSystem(order, extended_relators)
     
     return [x for (x,y) in RW.find_new_relators(n, max_len)]
 

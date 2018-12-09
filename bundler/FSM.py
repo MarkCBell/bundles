@@ -1,9 +1,10 @@
-##### Required modules:
+
 from __future__ import print_function
 try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
+
 from bundler.extensions import build_c_FSM
 
 # We now use the cFSM class implemented in C++. This is about

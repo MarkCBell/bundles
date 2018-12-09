@@ -1,4 +1,4 @@
-##### Required modules:
+
 from __future__ import print_function
 from string import ascii_lowercase
 try:
@@ -8,12 +8,6 @@ except ImportError:
 
 # This module is quite a mess. At some point this should
 # be tidied up and replaced with a more rigid structure.
-
-# doing m (mod n) right.
-def smartmod(m, n):
-    m = m % n
-    if m < 0: m += n
-    return m
 
 def load_fat_graph(file_contents):
     num_vertices = 0
@@ -58,7 +52,7 @@ def load_fat_graph(file_contents):
             else:
                 annuli.append([name, inverse_name, curve_start, curve])
     
-    return fat_graph(edge_connections, vertex_orders, None, annuli, rectangles)
+    return FatGraph(edge_connections, vertex_orders, None, annuli, rectangles)
 
 def ends(edge):
     return edge[0], edge[2]
@@ -77,7 +71,7 @@ def to_left_of(in_dir, out_dir, target):
     else:
         return not (out_dir < target < in_dir)
 
-class fat_graph:
+class FatGraph():
     ''' This class represents a fat graph, that is a graph in which the edges adjacent to
     a vertex occur in a predefined order. This can be used, for example, to represent the
     spine of a surface. '''
@@ -182,7 +176,7 @@ class fat_graph:
                 
                 vertex_orders.append(new_vertex)
         
-        return fat_graph(edge_connections, vertex_orders, self)
+        return FatGraph(edge_connections, vertex_orders, self)
     
     def _flow(self, information, deleted_edges):
         Q = Queue()
@@ -506,10 +500,10 @@ class fat_graph:
         valid_direction.append((v_target, d_target))
         
         def turn(v, d, sign=+1):
-            d = smartmod(d + sign, 4)
+            d = (d + sign) % 4
             if self.vertex_orders[v][d] is None: return None
             while (v, d) not in valid_direction:
-                d = smartmod(d + sign, 4)
+                d = (d + sign) % 4
                 if self.vertex_orders[v][d] is None: return None
             return d
         

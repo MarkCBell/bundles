@@ -1,4 +1,4 @@
-##### Required modules:
+
 from __future__ import print_function
 from random import randint
 from collections import deque
@@ -9,12 +9,11 @@ try:
 except ImportError:
     maketrans = str.maketrans
 
-from bundler.Aut_Fn import generate_FSM_info, Aut_Fn
+import bundler
+from bundler.Aut_Fn import generate_FSM_info
 from bundler.fat_graphs import load_fat_graph
 from bundler.FSM import word_accepting_FSM
-from bundler.RAAG import RAAG
 from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
-from bundler.ordering import short_lex
 from bundler.extensions import convert_action_to_matrix, c_automorph
 
 def extract_surface_information(surface_file_contents, MCG_generators):
@@ -40,7 +39,7 @@ def extract_surface_information(surface_file_contents, MCG_generators):
     
     return curve_type, intersection
 
-class word_generator():
+class WordGenerator():
     def __init__(self, MCG_generators, arc_neighbours, MCG_automorphisms, MCG_must_contain, word_filter, option, symmetric_generators=True):
         
         self.MCG_generators = MCG_generators
@@ -59,7 +58,7 @@ class word_generator():
         # Get an ordering system.
         self.stop_character = '~'
         self.MCG_generators_extended = self.MCG_generators + self.stop_character
-        self.MCG_ordering = short_lex(self.MCG_generators_extended)
+        self.MCG_ordering = bundler.ShortLex(self.MCG_generators_extended)
         self.translate_rule = self.MCG_ordering.translate_rule
         self.stop_character_translated = self.stop_character.translate(self.translate_rule)
         self.MCG_generators_last = self.MCG_generators[-1]
@@ -145,7 +144,7 @@ class word_generator():
         self.bad_prefix_FSM = word_accepting_FSM(self.MCG_generators, bad_prefix)
         
         if self.option.SHOW_PROGRESS: print('Building FSM.')
-        self.fundamental_group_action = Aut_Fn(self.Pi_1_generators, self.Twist_actions_on_pi_1)
+        self.fundamental_group_action = bundler.AutFn(self.Pi_1_generators, self.Twist_actions_on_pi_1)
         self.loop_invariant_FSM = generate_FSM_info(self.MCG_generators, self.loop_invariant_FSM_seed, self.option.LOOP_INVARIANT_FSM_DEPTH, self.fundamental_group_action)
         
         # Now build some dictionaries for looking up the next characters in MCG_generators.
@@ -160,7 +159,7 @@ class word_generator():
         
         # Set up a right-angled Artin group to quickly test for commutativity.
         MCG_generators_lower = ''.join(letter for letter in self.MCG_generators if letter.islower()) + self.stop_character
-        self.RAAG_translated = RAAG(MCG_generators_lower.translate(self.translate_rule), [(a.translate(self.translate_rule), b.translate(self.translate_rule)) for a, b in self.commutors], MCG_generators_lower.upper().translate(self.translate_rule))
+        self.RAAG_translated = bundler.RAAG(MCG_generators_lower.translate(self.translate_rule), [(a.translate(self.translate_rule), b.translate(self.translate_rule)) for a, b in self.commutors], MCG_generators_lower.upper().translate(self.translate_rule))
         
     
     # def next_addable_character(self, suffix):

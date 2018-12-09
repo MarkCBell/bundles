@@ -1,31 +1,27 @@
 
 from __future__ import print_function
-import os
-from time import time
-from glob import glob
 from collections import namedtuple
+from glob import glob
+from multiprocessing import Pool
 from random import randint
+from time import time
 import numpy as np
+import os
 import pandas as pd
 try:
     from itertools import ifilter as iterator_filter
 except ImportError:
     iterator_filter = filter
 
-from bundler.word_generators import word_generator
-import bundler.ordering as ordering
-import bundler.imultiprocessing as imultiprocessing
-from bundler.fileio import line_count, print_words_to_file, concatinate_files
-from bundler.fileio import clean_files
-
+import bundler
+from bundler.fileio import line_count, print_words_to_file, concatinate_files, clean_files
 
 def basic_filter(self, x): return True
 
-class census_generator:
+class CensusGenerator():
     def __init__(self, MCG_generators, arc_neighbours, automorph, MCG_must_contain, option, word_filter=basic_filter, manifold_filter=basic_filter):
-        self.word_generator = word_generator(MCG_generators, arc_neighbours, automorph, MCG_must_contain, word_filter, option)
-        # self.table_generator = TableGenerator(MCG_generators, manifold_filter, option)
-        self.ordering = ordering.short_lex(MCG_generators)
+        self.word_generator = bundler.WordGenerator(MCG_generators, arc_neighbours, automorph, MCG_must_contain, word_filter, option)
+        self.ordering = bundler.ShortLex(MCG_generators)
         self.option = option
         self.word_filter = word_filter
         self.manifold_filter = manifold_filter
@@ -73,7 +69,7 @@ class census_generator:
             clean_files(glob(self.option.word_parts.format('*')))
             words, prefixes = self.word_generator.valid_suffixes(self.option.MASTER_PREFIX, self.option.PREFIX_DEPTH, depth)
             if self.option.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-            print_words_to_file(words, self.option.word_parts.format('start_words'))
+            print_words_to_file(words, self.option.word_parts.format('start'))
             print_words_to_file(prefixes, self.option.word_parts.format('prefixes'))
         
         if prebuilt < 2:
@@ -83,13 +79,18 @@ class census_generator:
                 for I in load_inputs:
                     valid_suffixes_map(I)
             else:
-                imultiprocessing.imap(valid_suffixes_map, load_inputs, self.option.CORES, return_results=False)
+                P = Pool(processes=self.option.CORES)
+                P.map(valid_suffixes_map, load_inputs)
+                P.close()
+                P.join()
+                
+                # bundler.imap(valid_suffixes_map, load_inputs, self.option.CORES, return_results=False)
             
             if self.option.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
             
             if self.option.SHOW_PROGRESS: print('Combining files.')
             labels = [I[1] for I in self.get_prefix_blocks(depth)]
-            concatinate_files([self.option.word_parts.format('start_words')] + [self.option.word_parts.format(label) for label in labels], self.option.word_file)
+            concatinate_files([self.option.word_parts.format('start')] + [self.option.word_parts.format(label) for label in labels], self.option.word_file)
             
             time_words = time() - start
             num_words = line_count(self.option.word_file)
@@ -108,7 +109,10 @@ class census_generator:
                 for I in load_inputs:
                     determine_properties_map(I)
             else:
-                imultiprocessing.imap(determine_properties_map, load_inputs, self.option.CORES, return_results=False)
+                P = Pool(processes=self.option.CORES)
+                P.map(determine_properties_map, load_inputs)
+                P.close()
+                P.join()
             
             if self.option.SHOW_PROGRESS: print('\rCollecting properties: DONE          ')
             

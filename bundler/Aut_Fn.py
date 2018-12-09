@@ -1,4 +1,4 @@
-##### Required modules:
+
 from __future__ import print_function
 from random import choice, seed
 from time import time
@@ -6,10 +6,11 @@ try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
-from bundler.ordering import short_lex
+
+import bundler
 from bundler.extensions import build_c_FSM
 
-class Aut_Fn():
+class AutFn():
     ''' This stores a collection of automorphisms of a free group F_n. When S is a punctured
     surface then \pi_1(S) is a free group and MCG(S) acts on \pi_1(S) by automorphisms.
     
@@ -24,7 +25,7 @@ class Aut_Fn():
         self.generators = Pi_1_generators
         self.trivial_relations = [generator + self.inverse(generator) for generator in Pi_1_generators]
         self.inverse_letters = dict(zip(Pi_1_generators, map(self.inverse, Pi_1_generators)))
-        self.ordering = short_lex(Pi_1_generators)
+        self.ordering = bundler.ShortLex(Pi_1_generators)
         self.actions = dict()
         
         if Twists is not None:

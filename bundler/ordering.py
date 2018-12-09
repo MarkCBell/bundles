@@ -1,8 +1,7 @@
 
 ''' This module contains ordering system classes. Eventually this will / should
-contain many different orderings. However, for now we are only using short_lex.'''
+contain many different orderings. However, for now we are only using ShortLex.'''
 
-##### Required modules:
 from __future__ import print_function
 from string import ascii_lowercase
 try:
@@ -10,7 +9,7 @@ try:
 except ImportError:
     maketrans = str.maketrans
 
-class short_lex:
+class ShortLex():
     ''' This class acts as an ordering system for the ordering 'short lexicographical'
     with respect to the ordered alphabet provided at initialisation. '''
     def __init__(self, alphabet):
