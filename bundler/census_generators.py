@@ -36,7 +36,7 @@ class CensusGenerator():
         df = pd.read_csv(self.options.word_parts.format('prefixes'))
         
         for index, row in df.iterrows():
-            yield (self, '%d - %d' % (index+1, len(df)), row.word, depth)
+            yield (self, '%d-%d' % (index+1, len(df)), row.word, depth)
     
     def get_word_blocks(self):
         for index, df in enumerate(pd.read_csv(self.options.word_file, chunksize=self.options.CHUNKSIZE_LOAD)):
@@ -74,8 +74,8 @@ class CensusGenerator():
             clean_files(glob(self.options.word_parts.format('*')))
             words, prefixes = self.word_generator.valid_suffixes(self.options.MASTER_PREFIX, self.options.PREFIX_DEPTH, depth)
             if self.options.SHOW_PROGRESS: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-            pd.DataFrame({'word':words}).to_csv(self.options.word_parts.format('0'), index=False)
-            pd.DataFrame({'word':prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
+            pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format('0'), index=False)
+            pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         if prebuilt < 2:
             load_inputs = ifilter(lambda I: not os.path.isfile(self.options.word_parts.format('*')), self.get_prefix_blocks(depth))
