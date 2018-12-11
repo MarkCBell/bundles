@@ -92,7 +92,7 @@ class CensusGenerator():
             if self.options.SHOW_PROGRESS: print('\rTraversing word tree: DONE          ')
             
             if self.options.SHOW_PROGRESS: print('Combining files.')
-            word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if path[-12:] != 'prefixes.csv'], ignore_index=True)
+            word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if not path.endswith('prefixes.csv')], ignore_index=True)
             word_table.to_csv(self.options.word_file, index=False)
             
             time_words = time() - start

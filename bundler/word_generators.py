@@ -13,7 +13,6 @@ from sympy import Matrix, eye
 
 import bundler
 from bundler.Aut_Fn import generate_FSM_info
-from bundler.fat_graphs import load_fat_graph
 from bundler.FSM import word_accepting_FSM
 from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
 from bundler.extensions import c_automorph
@@ -85,7 +84,7 @@ class WordGenerator():
         
         # And get information about the induced action on pi_1 using a fat graph.
         if self.options.SHOW_PROGRESS: print('Generating fat graphs.')
-        G = load_fat_graph(self.options.SURFACE_FILE_CONTENTS)
+        G = bundler.FatGraph.from_twister_file(self.options.SURFACE_FILE_CONTENTS)
         self.Pi_1_generators = G.Pi_1_generators()
         self.Twist_actions_on_pi_1 = G.actions(self.MCG_generators)
         self.Twist_actions_on_H_1 = dict((g, convert_action_to_matrix(self.Pi_1_generators, self.Twist_actions_on_pi_1[g])) for g in self.MCG_generators)

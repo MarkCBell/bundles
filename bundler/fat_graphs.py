@@ -9,50 +9,6 @@ except ImportError:
 # This module is quite a mess. At some point this should
 # be tidied up and replaced with a more rigid structure.
 
-def load_fat_graph(file_contents):
-    num_vertices = 0
-    for line in file_contents.split('\n'):
-        data = line.split('#')[0].split(',')
-        if data[0] == 'annulus' or data[0] == 'rectangle':
-            largest_num = max(map(lambda x: abs(int(x)) + 1, data[3:]))
-            if largest_num > num_vertices:
-                num_vertices = largest_num
-    
-    if num_vertices == 0: raise ValueError('Cannot load fat graph with no vertices.')
-    
-    vertex_orders = [[None] * 4 for i in range(num_vertices)]
-    edge_connections = []
-    annuli, rectangles = [], []
-    
-    for line in file_contents.split('\n'):
-        data = line.split('#')[0].split(',')
-        
-        if data[0] == 'annulus' or data[0] == 'rectangle':
-            name, inverse_name = data[1], data[2]
-            pairs = zip(data[3:], data[4:]+data[3 if data[0] == 'annulus' else 4:4])
-            for a, b in pairs:
-                x, y = abs(int(a)), abs(int(b))
-                e = (x, 1 if a[0] == '+' else 0, y, 3 if b[0] == '+' else 2)
-                
-                e_num = len(edge_connections)
-                vertex_orders[x][1 if a[0] == '+' else 0] = e_num
-                vertex_orders[y][3 if b[0] == '+' else 2] = e_num
-                edge_connections.append(e)
-            
-            curve_start = abs(int(data[3]))
-            curve = []
-            for d in data[3:]:
-                curve.append(1 if d[0] == '+' else 0)
-            
-            if data[0] == 'rectangle':
-                end_dir = curve[-1]
-                start_dir = 3 if curve[0] == 1 else 2
-                curve = curve[:-1]
-                rectangles.append([name, inverse_name, curve_start, curve, start_dir, end_dir])
-            else:
-                annuli.append([name, inverse_name, curve_start, curve])
-    
-    return FatGraph(edge_connections, vertex_orders, None, annuli, rectangles)
 
 def ends(edge):
     return edge[0], edge[2]
@@ -121,6 +77,52 @@ class FatGraph():
         self.fundamental_group_generators = ascii_lowercase[:len(numbered_generators)]
         self.path_lookup = dict(zip(self.fundamental_group_generators, [self.generator_path(e_num) for e_num in numbered_generators]))
         self.generator_lookup = dict(zip(numbered_generators, self.fundamental_group_generators))
+    
+    @classmethod
+    def from_twister_file(cls, file_contents):
+        num_vertices = 0
+        for line in file_contents.split('\n'):
+            data = line.split('#')[0].split(',')
+            if data[0] == 'annulus' or data[0] == 'rectangle':
+                largest_num = max(map(lambda x: abs(int(x)) + 1, data[3:]))
+                if largest_num > num_vertices:
+                    num_vertices = largest_num
+        
+        if num_vertices == 0: raise ValueError('Cannot load fat graph with no vertices.')
+        
+        vertex_orders = [[None] * 4 for i in range(num_vertices)]
+        edge_connections = []
+        annuli, rectangles = [], []
+        
+        for line in file_contents.split('\n'):
+            data = line.split('#')[0].split(',')
+            
+            if data[0] == 'annulus' or data[0] == 'rectangle':
+                name, inverse_name = data[1], data[2]
+                pairs = zip(data[3:], data[4:]+data[3 if data[0] == 'annulus' else 4:4])
+                for a, b in pairs:
+                    x, y = abs(int(a)), abs(int(b))
+                    e = (x, 1 if a[0] == '+' else 0, y, 3 if b[0] == '+' else 2)
+                    
+                    e_num = len(edge_connections)
+                    vertex_orders[x][1 if a[0] == '+' else 0] = e_num
+                    vertex_orders[y][3 if b[0] == '+' else 2] = e_num
+                    edge_connections.append(e)
+                
+                curve_start = abs(int(data[3]))
+                curve = []
+                for d in data[3:]:
+                    curve.append(1 if d[0] == '+' else 0)
+                
+                if data[0] == 'rectangle':
+                    end_dir = curve[-1]
+                    start_dir = 3 if curve[0] == 1 else 2
+                    curve = curve[:-1]
+                    rectangles.append([name, inverse_name, curve_start, curve, start_dir, end_dir])
+                else:
+                    annuli.append([name, inverse_name, curve_start, curve])
+        
+        return cls(edge_connections, vertex_orders, None, annuli, rectangles)
     
     def __str__(self):
         return str(self.edge_connections) + '\n' + str(self.vertex_orders)
