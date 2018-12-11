@@ -108,7 +108,7 @@ def find_bad_prefix_relators(old_relators, alphabet, n, max_len, order):
     extended_relators = old_relators + [(letter+letter.swapcase(), '') for letter in alphabet]
     RW = RewritingSystem(order, extended_relators)
     
-    return [x for (x,y) in RW.find_new_relators(n, max_len)]
+    return [x for (x, y) in RW.find_new_relators(n, max_len)]
 
 def find_simpler_relators(old_relators, alphabet, n, max_len, order):
     # all_relators = set(old_relators + [r[::-1] for r in old_relators])
