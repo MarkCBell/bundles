@@ -64,10 +64,6 @@ class CensusGenerator():
         time_words, time_good, time_census = 0, 0, 0
         num_words, num_good, num_acceptable, num_census = 'SKIPPED', 'SKIPPED', 'SKIPPED', 'SKIPPED'
         
-        # Note: Most of this is now avoided by working with generator expressions. However,
-        # as we can't use multiprocessing.Pool.map over a generator we use my custom
-        # imultiprocessing library instead now.
-        
         start = time()
         if self.options.SHOW_PROGRESS: print('Generating words.')
         if prebuilt < 1:
@@ -78,7 +74,7 @@ class CensusGenerator():
             pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         if prebuilt < 2:
-            load_inputs = ifilter(lambda I: not os.path.isfile(self.options.word_parts.format('*')), self.get_prefix_blocks(depth))
+            load_inputs = ifilter(lambda I: not os.path.isfile(self.options.word_parts.format(I[1])), self.get_prefix_blocks(depth))
             
             if self.options.CORES == 1:
                 for I in load_inputs:

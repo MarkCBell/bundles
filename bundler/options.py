@@ -55,8 +55,8 @@ class Options():
         self.parts_dir = os.path.join(self.census_dir, 'parts')
         
         # Where to save parts of the census that have been built.
-        self.word_parts = os.path.join(self.parts_dir, 'word{}.csv')
-        self.good_parts = os.path.join(self.parts_dir, 'good{}.csv')
+        self.word_parts = os.path.join(self.parts_dir, 'word_{}.csv')
+        self.good_parts = os.path.join(self.parts_dir, 'good_{}.csv')
         
         # Where to output information to.
         self.census_file = os.path.join(self.census_dir, 'census.csv')
