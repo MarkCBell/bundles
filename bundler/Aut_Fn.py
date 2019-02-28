@@ -8,7 +8,6 @@ except ImportError:
     from queue import Queue
 
 import bundler
-from bundler.extensions import build_c_FSM
 
 class AutFn():
     ''' This stores a collection of automorphisms of a free group F_n. When S is a punctured
@@ -74,37 +73,4 @@ class AutFn():
         ''' Applies an action to the loop w. '''
         action = self.actions[action_name]
         return self.free_reduce(''.join([action[letter] for letter in w]))
-
-##### FSM code
-
-def generate_FSM_info(MCG_generators, seeds, search_depth, pi_1_action):
-    ''' Generates a FSM consisting of all loops within distance n of an element of the seed. '''
-    
-    machine = []
-    seeds = [pi_1_action.canonical(w) for w in seeds]
-    to_check = Queue()
-    depth = dict()
-    for seed in seeds:
-        if seed not in depth:
-            to_check.put(seed)
-            depth[seed] = 0
-    
-    while not to_check.empty():
-        current_loop = to_check.get()
-        current_depth = depth[current_loop]
-        
-        arrows = {'': current_loop}  # We store the current loops name in the '' field.
-        
-        # Determine the action of each of mcg_generators of the current_loop.
-        for generator in MCG_generators:  # We explore in every direction.
-            new_loop = pi_1_action.canonical(pi_1_action.apply_to(generator, current_loop))
-            
-            arrows[generator] = new_loop
-            if current_depth < search_depth and new_loop not in depth:
-                to_check.put(new_loop)
-                depth[new_loop] = current_depth + 1
-        
-        machine.append(arrows)
-    
-    return build_c_FSM(MCG_generators, machine)
 

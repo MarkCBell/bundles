@@ -12,8 +12,7 @@ except ImportError:
 from sympy import Matrix, eye
 
 import bundler
-from bundler.Aut_Fn import generate_FSM_info
-from bundler.FSM import word_accepting_FSM
+from bundler.FSM import word_accepting_FSM, generate_FSM_info
 from bundler.relators import shuffle_relators, find_bad_prefix_relators, find_simpler_relators
 from bundler.extensions import c_automorph
 
