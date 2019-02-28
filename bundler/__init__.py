@@ -5,5 +5,4 @@ from .census_generators import CensusGenerator
 from .fat_graphs import FatGraph
 from .options import Options
 from .ordering import ShortLex
-from .relators import RewritingSystem
 from .word_generators import WordGenerator

@@ -85,12 +85,12 @@ class WordGenerator():
         # And get information about the induced action on pi_1 using a fat graph.
         if self.options.SHOW_PROGRESS: print('Generating fat graphs.')
         G = bundler.FatGraph.from_twister_file(self.options.SURFACE_FILE_CONTENTS)
-        self.Pi_1_generators = G.Pi_1_generators()
-        self.Twist_actions_on_pi_1 = G.actions(self.MCG_generators)
-        self.Twist_actions_on_H_1 = dict((g, convert_action_to_matrix(self.Pi_1_generators, self.Twist_actions_on_pi_1[g])) for g in self.MCG_generators)
-        self.Homology_Cache = dict()
+        self.pi_1_generators = G.pi_1_generators()
+        self.twist_actions_on_pi_1 = G.actions(self.MCG_generators)
+        self.twist_actions_on_H_1 = dict((g, convert_action_to_matrix(self.pi_1_generators, self.twist_actions_on_pi_1[g])) for g in self.MCG_generators)
+        self.homology_cache = dict()
         for g in self.MCG_generators:
-            self.Homology_Cache[g] = self.Twist_actions_on_H_1[g]
+            self.homology_cache[g] = self.twist_actions_on_H_1[g]
         
         self.loop_invariant_FSM_seed = G.possible_seeds()
         
@@ -150,7 +150,7 @@ class WordGenerator():
         self.bad_prefix_FSM = word_accepting_FSM(self.MCG_generators, bad_prefix)
         
         if self.options.SHOW_PROGRESS: print('Building FSM.')
-        self.fundamental_group_action = bundler.AutFn(self.Pi_1_generators, self.Twist_actions_on_pi_1)
+        self.fundamental_group_action = bundler.AutFn(self.pi_1_generators, self.twist_actions_on_pi_1)
         self.loop_invariant_FSM = generate_FSM_info(self.MCG_generators, self.loop_invariant_FSM_seed, self.options.LOOP_INVARIANT_FSM_DEPTH, self.fundamental_group_action)
         
         # Now build some dictionaries for looking up the next characters in MCG_generators.
@@ -214,18 +214,18 @@ class WordGenerator():
     def H_1_action(self, w, len_w):
         ''' Uses divide and conquer to compute the product of the matrices
         specified by w. Stores the product of words smaller than the
-        Homology_Cache_Threshold in the Homology_Cache to speed up later
+        Homology_Cache_Threshold in the homology_cache to speed up later
         computations. '''
         
         threshold = self.options.H_1_CACHE_THRESHOLD
         
         if len_w <= threshold:
-            if w in self.Homology_Cache:
-                return self.Homology_Cache[w].copy()
+            if w in self.homology_cache:
+                return self.homology_cache[w].copy()
             
             len_w2 = len_w // 2
             A = self.H_1_action(w[:len_w2], len_w2) * self.H_1_action(w[len_w2:], len_w - len_w2)
-            self.Homology_Cache[w] = A.copy()  # If the word was small enough then save the result in the cache.
+            self.homology_cache[w] = A.copy()  # If the word was small enough then save the result in the cache.
         else:
             A = self.H_1_action(w[:threshold], threshold) * self.H_1_action(w[threshold:], len_w - threshold)
         

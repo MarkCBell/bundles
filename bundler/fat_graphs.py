@@ -621,6 +621,6 @@ class FatGraph():
     def possible_seeds(self):
         return [self.encode_path_generators(self.annulus_to_path(a)) for a in self.annuli] + [self.encode_path_generators(self.rectangle_to_path(r)) for r in self.rectangles]
     
-    def Pi_1_generators(self):
+    def pi_1_generators(self):
         return ''.join(g + g.swapcase() for g in self.fundamental_group_generators)
 
