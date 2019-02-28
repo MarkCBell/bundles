@@ -21,16 +21,16 @@ class AutFn():
             only that v & w have same canonical representative => v ~ w. Which this does.
         3) The performance gain is huge. '''
     
-    def __init__(self, Pi_1_generators, Twists=None):
-        self.generators = Pi_1_generators
-        self.trivial_relations = [generator + self.inverse(generator) for generator in Pi_1_generators]
-        self.inverse_letters = dict(zip(Pi_1_generators, map(self.inverse, Pi_1_generators)))
-        self.ordering = bundler.ShortLex(Pi_1_generators)
+    def __init__(self, generators, twists=None):
+        self.generators = generators
+        self.trivial_relations = [generator + self.inverse(generator) for generator in generators]
+        self.inverse_letters = dict(zip(generators, map(self.inverse, generators)))
+        self.ordering = bundler.ShortLex(generators)
         self.actions = dict()
         
-        if Twists is not None:
-            for curve in Twists:
-                self.add_action(curve, Twists[curve])
+        if twists is not None:
+            for curve in twists:
+                self.add_action(curve, twists[curve])
     
     def canonical(self, w):
         w = self.cyclic_free_reduce(w)

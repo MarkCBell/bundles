@@ -161,21 +161,10 @@ class WordGenerator():
         
         self.next_suffix = dict()
         self.next_addable_character = dict(zip(all_good_words, map(lambda word: [letter for letter in self.MCG_generators if letter == self.MCG_generators_last or not self.bad_prefix_FSM.evaluate(word + letter) < 0][0], all_good_words)))
-        # self.next_character = dict()
         
         # Set up a right-angled Artin group to quickly test for commutativity.
         MCG_generators_lower = ''.join(letter for letter in self.MCG_generators if letter.islower()) + self.stop_character
         self.RAAG_translated = bundler.RAAG(MCG_generators_lower.translate(self.translate_rule), [(a.translate(self.translate_rule), b.translate(self.translate_rule)) for a, b in self.commutors], MCG_generators_lower.upper().translate(self.translate_rule))
-        
-    
-    # def next_addable_character(self, suffix):
-        # if suffix not in self.next_character:
-            # for letter in self.MCG_generators:
-                # if letter == self.MCG_generators_last or not self.bad_prefix_FSM.evaluate(suffix + letter) < 0:
-                    # self.next_character[suffix] = letter
-                    # break
-        
-        # return self.next_character[suffix]
     
     def next_good_suffix(self, suffix):
         ''' Find the next possible suffix after this one.'''
@@ -235,8 +224,6 @@ class WordGenerator():
         A = self.H_1_action(word[::-1], len(word))
         A = A - eye(A.shape[0])
         return int(abs(A.det()))
-        A.add_diagonal(-1)
-        return abs(A.determinant())
     
     def first_in_class(self, word, max_tree_size=0, prefix=False):
         ''' Determines if a word is lex first in its class.
