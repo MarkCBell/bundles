@@ -77,36 +77,34 @@ class AutFn():
 
 ##### FSM code
 
-def generate_FSM_info(MCG_generators, seeds, depth, Pi_1_action):
+def generate_FSM_info(MCG_generators, seeds, search_depth, pi_1_action):
     ''' Generates a FSM consisting of all loops within distance n of an element of the seed. '''
     
-    Machine = []
-    reduced_seeds = [Pi_1_action.canonical(w) for w in seeds]
-    Loop_names = set()
-    Unexplored = Queue()
-    for seed in reduced_seeds:
-        if seed not in Loop_names:
-            Unexplored.put(seed)
-            Loop_names.add(seed)
-    Depth = dict((w, 0) for w in reduced_seeds)
+    machine = []
+    seeds = [pi_1_action.canonical(w) for w in seeds]
+    to_check = Queue()
+    depth = dict()
+    for seed in seeds:
+        if seed not in depth:
+            to_check.put(seed)
+            depth[seed] = 0
     
-    while not Unexplored.empty():
-        current_loop = Unexplored.get()
-        current_depth = Depth[current_loop]
+    while not to_check.empty():
+        current_loop = to_check.get()
+        current_depth = depth[current_loop]
         
-        arrows = {'':current_loop}  # We store the current loops name in the '' field.
+        arrows = {'': current_loop}  # We store the current loops name in the '' field.
         
         # Determine the action of each of mcg_generators of the current_loop.
         for generator in MCG_generators:  # We explore in every direction.
-            new_loop = Pi_1_action.canonical(Pi_1_action.apply_to(generator, current_loop))
+            new_loop = pi_1_action.canonical(pi_1_action.apply_to(generator, current_loop))
             
             arrows[generator] = new_loop
-            if current_depth < depth and new_loop not in Loop_names:
-                Unexplored.put(new_loop)
-                Loop_names.add(new_loop)
-                Depth[new_loop] = current_depth + 1
+            if current_depth < search_depth and new_loop not in depth:
+                to_check.put(new_loop)
+                depth[new_loop] = current_depth + 1
         
-        Machine.append(arrows)
+        machine.append(arrows)
     
-    return build_c_FSM(MCG_generators, Machine)
+    return build_c_FSM(MCG_generators, machine)
 
