@@ -52,7 +52,6 @@ class RAAG():
             if i == j:
                 self.non_commuters_and_i[i].add(j)
         
-        
         # We use deques for fast access at the front and back.
         # We'll keep one bucket empty so we can use natural indexing.
         self.piles = [deque() for i in self.dummy_generators]

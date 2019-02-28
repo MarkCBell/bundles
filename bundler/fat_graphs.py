@@ -9,7 +9,6 @@ except ImportError:
 # This module is quite a mess. At some point this should
 # be tidied up and replaced with a more rigid structure.
 
-
 def ends(edge):
     return edge[0], edge[2]
 

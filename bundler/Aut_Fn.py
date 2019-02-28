@@ -1,11 +1,6 @@
 
 from __future__ import print_function
 from random import choice, seed
-from time import time
-try:
-    from Queue import Queue
-except ImportError:
-    from queue import Queue
 
 import bundler
 
