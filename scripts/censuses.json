@@ -4,8 +4,7 @@
     {
     "surface": "S_1_1",
     "generators": "aAbB",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b"],
+    "MCG_must_contain": "aA;bB",
     "automorphisms": [["", "bBaA"]]
     },
 
@@ -13,8 +12,7 @@
     {
     "surface": "S_1_2",
     "generators": "aAbBcCxX",
-    "arc_neighbours": {"x":{"c":["a", "a"]}},
-    "MCG_must_contain": ["b", "c", "ax"],
+    "MCG_must_contain": "bB;cC;aAxX",
     "automorphisms": [["x", "cCbBaAxX"]]
     },
 
@@ -22,8 +20,7 @@
     {
     "surface": "S_1_2",
     "generators": "aAbBcC",
-    "arc_neighbours": {},
-    "MCG_must_contain": [],
+    "MCG_must_contain": "bB;cC;aA",
     "automorphisms": [["", "cCbBaA"]]
     },
 
@@ -31,8 +28,7 @@
     {
     "surface": "S_1_3",
     "generators": "aAbBcCdDxXyY",
-    "arc_neighbours": {"x":{"c":["a", "d"]}, "y":{"d":["c", "a"]}},
-    "MCG_must_contain": ["b", "cd", "axy"],
+    "MCG_must_contain": "bB;cCdD;aAxXyY",
     "automorphisms": []
     },
 
@@ -40,8 +36,7 @@
     {
     "surface": "S_2",
     "generators": "aAbBcCdDeE",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["b", "c", "d", "ae"],
+    "MCG_must_contain": "bB;cC;dD;aAeE",
     "automorphisms": [["", "eEdDcCbBaA"]]
     },
 
@@ -49,8 +44,7 @@
     {
     "surface": "S_2_1",
     "generators": "aAbBcCdDeEfF",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b", "c", "def"],
+    "MCG_must_contain": "aA;bB;cC;dDeEfF",
     "automorphisms": [["", "aAbBcCeEdDfF"], ["e", "cCbBaAfFeEdD"], ["e", "cCbBaAfFeEdD"], ["e", "cCbBaAfFdDeE"]]
     },
 
@@ -58,8 +52,7 @@
     {
     "surface": "S_3_0",
     "generators": "aAbBcCdDeEfFgg",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b", "c", "d", "e", "fg"],
+    "MCG_must_contain": "aA;bB;cC;dD;eE;fFgG",
     "automorphisms": [["f", "eEdDcCbBaAfFgG"]]
     },
 
@@ -67,8 +60,7 @@
     {
     "surface": "S_3_1",
     "generators": "aAbBcCdDeEfFgGhH",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b", "c", "d", "e", "fgh"],
+    "MCG_must_contain": "aA;bB;cC;dD;eE;fFgGhH",
     "automorphisms": [["h", "aAbBcCdDeEgGfFhH"]]
     },
 
@@ -76,8 +68,7 @@
     {
     "surface": "S_4_1",
     "generators": "aAbBcCdDeEfFgGhHiIjJ",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b", "c", "d", "e", "f", "g", "hij"],
+    "MCG_must_contain": "aA;bB;cC;dD;eE;fF;gG;hHiIjJ",
     "automorphisms": [["j", "aAbBcCdDeEfFgGiIhHjJ"]]
     },
 
@@ -85,8 +76,7 @@
     {
     "surface": "S_5_1",
     "generators": "aAbBcCdDeEfFgGhHiIjJkKlL",
-    "arc_neighbours": {},
-    "MCG_must_contain": ["a", "b", "c", "d", "e", ", f", "g", "h", "i", "jkl"],
+    "MCG_must_contain": "aA;bB;cC;dD;eE;fF;gG;hHiI;jJkKlL",
     "automorphisms": [["l", "aAbBcCdDeEfFgGhHiIkKjJlL"]]
     }
 

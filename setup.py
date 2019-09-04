@@ -1,23 +1,15 @@
-from setuptools import setup, find_packages, Extension
+from setuptools import setup, find_packages
+from Cython.Build import cythonize
 
 requirements = [
-    'pandas',
+    'contexttimer',
+    'curver',
+    'decorator',
+    'flipper',
     'numpy',
+    'pandas',
     'sympy',
-    'decorator'
 ]
-
-core_FSM = Extension(
-    name = 'bundler.extensions.c_FSM_core',
-    sources = ['./bundler/extensions/c_FSM_core.cpp'],
-    language='c++'
-    )
-
-core_automorph = Extension(
-    name = 'bundler.extensions.c_automorph_core',
-    sources = ['./bundler/extensions/c_automorph_core.cpp'],
-    language='c++'
-    )
 
 setup(
     name='bundler',
@@ -28,7 +20,11 @@ setup(
     url='https://github.com/MarkCBell/bundles',
     packages=find_packages(),
     install_requires=requirements,
-    ext_modules=[core_FSM, core_automorph],
+    ext_modules=cythonize([
+        './bundler/extensions/FSM.pyx',
+        './bundler/extensions/automorphism.pyx',
+        './bundler/extensions/ordering.pyx',
+        ]),
     license='MIT License',
     zip_safe=False,
     keywords='bundler',
