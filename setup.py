@@ -24,7 +24,7 @@ setup(
         './bundler/extensions/FSM.pyx',
         './bundler/extensions/automorphism.pyx',
         './bundler/extensions/ordering.pyx',
-        ]),
+        ], annotate=True),
     license='MIT License',
     zip_safe=False,
     keywords='bundler',

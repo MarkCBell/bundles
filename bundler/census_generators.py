@@ -49,12 +49,10 @@ class CensusGenerator():
     def map(self, function, generator):
         if self.options.cores == 1:
             for item in generator:
-                function(item)
+                function(*item)
         else:
-            P = Pool(processes=self.options.cores)
-            P.map(function, generator)  # Consider adding chunksize=
-            P.close()
-            P.join()
+            with Pool(processes=self.options.cores) as P:
+                P.starmap(function, generator)  # Consider adding chunksize=
     
     def clean(self, basepath):
         for path in glob(basepath.format('*')):
@@ -65,7 +63,7 @@ class CensusGenerator():
         self.word_generator = WordGenerator(self.generators, self.automorph, self.MCG_must_contain, self.word_filter, self.surfaces, self.options)
         
         if not os.path.isfile(self.options.word_parts.format('prefixes')):
-            prefixes = valid_suffixes_map((self, '0', self.options.master_prefix, self.options.prefix_depth, depth))
+            prefixes = valid_suffixes_map(self, '0', self.options.master_prefix, self.options.prefix_depth, depth)
             if self.options.show_progress: print('\rTraversing prefix tree: DONE' + ' ' * depth)
             pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
@@ -169,8 +167,7 @@ class CensusGenerator():
 # to various functions globally. Otherwise it would just be
 # an instance copy of the function and so lost when the objects are passed
 # around by pickling.
-def valid_suffixes_map(X):
-    self, label, prefix, depth, word_depth = X
+def valid_suffixes_map(self, label, prefix, depth, word_depth):
     if self.options.show_progress: print('\rLoading suffixes of prefix {} ({})'.format(prefix, label))
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth, word_depth)
@@ -179,8 +176,7 @@ def valid_suffixes_map(X):
     return prefixes if word_depth is not None else None
 
 
-def determine_properties_map(X):
-    self, label, table = X
+def determine_properties_map(self, label, table):
     if self.options.show_progress: print('\rCollecting properties from block: %s' % label)
     
     Properties = namedtuple('Properties', ('loadable', 'acceptable', 'volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
