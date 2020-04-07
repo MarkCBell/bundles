@@ -89,8 +89,7 @@ class WordGenerator():
         # Let's build some FSM to help us search for these faster.
         self.curver_action = {letter: self.surfaces.curver(letter) for letter in self.generators}
         
-        def find_bad(length, comparison=None):
-            if comparison is None: comparison = self.ordering.cmp
+        def find_bad(length, comparison):
             convert = lambda X: (X[0], tuple(X[1].flatten()))  # Since numpy.ndarrays are not hashable we need a converter.
             
             image = {'': (self.surfaces.curver.triangulation.as_lamination(), self.surfaces.curver('').homology_matrix())}  # word |--> image
@@ -127,7 +126,7 @@ class WordGenerator():
         # Any word which contains one such input cannot be first_in_class.
         if self.options.show_progress: print('Building FSMs')
         if self.options.show_progress: print('Bad prefix FSM')
-        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=4))
+        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=self.ordering.cmp))
         
         # Secondly, the bad_prefix FSM detects relations whose output is earlier than its input.
         # These cannot appear in any first_in_class word or prefix.
