@@ -65,7 +65,6 @@ EXPERIMENTS = {
         }
 }
 
-
 def setup(**kwargs):
     parser = argparse.ArgumentParser()
     parser.add_argument('--name', '-n', required=True, type=str,  help='name of experiment to load')

@@ -101,7 +101,7 @@ class CensusGenerator():
         word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if not path.endswith('prefixes.csv')], ignore_index=True, sort=False)
         word_table.to_csv(self.options.word, index=False)
         
-        if self.options.show_progress: print('\t%d possible words to check.' % len(word_table))
+        if self.options.show_progress: print('\tWords {}'.format(len(word_table)))
     
     def build_properties(self):
         if self.options.show_progress: print('Collecting properties.')
@@ -120,8 +120,9 @@ class CensusGenerator():
         properties_table.sort_values('volume', inplace=True)
         properties_table.to_csv(self.options.properties, index=False)
         
-        if self.options.show_progress: print('\t%d loadable words.' % properties_table.loadable.sum())
-        if self.options.show_progress: print('\t%d acceptable words.' % properties_table.acceptable.sum())
+        if self.options.show_progress: print('\tHyperbolic {}'.format(properties_table.hyperbolic.sum()))
+        if self.options.show_progress: print('\tLoadable {}'.format(properties_table.loadable.sum()))
+        if self.options.show_progress: print('\tAcceptable {}'.format(properties_table.acceptable.sum()))
     
     def thin_properties(self):
         if self.options.show_progress: print('Removing duplicates.')
@@ -166,17 +167,17 @@ class CensusGenerator():
             if self.options.show_timings: print('Thin time: %fs' % time_census.elapsed)
         
         if self.options.show_timings:
-            num_words = len(pd.read_csv(self.options.word))
-            num_loadable = pd.read_csv(self.options.properties).loadable.sum()
-            num_acceptable = pd.read_csv(self.options.properties).acceptable.sum()
-            num_census = len(pd.read_csv(self.options.census))
+            words = pd.read_csv(self.options.word)
+            properties = pd.read_csv(self.options.properties)
+            census = pd.read_csv(self.options.census)
             print('\nSummary:')
             print('\tStatistics:')
-            print('\t\tTotal words:\t%s' % num_words)
-            print('\t\tLoadable words:\t%s' % num_loadable)
-            print('\t\tAcceptable words:\t%s' % num_acceptable)
+            print('\t\tWords:\t{}'.format(len(words)))
+            print('\t\tHyperbolic:\t{}'.format(properties.hyperbolic.sum()))
+            print('\t\tLoadable:\t{}'.format(properties.loadable.sum()))
+            print('\t\tAcceptable:\t{}'.format(properties.acceptable.sum()))
             print('\t\t------------------------------')
-            print('\t\tDistinct words:\t%s' % num_census)
+            print('\t\tDistinct:\t{}'.format(len(census)))
             print('\t\t------------------------------')
             print('\tTimings:')
             print('\t\tGrow time:\t%fs' % time_words.elapsed)
@@ -200,8 +201,8 @@ def valid_suffixes_map(self, label, prefix, depth, word_depth):
 def determine_properties_map(self, label, table):
     if self.options.show_progress: print('\rCollecting properties from block: %s' % label)
     
-    Properties = namedtuple('Properties', ('loadable', 'acceptable', 'volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
-    Unloadable = lambda word: Properties(False, False, 0.0, '', 0, 0, 0)
+    Properties = namedtuple('Properties', ('hyperbolic', 'loadable', 'acceptable', 'volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
+    Unloadable = lambda word, hyperbolic: Properties(False, False, False, 0.0, '', 0, 0, 0)
     
     def properties(row):
         ''' Return the properties associated with the mapping class `word`. '''
@@ -210,11 +211,12 @@ def determine_properties_map(self, label, table):
         for i in range(self.options.max_randomize):  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
             if M.solution_type() == 'all tetrahedra positively oriented': break
             M.randomize()  # There needs to be a better way to do this.
-        else:
-            return pd.Series(Unloadable(word))  # Couldn't find positive structure.
-        G = M.symmetry_group()
+        else:  # Couldn't find positive structure.
+            return pd.Series(Unloadable(word, self.surfaces.flipper(word).is_pseudo_anosov()))
         
+        G = M.symmetry_group()
         return pd.Series(Properties(
+            True,
             True,
             self.manifold_filter(self, M),
             float(M.volume()),
