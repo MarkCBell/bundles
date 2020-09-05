@@ -16,6 +16,7 @@ In many cases SnapPy could not tell if two bundles were isometric and so althoug
 
 To generate a new census, compile the packages extensions and install it by
 running:
-    $ pip install .
+    $ pip install -r requirements.txt
+    $ python setup.py build_ext --inplace
 Then start one by doing, for example:
-    $ python scripts/generators.py S_1_2 6
+    $ python generate.py --name S_1_2 --depth 6

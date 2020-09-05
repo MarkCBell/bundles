@@ -1,9 +1,9 @@
 
-from itertools import permutations, product
-from random import randint
-from collections import deque
 from bisect import bisect_right
+from collections import deque
+from itertools import permutations, product
 from queue import Queue
+from random import randint
 
 from sympy import eye
 import curver
@@ -175,10 +175,9 @@ class WordGenerator():
     
     @memoize(lambda word: len(word) <= 5)
     def H_1_action(self, word):
-        ''' Uses divide and conquer to compute the product of the matrices
-        specified by word. Stores the product of words smaller than the
-        Homology_Cache_Threshold in the homology_cache to speed up later
-        computations. '''
+        ''' Uses divide and conquer to compute the product of the matrices specified by word.
+        
+        Cache small words to speed up later computations. '''
         
         if len(word) == 1:
             return self.curver_action[word].homology_matrix()
@@ -197,7 +196,7 @@ class WordGenerator():
         
         Uses relators and automorphs to find alternative representatives. Gives up after finding
         max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all
-        equivalent words of the same length in which case the result returned is absolutly correct.
+        equivalent words of the same length in which case the result returned is absolutely correct.
         
         If prefix == True, only prefix stable stable moves are performed, i.e. if it is discovered
         that u ~ v then uw ~ vw for all words w.
@@ -221,7 +220,7 @@ class WordGenerator():
         # We're going to need a translated version of the word a lot.
         translated_word = self.ordering.translate(word)
         
-        # Check to see if our origional word beats itself.
+        # Check to see if our original word beats itself.
         if not self.c_auto.before_automorphs(translated_word, translated_word, prefix):
             return False
         
@@ -286,7 +285,7 @@ class WordGenerator():
         assert len(prefix) < depth <= word_depth
         
         def backtrack(word):
-            ''' Gets the next feasable vertex in the tree of words based on suffix (DFT). '''
+            ''' Gets the next feasible vertex in the tree of words based on suffix (DFT). '''
             
             while word:
                 suffix = word[-self.options.suffix_depth:]

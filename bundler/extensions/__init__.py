@@ -1,8 +1,5 @@
 
-try:
-    from Queue import Queue
-except ImportError:
-    from queue import Queue
+from queue import Queue
 from collections import OrderedDict
 
 from .FSM import FSM

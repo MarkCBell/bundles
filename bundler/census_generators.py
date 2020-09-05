@@ -1,10 +1,8 @@
 
-from __future__ import print_function
-from types import SimpleNamespace
-import yaml
 from collections import namedtuple
 from glob import glob
 from multiprocessing import Pool
+from types import SimpleNamespace
 import os
 import pandas as pd
 
@@ -20,9 +18,32 @@ def basic_filter(self, x): return True
 
 class Options():
     def __init__(self, **kwargs):
-        with open(os.path.join(os.path.dirname(__file__), 'options.yaml')) as stream:
-            for key, value in yaml.load(stream, Loader=yaml.CLoader).items():
-                setattr(self, key, value)
+        self.cores = 1
+        self.prefix_depth = 6
+        self.chunksize = 500
+        self.suffix_depth = 3
+        self.fsm_power = 2
+        self.loop_invariant_fsm_depth = 4
+
+        # These affect how the script is displayed.
+        self.show_progress = True
+        self.show_timings = True
+        self.progress_rate = 100
+        self.log_level = 'info'
+
+        # File structure.
+        self.word_parts = './output/parts/word_{}.csv'
+        self.properties_parts = './output/parts/prop_{}.csv'
+        self.word = './output/words.csv'
+        self.properties = './output/prop.csv'
+        self.census = './output/census.csv'
+
+        # The affect what the script computes.
+        self.master_prefix = ''
+        self.max_randomize = 50
+        self.largest_class = 20
+        self.largest_class_prefix = 50
+        self.basic_search_range = 50
         
         for key, value in kwargs.items():
             setattr(self, key, value)
