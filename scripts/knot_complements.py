@@ -29,5 +29,5 @@ def presetup():
     return {'word_filter': word_filter, 'manifold_filter': manifold_filter}
 
 if __name__ == '__main__':
-    generator.setup(**presetup())
+    generate.setup(**presetup())
 

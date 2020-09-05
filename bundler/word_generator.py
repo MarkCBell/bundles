@@ -29,7 +29,7 @@ class WordGenerator():
     def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options, symmetric_generators=True):
         self.generators = generators
         self.MCG_automorphisms = MCG_automorphisms
-        self.MCG_must_contain = set(frozenset(clause) for clause in MCG_must_contain.split(';'))
+        self.MCG_must_contain = set(frozenset(clause) for clause in MCG_must_contain.split('^'))
         self.word_filter = word_filter
         self.options = options
         self.surfaces = surfaces
