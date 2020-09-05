@@ -1,6 +1,6 @@
 
 import argparse
-from bundler.census_generators import CensusGenerator, Options
+from bundler.census_generator import CensusGenerator, Options
 
 EXPERIMENTS = {
     "S_1_1": {

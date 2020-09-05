@@ -11,7 +11,7 @@ import snappy
 import flipper
 import curver
 
-from .word_generators import WordGenerator
+from .word_generator import WordGenerator
 from .extensions import ShortLex
 
 def basic_filter(self, x): return True
