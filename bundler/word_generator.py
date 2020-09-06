@@ -45,12 +45,11 @@ class WordGenerator():
                 break
         
         # Now construct a machine for performing automorphisms.
+        automorphisms = [automorphism.rpartition(':') for automorphism in self.MCG_automorphisms]
         self.c_auto = Automorph(
-            self.symmetric_generators,
             self.ordering.translate(generators_extended),
             self.ordering.translate(generators_extended.swapcase()),
-            [self.ordering.translate(output + STOP) for missing, output in self.MCG_automorphisms if not missing],
-            [(self.ordering.translate(missing), self.ordering.translate(output + STOP)) for missing, output in self.MCG_automorphisms if missing]
+            [(self.ordering.translate(missing), self.ordering.translate(output + STOP)) for missing, _, output in automorphisms]
             )
         
         # We find (some of) the major relators:
