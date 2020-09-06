@@ -67,7 +67,7 @@ EXPERIMENTS = {
 
 def setup(**kwargs):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--name', '-n', required=True, type=str,  help='name of experiment to load')
+    parser.add_argument('--name', '-n', required=True, type=str, help='name of experiment to load')
     parser.add_argument('--depth', '-d', required=True, type=int, help='depth to generate to')
     parser.add_argument('--prebuilt', '-p', type=int, default=0, help='')
     args, _ = parser.parse_known_args()

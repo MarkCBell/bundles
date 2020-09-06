@@ -5,7 +5,7 @@ from decorator import decorator
 def memoize(test=lambda *args, **kwargs: True):
     
     @decorator
-    def memoize(function, *args, **kwargs):
+    def wraps(function, *args, **kwargs):
         ''' A decorator that memoizes a function. '''
         
         inputs = inspect.getcallargs(function, *args, **kwargs)  # pylint: disable=deprecated-method
@@ -25,5 +25,5 @@ def memoize(test=lambda *args, **kwargs: True):
         
         return result
     
-    return memoize
+    return wraps
 

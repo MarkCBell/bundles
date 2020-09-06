@@ -1,5 +1,4 @@
 
-from bisect import bisect_right
 from collections import deque
 from itertools import permutations, product
 from queue import Queue
@@ -33,7 +32,7 @@ class WordGenerator():
         self.word_filter = word_filter
         self.options = options
         self.surfaces = surfaces
-        self.symmetric_generators = symmetric_generators
+        self.symmetric_generators = symmetric_generators  # Whether word and word.swapcase() are equivalent same mapping classes.
         
         # Get an ordering system.
         assert all(generator < STOP for generator in self.generators)
@@ -42,7 +41,7 @@ class WordGenerator():
         self.valid_starting_characters = set()
         for letter in self.generators:
             self.valid_starting_characters.add(letter)
-            if frozenset([letter, letter.swapcase()] if self.symmetric_generators else [letter]) in self.MCG_must_contain:
+            if frozenset([letter, letter.swapcase()] if self.symmetric_generators else [letter]) in self.MCG_must_contain:  # Recheck this.
                 break
         
         # Now construct a machine for performing automorphisms.
@@ -90,6 +89,7 @@ class WordGenerator():
         self.curver_action = {letter: self.surfaces.curver(letter) for letter in self.generators}
         
         def find_bad(length, comparison):
+            apply_action = lambda action, element: (action(element[0]), action.homology_matrix().dot(element[1]))
             convert = lambda X: (X[0], tuple(X[1].flatten()))  # Since numpy.ndarrays are not hashable we need a converter.
             
             image = {'': (self.surfaces.curver.triangulation.as_lamination(), self.surfaces.curver('').homology_matrix())}  # word |--> image
@@ -99,39 +99,43 @@ class WordGenerator():
             Q.put('')
             while not Q.empty():
                 g = Q.get()
+                if g in bad: continue
+                
                 for generator in self.generators:
                     word = generator + g
-                    if word[1:] not in bad and not any(word[:i] in bad for i in range(1, len(word))):
-                        lam, mat = image[g]
-                        image[word] = (self.curver_action[generator](lam), self.curver_action[generator].homology_matrix().dot(mat))
-                        key = convert(image[word])
-                        if key in best:
-                            # Can be neither, but can't be both.
-                            if comparison(best[key], word):
-                                bad.add(word)
-                                # best[key] = best[key]
-                            elif comparison(word, best[key]):
-                                bad.add(best[key])
-                                best[key] = word
-                                if len(word) < length:  # Seach deeper.
-                                    Q.put(word)
-                        else:  # element not seen yet.
+                    if any(word[:i] in bad for i in range(1, len(word))): continue
+                    
+                    neighbour = apply_action(self.curver_action[generator], image[g])
+                    key = convert(neighbour)
+                    if key in best:
+                        # Can be neither, but can't be both.
+                        if comparison(best[key], word):
+                            bad.add(word)
+                            # best[key] = best[key]
+                        elif comparison(word, best[key]):
+                            bad.add(best[key])
                             best[key] = word
                             if len(word) < length:  # Seach deeper.
+                                image[word] = neighbour
                                 Q.put(word)
+                    else:  # element not seen yet.
+                        best[key] = word
+                        if len(word) < length:  # Seach deeper.
+                            image[word] = neighbour
+                            Q.put(word)
             
             return bad
         
         # Firstly, the simpler FSM detects relations whose output is shorter than its input.
         # Any word which contains one such input cannot be first_in_class.
         if self.options.show_progress: print('Building FSMs')
-        if self.options.show_progress: print('Bad prefix FSM')
-        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=self.ordering.cmp))
+        if self.options.show_progress: print('Simpler FSM')
+        self.simpler_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=lambda b, w: len(b) < len(w)))
         
         # Secondly, the bad_prefix FSM detects relations whose output is earlier than its input.
         # These cannot appear in any first_in_class word or prefix.
-        if self.options.show_progress: print('Simpler FSM')
-        self.simpler_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=lambda b, w: len(b) < len(w)))
+        if self.options.show_progress: print('Bad prefix FSM')
+        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=self.ordering.cmp))
         
         if self.options.show_progress: print('Loop invariant FSM')
         seeds = self.surfaces.curver.triangulation.edge_curves()
@@ -183,8 +187,8 @@ class WordGenerator():
             return self.curver_action[word].homology_matrix()
         
         # Break in half and recurse.
-        breakpoint = len(word) // 2
-        return self.H_1_action(word[:breakpoint]).dot(self.H_1_action(word[breakpoint:]))
+        midpoint = len(word) // 2
+        return self.H_1_action(word[:midpoint]).dot(self.H_1_action(word[midpoint:]))
     
     def homology_order(self, word):
         A = self.H_1_action(word[::-1])

@@ -15,9 +15,9 @@ def presetup():
         
         if A.imag == 0 or B.real == 0: A, B = B, A
         
-        p = int(6 / B.real) + 1
-        q = int(6 / A.imag) + 1
-        r = int((p*B.imag) / A.imag) + 1
+        p = 6 // B.real + 1
+        q = 6 // A.imag + 1
+        r = p * B.imag // A.imag + 1
         
         def trivial_fill(i, j):
             N = M.copy()

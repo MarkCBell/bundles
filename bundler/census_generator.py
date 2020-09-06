@@ -53,19 +53,21 @@ class Options():
 
 class CensusGenerator():
     def __init__(self, surface_name, generators, automorph, MCG_must_contain, word_filter=basic_filter, manifold_filter=basic_filter, options=None):
-        self.options = options
-        if self.options is None: self.options = Options()
-        self.surfaces = SimpleNamespace(
-            twister=snappy.twister.Surface(surface_name),
-            flipper=flipper.load(surface_name),
-            curver=curver.load(surface_name),
-            )
+        self.surface_name = surface_name
         self.generators = generators
         self.automorph = automorph
         self.MCG_must_contain = MCG_must_contain
         self.word_filter = word_filter
         self.manifold_filter = manifold_filter
+        self.options = options if options is not None else Options()
+        
+        self.surfaces = SimpleNamespace(
+            twister=snappy.twister.Surface(self.surface_name),
+            flipper=flipper.load(self.surface_name),
+            curver=curver.load(self.surface_name),
+            )
         self.ordering = ShortLex(self.generators)
+        self.word_generator = WordGenerator(self.generators, self.automorph, self.MCG_must_contain, self.word_filter, self.surfaces, self.options)
     
     def map(self, function, generator):
         if self.options.cores == 1:
@@ -75,13 +77,13 @@ class CensusGenerator():
             with Pool(processes=self.options.cores) as P:
                 P.starmap(function, generator)  # Consider adding chunksize=
     
-    def clean(self, basepath):
+    @staticmethod
+    def clean(basepath):
         for path in glob(basepath.format('*')):
             os.remove(path)
     
     def build_words(self, depth):
         if self.options.show_progress: print('Generating words.')
-        self.word_generator = WordGenerator(self.generators, self.automorph, self.MCG_must_contain, self.word_filter, self.surfaces, self.options)
         
         if not os.path.isfile(self.options.word_parts.format('prefixes')):
             prefixes = valid_suffixes_map(self, '0', self.options.master_prefix, self.options.prefix_depth, depth)
@@ -208,7 +210,7 @@ def determine_properties_map(self, label, table):
         ''' Return the properties associated with the mapping class `word`. '''
         word = row.word
         M = self.surfaces.twister.bundle(monodromy='*'.join(word))
-        for i in range(self.options.max_randomize):  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
+        for _ in range(self.options.max_randomize):  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
             if M.solution_type() == 'all tetrahedra positively oriented': break
             M.randomize()  # There needs to be a better way to do this.
         else:  # Couldn't find positive structure.
