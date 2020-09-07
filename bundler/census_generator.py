@@ -88,6 +88,7 @@ class CensusGenerator():
         if not os.path.isfile(self.options.word_parts.format('prefixes')):
             prefixes = valid_suffixes_map(self, '0', self.options.master_prefix, self.options.prefix_depth, depth)
             if self.options.show_progress: print('\rTraversing prefix tree: DONE' + ' ' * depth)
+            if self.options.show_progress: print('{} prefixes to explore'.format(len(prefixes)))
             pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         load_inputs = (
@@ -182,29 +183,29 @@ class CensusGenerator():
             print('\t\tDistinct:\t{}'.format(len(census)))
             print('\t\t------------------------------')
             print('\tTimings:')
-            print('\t\tGrow time:\t%fs' % time_words.elapsed)
-            print('\t\tLoad time:\t%fs' % time_properties.elapsed)
-            print('\t\tThin time:\t%fs' % time_census.elapsed)
+            print('\t\tGrow time:\t{:0.2f}s'.format(time_words.elapsed))
+            print('\t\tLoad time:\t{:0.2f}s'.format(time_properties.elapsed))
+            print('\t\tThin time:\t{:0.2f}s'.format(time_census.elapsed))
 
 
 # In order to be able to multiprocess these we need to be able to refer
 # to various functions globally. Otherwise it would just be
 # an instance copy of the function and so lost when the objects are passed
 # around by pickling.
+
 def valid_suffixes_map(self, label, prefix, depth, word_depth):
     if self.options.show_progress: print('\rLoading suffixes of prefix {} ({})'.format(prefix, label))
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth, word_depth)
     pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format(label), index=False)
     
-    return prefixes if word_depth is not None else None
-
+    return prefixes
 
 def determine_properties_map(self, label, table):
     if self.options.show_progress: print('\rCollecting properties from block: %s' % label)
     
     Properties = namedtuple('Properties', ('hyperbolic', 'loadable', 'acceptable', 'volume', 'isom_sig', 'homology', 'num_sym', 'ab_sym'))
-    Unloadable = lambda word, hyperbolic: Properties(False, False, False, 0.0, '', 0, 0, 0)
+    Unloadable = lambda is_hyperbolic: Properties(is_hyperbolic, False, False, 0.0, '', 0, 0, 0)
     
     def properties(row):
         ''' Return the properties associated with the mapping class `word`. '''
@@ -214,7 +215,7 @@ def determine_properties_map(self, label, table):
             if M.solution_type() == 'all tetrahedra positively oriented': break
             M.randomize()  # There needs to be a better way to do this.
         else:  # Couldn't find positive structure.
-            return pd.Series(Unloadable(word, self.surfaces.flipper(word).is_pseudo_anosov()))
+            return pd.Series(Unloadable(self.surfaces.flipper(word).is_pseudo_anosov()))
         
         G = M.symmetry_group()
         return pd.Series(Properties(
