@@ -27,7 +27,7 @@ def shuffle_relators(relators):
 class WordGenerator():
     def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options):
         self.generators = generators
-        self.MCG_automorphisms = MCG_automorphisms
+        self.MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms]
         self.MCG_must_contain = set(frozenset(clause) for clause in MCG_must_contain.split('^'))
         self.word_filter = word_filter
         self.options = options
@@ -40,11 +40,10 @@ class WordGenerator():
         self.valid_starting_characters = set(letter for letter in self.generators if not any(all(self.ordering.cmp(term, letter) for term in clause) for clause in self.MCG_must_contain))
         
         # Now construct a machine for performing automorphisms.
-        automorphisms = [automorphism.rpartition(':') for automorphism in self.MCG_automorphisms]
         self.c_auto = Automorph(
             self.ordering.translate(generators_extended),
             self.ordering.translate(generators_extended.swapcase()),
-            [(self.ordering.translate(missing), self.ordering.translate(output + STOP)) for missing, _, output in automorphisms]
+            [(self.ordering.translate(missing), self.ordering.translate(output + STOP)) for missing, _, output in self.MCG_automorphisms]
             )
         
         # We find (some of) the major relators:
@@ -170,24 +169,6 @@ class WordGenerator():
         
         for node in nodes:
             self.first_child[node] = next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + letter))
-    
-    @memoize(lambda word: len(word) <= 5)
-    def H_1_action(self, word):
-        ''' Uses divide and conquer to compute the product of the matrices specified by word.
-        
-        Cache small words to speed up later computations. '''
-        
-        if len(word) == 1:
-            return self.curver_action[word].homology_matrix()
-        
-        # Break in half and recurse.
-        midpoint = len(word) // 2
-        return self.H_1_action(word[:midpoint]).dot(self.H_1_action(word[midpoint:]))
-    
-    def homology_order(self, word):
-        A = self.H_1_action(word[::-1])
-        A = A - eye(A.shape[0])
-        return int(abs(A.det()))
     
     def first_in_class(self, word, max_tree_size=None, prefix=False):
         ''' Determines if a word is lex first in its class.
