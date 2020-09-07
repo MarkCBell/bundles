@@ -25,24 +25,19 @@ def shuffle_relators(relators):
     return list(R)
 
 class WordGenerator():
-    def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options, symmetric_generators=True):
+    def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options):
         self.generators = generators
         self.MCG_automorphisms = MCG_automorphisms
         self.MCG_must_contain = set(frozenset(clause) for clause in MCG_must_contain.split('^'))
         self.word_filter = word_filter
         self.options = options
         self.surfaces = surfaces
-        self.symmetric_generators = symmetric_generators  # Whether word and word.swapcase() are equivalent same mapping classes.
         
         # Get an ordering system.
         assert all(generator < STOP for generator in self.generators)
         generators_extended = self.generators + STOP
         self.ordering = ShortLex(generators_extended)
-        self.valid_starting_characters = set()
-        for letter in self.generators:
-            self.valid_starting_characters.add(letter)
-            if frozenset([letter, letter.swapcase()] if self.symmetric_generators else [letter]) in self.MCG_must_contain:  # Recheck this.
-                break
+        self.valid_starting_characters = set(letter for letter in self.generators if not any(all(self.ordering.cmp(term, letter) for term in clause) for clause in self.MCG_must_contain))
         
         # Now construct a machine for performing automorphisms.
         automorphisms = [automorphism.rpartition(':') for automorphism in self.MCG_automorphisms]
