@@ -1,4 +1,3 @@
-
 from collections import deque
 from itertools import permutations, product
 from queue import Queue
@@ -7,95 +6,101 @@ from random import randint
 from sympy import eye
 import curver
 
-from .decorators import memoize
-from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph, ShortLex
+from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph
 
-STOP = '~'
-
-def shuffle_relators(relators):
-    inverse = lambda word: word[::-1].swapcase()
-    shuffle_relator = lambda a, b: set((a[i:]+inverse(b[len(b)-i:]), inverse(a[:i])+b[:len(b)-i]) for i in range(len(a)))
-    
-    R = set(relators)
-    S = set((x, y) for (a, b) in R for (x, y) in shuffle_relator(a, b) if all(m not in x for (m, n) in R))
-    R = R.union(set((a, b) for (a, b) in S if all(x not in a or (x, y) == (a, b) for (x, y) in S)))
-    R = R.union(set((inverse(a), inverse(b)) for (a, b) in R))
-    R = R.union(set((b, a) for (a, b) in R))
-    
-    return list(R)
+EMPTY_TUPLE = tuple()
 
 class WordGenerator():
-    def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options):
-        self.generators = generators
-        self.MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms]
-        self.MCG_must_contain = set(frozenset(clause) for clause in MCG_must_contain.split('^'))
+    # A generator is a string (of length one).
+    # A letter is a number.
+    # A word is a tuple of letters.
+    def __init__(self, generators, MCG_automorphisms, MCG_must_contain, word_filter, surfaces, options, inverse_generators=None):
+        self.letter_generators = generators
+        self.letter_inverse_generators = inverse_generators if inverse_generators is not None else self.letter_generators.swapcase()
+        
+        self.generators = [i for i in range(len(self.letter_generators))]
+        self.letter_lookup = {letter: index for index, letter in enumerate(self.letter_generators)}
+        
+        self.inverse_lookup = [self.letter_lookup[letter] for letter in self.letter_inverse_generators]
+        self.inverse = lambda word: tuple(self.inverse_lookup[letter] for letter in word[::-1])
+        
+        self.MCG_must_contain = set(frozenset(self.repr_word(clause)) for clause in MCG_must_contain.split('^'))
+        
         self.word_filter = word_filter
         self.options = options
         self.surfaces = surfaces
         
-        # Get an ordering system.
-        assert all(generator < STOP for generator in self.generators)
-        generators_extended = self.generators + STOP
-        self.ordering = ShortLex(generators_extended)
-        self.valid_starting_characters = set(letter for letter in self.generators if not any(all(self.ordering.cmp(term, letter) for term in clause) for clause in self.MCG_must_contain))
+        self.valid_starting_characters = set(letter for letter in self.generators if not any(all(term < letter for term in clause) for clause in self.MCG_must_contain))
         
         # Now construct a machine for performing automorphisms.
-        self.c_auto = Automorph(
-            self.ordering.translate(generators_extended),
-            self.ordering.translate(generators_extended.swapcase()),
-            [(self.ordering.translate(missing), self.ordering.translate(output + STOP)) for missing, _, output in self.MCG_automorphisms]
-            )
+        MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms.split('|')]
+        self.c_auto = Automorph(self.generators, self.inverse_lookup, [(list(self.repr_word(missing)), list(self.repr_word(output))) for missing, _, output in MCG_automorphisms])
         
         # We find (some of) the major relators:
         if self.options.show_progress: print('Listing relators.')
         relators = []
-        lower_generators = [generator for generator in self.generators if generator.islower()]
-        for a, b in permutations(lower_generators, r=2):
-            A, B = a.upper(), b.upper()
-            a_lam = self.surfaces.curver.curves.get(a, self.surfaces.curver.arcs.get(a))
-            b_lam = self.surfaces.curver.curves.get(b, self.surfaces.curver.arcs.get(b))
+        for a, b in permutations(self.generators, r=2):
+            A, B = self.inverse_lookup[a], self.inverse_lookup[b]
+            al, bl = self.letter_generators[a], self.letter_generators[b]
+            a_lam = self.surfaces.curver.curves.get(al, self.surfaces.curver.arcs.get(al))
+            b_lam = self.surfaces.curver.curves.get(bl, self.surfaces.curver.arcs.get(bl))
+            if a_lam is None or b_lam is None: continue
             if not (isinstance(a_lam, curver.kernel.Arc) and isinstance(b_lam, curver.kernel.Arc)) and a_lam.intersection(b_lam) == 0:
-                relators.append((a+b, b+a))
+                relators.append(((a, b), (b, a)))
             if isinstance(a_lam, curver.kernel.Curve) and isinstance(b_lam, curver.kernel.Curve) and a_lam.intersection(b_lam) == 1:
-                relators.append((a+b+a, b+a+b))
-                relators.append((A+b+b+a, b+a+a+B))
-                # relators.append((A+b+b+b+a, b+a+a+a+B))
+                relators.append(((a, b, a), (b, a, b)))
+                relators.append(((A, b, b, a), (b, a, a, B)))
+                # relators.append(((A, b, b, b, a), (b, a, a, a, B)))
             if isinstance(a_lam, curver.kernel.Arc) and isinstance(b_lam, curver.kernel.Curve) and a_lam.intersection(b_lam) == 1:
-                relators.append((a+b+a+b, b+a+b+a))
-                for l, r in product(lower_generators, repeat=2):
-                    if self.surfaces.flipper(a+b+a+b) == self.surfaces.flipper(l+r):
-                        L, R = l.upper(), r.upper()
-                        relators.append((a + b + a, l + B + r))
-                        relators.append((b + a + b, l + A + r))
-                        relators.append((L + b + a, r + A + B))
-                        relators.append((R + b + a, l + A + B))
-                        relators.append((L + a + b, r + B + A))
-                        relators.append((R + a + b, l + B + A))
-        # Now get all the different 'flavors' of each relator.
+                relators.append(((a, b, a, b), (b, a, b, a)))
+                for l, r in product(self.generators, repeat=2):
+                    ll, rl = self.letter_generators[l], self.letter_generators[r]
+                    if self.surfaces.flipper(al+bl+al+bl) == self.surfaces.flipper(ll+rl):
+                        L, R = self.inverse_lookup[l], self.inverse_lookup[r]
+                        relators.append(((a, b, a), (l, B, r)))
+                        relators.append(((b, a, b), (l, A, r)))
+                        # relators.append(((L, b, a), (r, A, B)))
+                        # relators.append(((R, b, a), (l, A, B)))
+                        # relators.append(((L, a, b), (r, B, A)))
+                        # relators.append(((R, a, b), (l, B, A)))
+        
+        # Now get all the different 'flavours' of each relator.
+        def shuffle_relators(relators):
+            shuffle_relator = lambda a, b: set((a[i:]+self.inverse(b[len(b)-i:]), self.inverse(a[:i])+b[:len(b)-i]) for i in range(len(a)))
+            
+            R = set(relators)
+            S = set((x, y) for (a, b) in R for (x, y) in shuffle_relator(a, b) if all(m not in x for (m, n) in R))
+            R = R.union(set((a, b) for (a, b) in S if all(x not in a or (x, y) == (a, b) for (x, y) in S)))
+            R = R.union(set((self.inverse(a), self.inverse(b)) for (a, b) in R))
+            R = R.union(set((b, a) for (a, b) in R))
+            
+            return list(R)
+
         relators = shuffle_relators(relators)
+        print(len(relators))
         balanced_relators = [relator for relator in relators if len(relator[0]) == len(relator[1])]
         
         self.balanced_relator_lookup = dict(balanced_relators)
         self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, [a for a, _ in balanced_relators])
         
         # Let's build some FSM to help us search for these faster.
-        self.curver_action = {letter: self.surfaces.curver(letter) for letter in self.generators}
+        self.curver_action = {letter: self.surfaces.curver(self.letter_generators[letter]) for letter in self.generators}
         
         def find_bad(length, comparison):
             apply_action = lambda action, element: (action(element[0]), action.homology_matrix().dot(element[1]))
             convert = lambda X: (X[0], tuple(X[1].flatten()))  # Since numpy.ndarrays are not hashable we need a converter.
             
-            image = {'': (self.surfaces.curver.triangulation.as_lamination(), self.surfaces.curver('').homology_matrix())}  # word |--> image
-            best = {convert(image['']): ''}  # mapping class |--> best word.
+            image = {EMPTY_TUPLE: (self.surfaces.curver.triangulation.as_lamination(), self.surfaces.curver('').homology_matrix())}  # word |--> image
+            best = {convert(image[EMPTY_TUPLE]): EMPTY_TUPLE}  # mapping class |--> best word.
             bad = set()  # word such that comparison(best[word], word)
             Q = Queue()
-            Q.put('')
+            Q.put(EMPTY_TUPLE)
             while not Q.empty():
                 g = Q.get()
                 if g in bad: continue
                 
                 for generator in self.generators:
-                    word = generator + g
+                    word = (generator,) + g
                     if any(word[:i] in bad for i in range(1, len(word))): continue
                     
                     neighbour = apply_action(self.curver_action[generator], image[g])
@@ -123,12 +128,12 @@ class WordGenerator():
         # Any word which contains one such input cannot be first_in_class.
         if self.options.show_progress: print('Building FSMs')
         if self.options.show_progress: print('Simpler FSM')
-        self.simpler_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=lambda b, w: len(b) < len(w)))
+        self.simpler_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: len(a) < len(b)))
         
         # Secondly, the bad_prefix FSM detects relations whose output is earlier than its input.
         # These cannot appear in any first_in_class word or prefix.
         if self.options.show_progress: print('Bad prefix FSM')
-        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=4, comparison=self.ordering.cmp))
+        self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: (len(a), a) < (len(b), b)))
         
         if self.options.show_progress: print('Loop invariant FSM')
         seeds = self.surfaces.curver.triangulation.edge_curves()
@@ -145,14 +150,14 @@ class WordGenerator():
         upwards = dict()
         self.last_children = set()
         
-        nodes = ['']
-        upwards[''] = ''
+        nodes = [EMPTY_TUPLE]
+        upwards[EMPTY_TUPLE] = EMPTY_TUPLE
         for _ in range(self.options.suffix_depth):
             # Compute all the children of the current nodes.
-            children = dict((word, [word + letter for letter in self.generators if not self.bad_prefix_FSM.hit(word + letter)]) for word in nodes)
+            children = dict((word, [word + (letter,) for letter in self.generators if not self.bad_prefix_FSM.hit(word + (letter,))]) for word in nodes)
             
             for node in nodes:
-                self.first_child[node] = children[node][0][-1:]
+                self.first_child[node] = children[node][0][-1]
             
             for node in nodes:
                 for child_1, child_2 in zip(children[node], children[node][1:]):
@@ -168,7 +173,15 @@ class WordGenerator():
             nodes = [child for node in nodes for child in children[node]]
         
         for node in nodes:
-            self.first_child[node] = next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + letter))
+            self.first_child[node] = next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))
+    
+    def str_word(self, word):
+        ''' Convert tuple |--> str. '''
+        return ''.join(self.letter_generators[letter] for letter in word)
+    
+    def repr_word(self, word):
+        ''' Convert str |--> tuple. '''
+        return tuple(self.letter_lookup[letter] for letter in word)
     
     def first_in_class(self, word, max_tree_size=None, prefix=False):
         ''' Determines if a word is lex first in its class.
@@ -191,16 +204,8 @@ class WordGenerator():
         
         # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
         
-        # Modify the word if it is a prefix.
-        if prefix:
-            word += STOP
-            len_word += 1
-        
-        # We're going to need a translated version of the word a lot.
-        translated_word = self.ordering.translate(word)
-        
         # Check to see if our original word beats itself.
-        if not self.c_auto.before_automorphs(translated_word, translated_word, prefix):
+        if not self.c_auto.before_automorphs(word, word, prefix):
             return False
         
         seen = set([word])  # This records all words that we have seen.
@@ -209,20 +214,20 @@ class WordGenerator():
         while to_do:  # Keep going while there are still unprocessed words in the queue.
             reached = to_do.popleft()  # Get the next equivalent word to check.
             
-            for b, match in self.find_balanced_relators_FSM.hits(reached[:-1] if prefix else reached + reached):
+            for b, match in self.find_balanced_relators_FSM.hits(reached if prefix else reached + reached):
                 a = b - len(match)
                 # There is a replacement to be made between a & b.
                 if a > len_word: continue
                 
                 replace = self.balanced_relator_lookup[match]
-                next_word = reached[:a] + replace + reached[b:] if prefix or b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
+                next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
                 
                 if next_word not in seen:  # Only consider new words.
                     # Test for trivial simplifications.
-                    if self.simpler_FSM.hit(next_word[:-1] if prefix else next_word + next_word[0]):
+                    if self.simpler_FSM.hit(next_word if prefix else next_word + next_word[:1]):
                         return False
                     
-                    if not self.c_auto.before_automorphs(translated_word, self.ordering.translate(next_word), prefix):
+                    if not self.c_auto.before_automorphs(word, next_word, prefix):
                         return False
                     
                     # If we've hit the max_tree_size then give up.
@@ -260,6 +265,7 @@ class WordGenerator():
          with length at most 'depth' while the second is the sublist consisting of those which have length
         'depth' and are also valid prefixes. Note we require that len(prefix) < depth <= word_depth. '''
         
+        prefix = self.repr_word(prefix)
         if word_depth is None: word_depth = depth
         assert len(prefix) < depth <= word_depth
         
@@ -277,23 +283,23 @@ class WordGenerator():
         output_prefixes = []
         
         prefix_len = len(prefix)
-        strn = prefix + self.first_child[prefix[-self.options.suffix_depth:]]
+        strn = prefix + (self.first_child[prefix[-self.options.suffix_depth:]],)
         while strn and strn[:prefix_len] == prefix:
-            if self.options.show_progress and not randint(0, self.options.progress_rate): print('\rTraversing word tree: %s          ' % strn, end='')
+            if self.options.show_progress and not randint(0, self.options.progress_rate): print('\rTraversing word tree: %s          ' % self.str_word(strn), end='')
             
             # Testing validity is the slowest bit.
             strn_valid_word = self.valid_word(strn)
             
-            if strn_valid_word: output_words.append(strn)
+            if strn_valid_word: output_words.append(self.str_word(strn))
             
             if len(strn) == word_depth:
                 strn = backtrack(strn)
             elif strn_valid_word or self.valid_prefix(strn, word_depth):  # valid_word ==> valid_prefix.
                 if len(strn) == depth:
-                    output_prefixes.append(strn)
+                    output_prefixes.append(self.str_word(strn))
                     strn = backtrack(strn)
                 else:
-                    strn += self.first_child[strn[-self.options.suffix_depth:]]
+                    strn += (self.first_child[strn[-self.options.suffix_depth:]],)
             else:
                 strn = backtrack(strn)
         

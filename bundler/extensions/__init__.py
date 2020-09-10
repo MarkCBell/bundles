@@ -4,7 +4,8 @@ from collections import OrderedDict
 
 from .FSM import FSM
 from .automorphism import Automorph
-from .ordering import ShortLex
+
+EMPTY_TUPLE = tuple()
 
 def suffixes(word):
     return set(word[j:] for j in range(len(word)))
@@ -12,7 +13,7 @@ def suffixes(word):
 def build_c_FSM(alphabet, machine, hits):
     ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
     
-    assert isinstance(alphabet, str)
+    assert isinstance(alphabet, list)
     assert isinstance(machine, OrderedDict)
     assert isinstance(hits, dict)
     
@@ -33,8 +34,8 @@ def word_accepting_FSM(alphabet, acceptable_words):
     
     machine = OrderedDict()
     tree = Queue()
-    tree.put('')
-    all_states = set([''])
+    tree.put(EMPTY_TUPLE)
+    all_states = set([EMPTY_TUPLE])
     acceptable_words_set = set(acceptable_words)
     acceptable_words_prefixes_set = set(w[:i+1] for w in acceptable_words for i in range(len(w)))
     accepting_states = dict()
@@ -47,8 +48,8 @@ def word_accepting_FSM(alphabet, acceptable_words):
         state = dict()
         
         for letter in alphabet:
-            state[letter] = ''
-            next_word = word + letter
+            state[letter] = EMPTY_TUPLE
+            next_word = word + (letter,)
             
             for i in range(len(next_word)-1, -1, -1):
                 if next_word[-i-1:] in acceptable_words_prefixes_set:
@@ -89,7 +90,7 @@ def action_FSM(actions, seeds, max_depth):
         
         machine[current] = arrows
     
-    return build_c_FSM(''.join(sorted(actions)), machine, dict())
+    return build_c_FSM(sorted(actions), machine, dict())
 
 def CNF_FSM(alphabet, clauses):
     ''' Generate an FSM that determines whether a CNF is satisfied. '''

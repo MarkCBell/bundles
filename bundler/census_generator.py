@@ -12,7 +12,6 @@ import flipper
 import curver
 
 from .word_generator import WordGenerator
-from .extensions import ShortLex
 
 def basic_filter(self, x): return True
 
@@ -66,7 +65,6 @@ class CensusGenerator():
             flipper=flipper.load(self.surface_name),
             curver=curver.load(self.surface_name),
             )
-        self.ordering = ShortLex(self.generators)
         self.word_generator = WordGenerator(self.generators, self.automorph, self.MCG_must_contain, self.word_filter, self.surfaces, self.options)
     
     def map(self, function, generator):
@@ -134,7 +132,7 @@ class CensusGenerator():
         census_table = census_table[census_table.acceptable]
         
         census_table['length'] = census_table.word.str.len()
-        census_table['canonical'] = census_table.word.str.translate(self.ordering.translate_rule)
+        census_table['canonical'] = census_table.word.apply(self.word_generator.repr_word)
         census_table = census_table.sort_values(['isom_sig', 'length', 'canonical']).groupby('isom_sig').first()
         census_table.drop(['length', 'canonical'], axis=1, inplace=True)  # Remove unneeded columns.
         census_table.reset_index(inplace=True, drop=True)
