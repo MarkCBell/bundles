@@ -21,7 +21,6 @@ class Options():
         self.prefix_depth = 6
         self.chunksize = 500
         self.suffix_depth = 3
-        self.fsm_power = 2
         self.loop_invariant_fsm_depth = 4
 
         # These affect how the script is displayed.

@@ -12,7 +12,7 @@ cdef is_cyclic_ordered(tuple A, tuple B, bint prefix):
             j += 1
             if j >= l:
                 if prefix:
-                    return True
+                    break  # !?! Recheck this.
                 else:
                     j = 0
             if A[i] < B[j]:

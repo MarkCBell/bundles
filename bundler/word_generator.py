@@ -3,7 +3,6 @@ from itertools import permutations, product
 from queue import Queue
 from random import randint
 
-from sympy import eye
 import curver
 
 from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph
@@ -77,7 +76,6 @@ class WordGenerator():
             return list(R)
 
         relators = shuffle_relators(relators)
-        print(len(relators))
         balanced_relators = [relator for relator in relators if len(relator[0]) == len(relator[1])]
         
         self.balanced_relator_lookup = dict(balanced_relators)
@@ -156,8 +154,7 @@ class WordGenerator():
             # Compute all the children of the current nodes.
             children = dict((word, [word + (letter,) for letter in self.generators if not self.bad_prefix_FSM.hit(word + (letter,))]) for word in nodes)
             
-            for node in nodes:
-                self.first_child[node] = children[node][0][-1]
+            self.first_child.update((node, children[node][0][-1]) for node in nodes)
             
             for node in nodes:
                 for child_1, child_2 in zip(children[node], children[node][1:]):
@@ -172,8 +169,7 @@ class WordGenerator():
             # The new nodes are the current children.
             nodes = [child for node in nodes for child in children[node]]
         
-        for node in nodes:
-            self.first_child[node] = next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))
+        self.first_child.update((node, next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))) for node in nodes)
     
     def str_word(self, word):
         ''' Convert tuple |--> str. '''

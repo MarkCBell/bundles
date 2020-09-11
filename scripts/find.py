@@ -2,8 +2,9 @@
 from functools import reduce
 from operator import mul
 from snappy import Manifold
+from sympy import Matrix
 import argparse
-import pandas as pd
+import numpy as np
 
 import generate
 
