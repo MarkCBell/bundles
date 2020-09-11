@@ -80,6 +80,7 @@ class WordGenerator():
         
         self.balanced_relator_lookup = dict(balanced_relators)
         self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, [a for a, _ in balanced_relators])
+        self.longest_relator = max(len(a) for a, _ in balanced_relators)
         
         # Let's build some FSM to help us search for these faster.
         self.curver_action = {letter: self.surfaces.curver(self.letter_generators[letter]) for letter in self.generators}
@@ -214,13 +215,14 @@ class WordGenerator():
                 a = b - len(match)
                 # There is a replacement to be made between a & b.
                 if a > len_word: continue
+                if b >= len_word + self.longest_relator: break
                 
                 replace = self.balanced_relator_lookup[match]
                 next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
                 
                 if next_word not in seen:  # Only consider new words.
                     # Test for trivial simplifications.
-                    if self.simpler_FSM.hit(next_word if prefix else next_word + next_word[:1]):
+                    if self.simpler_FSM.hit(next_word):
                         return False
                     
                     if not self.c_auto.before_automorphs(word, next_word, prefix):
