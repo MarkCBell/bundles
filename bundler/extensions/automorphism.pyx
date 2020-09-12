@@ -1,7 +1,4 @@
-from cpython cimport array
-import array
-
-from libc.stdlib cimport free, calloc
+from libc.stdlib cimport calloc, free
 
 cdef bint is_cyclic_ordered(int* A, int* B, int l, int* S, int* f):
     ''' Return whether A is <= all cyclic perumtations of B.
