@@ -155,7 +155,7 @@ class WordGenerator():
             # Compute all the children of the current nodes.
             children = dict((word, [word + (letter,) for letter in self.generators if not self.bad_prefix_FSM.hit(word + (letter,))]) for word in nodes)
             
-            self.first_child.update((node, children[node][0][-1]) for node in nodes)
+            self.first_child.update((node, (children[node][0][-1],)) for node in nodes)
             
             for node in nodes:
                 for child_1, child_2 in zip(children[node], children[node][1:]):
@@ -170,7 +170,7 @@ class WordGenerator():
             # The new nodes are the current children.
             nodes = [child for node in nodes for child in children[node]]
         
-        self.first_child.update((node, next(letter for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))) for node in nodes)
+        self.first_child.update((node, next((letter,) for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))) for node in nodes)
     
     def str_word(self, word):
         ''' Convert tuple |--> str. '''
@@ -281,7 +281,7 @@ class WordGenerator():
         output_prefixes = []
         
         prefix_len = len(prefix)
-        strn = prefix + (self.first_child[prefix[-self.options.suffix_depth:]],)
+        strn = prefix + self.first_child[prefix[-self.options.suffix_depth:]]
         while strn and strn[:prefix_len] == prefix:
             if self.options.show_progress and not randint(0, self.options.progress_rate): print('\rTraversing word tree: %s          ' % self.str_word(strn), end='')
             
@@ -297,7 +297,7 @@ class WordGenerator():
                     output_prefixes.append(self.str_word(strn))
                     strn = backtrack(strn)
                 else:
-                    strn += (self.first_child[strn[-self.options.suffix_depth:]],)
+                    strn += self.first_child[strn[-self.options.suffix_depth:]]
             else:
                 strn = backtrack(strn)
         
