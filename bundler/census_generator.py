@@ -39,8 +39,8 @@ class Options():
         # The affect what the script computes.
         self.master_prefix = ''
         self.max_randomize = 50
-        self.largest_class = 20
-        self.largest_class_prefix = 50
+        self.largest_class = 100
+        self.largest_class_prefix = 200
         self.basic_search_range = 50
         
         for key, value in kwargs.items():

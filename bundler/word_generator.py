@@ -243,7 +243,7 @@ class WordGenerator():
         if word[0] not in self.valid_starting_characters: return False
         if self.cnf_FSM.distance(word) > depth - len(word): return False
         
-        if not self.first_in_class(word, prefix=True): return False
+        if not self.first_in_class(word, max_tree_size=self.options.largest_class_prefix, prefix=True): return False
         
         return True
     
@@ -251,7 +251,7 @@ class WordGenerator():
         ''' Return whether the given word is valid. '''
         
         if not self.cnf_FSM.hit(word): return False
-        if self.loop_invariant_FSM.has_cycle(word, self.options.basic_search_range): return False  # Note: word forms a cycle iff word[::-1] does.
+        if self.loop_invariant_FSM.has_cycle(word, self.options.basic_search_range): return False
         
         if not self.word_filter(self, word): return False
         if not self.first_in_class(word, prefix=False): return False
