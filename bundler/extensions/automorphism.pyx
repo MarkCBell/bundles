@@ -48,11 +48,11 @@ cdef class Automorph:
     cdef int len_alphabet
     cdef int len_alphabet1
     cdef int stop
+    cdef int* inverse
     cdef int num_automorphisms
     cdef bint* any_missing
     cdef bint* missing
-    cdef int** automorphisms
-    cdef int* inverse
+    cdef int* automorphisms
     
     def __init__(self, list alphabet, list inverse, list automorphisms):
         cdef list missing, auto
@@ -69,32 +69,26 @@ cdef class Automorph:
         self.num_automorphisms = len(automorphisms)
         self.any_missing = <bint *> calloc(self.num_automorphisms, sizeof(bint))
         self.missing = <bint *> calloc(self.num_automorphisms * self.len_alphabet1, sizeof(bint))
+        self.automorphisms = <int *> calloc(self.num_automorphisms * self.len_alphabet1, sizeof(int*))
         for i in range(self.num_automorphisms):
             if automorphisms[i][0]: self.any_missing[i] = 1
             for j in automorphisms[i][0]:
                 self.missing[self.len_alphabet1 * i + j] = 1
-        self.automorphisms = <int **> calloc(self.num_automorphisms, sizeof(int*))
-        for i, (_, auto) in enumerate(automorphisms):
-            self.automorphisms[i] = <int *> calloc(self.len_alphabet1, sizeof(int))  # +1 for stop character.
             for j in range(self.len_alphabet):
-                self.automorphisms[i][j] = auto[j]
-            self.automorphisms[i][self.len_alphabet] = self.stop
+                self.automorphisms[i * self.len_alphabet1 + j] = automorphisms[i][1][j]
+            self.automorphisms[i * self.len_alphabet1 + self.len_alphabet] = self.stop
     
     def __del__(self):
-        cdef int i
+        free(self.inverse)
         free(self.any_missing)
         free(self.missing)
-        for i in range(self.num_automorphisms):
-            free(self.automorphisms[i])
         free(self.automorphisms)
-        free(self.inverse)
     
     def before_automorphs(self, tuple word, tuple next_word, bint prefix=False):
         ''' Return whether word is before all cyclic permutations of all automorphs of next_word and next_word^-1. '''
         cdef int l0 = len(word)
         cdef int i, j, l = l0 + (1 if prefix else 0)
         cdef bint bad
-        cdef int* automorphism
         cdef int* wd = <int *> calloc(l, sizeof(int))
         cdef int* nxt_wd = <int *> calloc(l, sizeof(int))
         cdef int* nxt_wd_inv = <int *> calloc(l, sizeof(int))
@@ -130,16 +124,15 @@ cdef class Automorph:
                         bad = True
                         break
                 if bad: continue
-                automorphism = self.automorphisms[i]
                 
                 # Construct and test automorph(next_word).
                 for j in range(l):
-                    automorphed[j] = automorphism[nxt_wd[j]]
+                    automorphed[j] = self.automorphisms[i * self.len_alphabet1 + nxt_wd[j]]
                 if not is_cyclic_ordered(wd, automorphed, l, tmp1, tmp2): return False
                 
                 # Construct and test automorph(next_word^-1).
                 for j in range(l):
-                    automorphed[j] = automorphism[nxt_wd_inv[j]]
+                    automorphed[j] = self.automorphisms[i * self.len_alphabet1 + nxt_wd_inv[j]]
                 if not is_cyclic_ordered(wd, automorphed, l, tmp1, tmp2): return False
             
             return True
