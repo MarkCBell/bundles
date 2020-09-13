@@ -31,9 +31,9 @@ class Options():
 
         # File structure.
         self.word_parts = './output/parts/word_{}.csv'
-        self.properties_parts = './output/parts/prop_{}.csv'
+        self.properties_parts = './output/parts/properties_{}.csv'
         self.word = './output/words.csv'
-        self.properties = './output/prop.csv'
+        self.properties = './output/properties.csv'
         self.census = './output/census.csv'
 
         # The affect what the script computes.
@@ -191,7 +191,7 @@ class CensusGenerator():
 # around by pickling.
 
 def valid_suffixes_map(self, label, prefix, depth, word_depth):
-    if self.options.show_progress: print('\rLoading suffixes of prefix {} ({})'.format(prefix, label))
+    if self.options.show_progress: print('\rFinding suffixes of {} ({})'.format(prefix, label))
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth, word_depth)
     pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format(label), index=False)
