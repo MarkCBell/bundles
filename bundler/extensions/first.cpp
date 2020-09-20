@@ -1318,13 +1318,14 @@ static PyObject *__pyx_codeobj__2;
  * ctypedef vector[int] IWord
  * 
  * def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):             # <<<<<<<<<<<<<<
+ *     ''' Determines if a word is lex first in its class.
  * 
- *     cdef int len_word = len(word)  # Let's save some highly used data.
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7bundler_10extensions_5first_1first_in_class(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_7bundler_10extensions_5first_1first_in_class = {"first_in_class", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_5first_1first_in_class, METH_VARARGS|METH_KEYWORDS, 0};
+static char __pyx_doc_7bundler_10extensions_5first_first_in_class[] = " Determines if a word is lex first in its class.\n    \n    Uses relators and automorphs to find alternative representatives. Gives up after finding\n    max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all\n    equivalent words of the same length in which case the result returned is absolutely correct.\n    \n    If prefix == True, only prefix stable stable moves are performed, i.e. if it is discovered\n    that u ~ v then uw ~ vw for all words w.\n    \n    This function is the heart of the grow phase, speed is critical here.";
+static PyMethodDef __pyx_mdef_7bundler_10extensions_5first_1first_in_class = {"first_in_class", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_5first_1first_in_class, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_5first_first_in_class};
 static PyObject *__pyx_pw_7bundler_10extensions_5first_1first_in_class(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_word = 0;
@@ -1466,8 +1467,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("first_in_class", 0);
 
-  /* "bundler/extensions/first.pyx":13
- * def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):
+  /* "bundler/extensions/first.pyx":23
+ *     This function is the heart of the grow phase, speed is critical here.'''
  * 
  *     cdef int len_word = len(word)  # Let's save some highly used data.             # <<<<<<<<<<<<<<
  *     cdef queue[IWord] to_do  # This is a deque of all words that have yet to be processed.
@@ -1475,21 +1476,21 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
   if (unlikely(__pyx_v_word == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 13, __pyx_L1_error)
+    __PYX_ERR(0, 23, __pyx_L1_error)
   }
-  __pyx_t_1 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 23, __pyx_L1_error)
   __pyx_v_len_word = __pyx_t_1;
 
-  /* "bundler/extensions/first.pyx":23
+  /* "bundler/extensions/first.pyx":33
  * 
  *     # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *     if self.bad_prefix_FSM.hit(word):             # <<<<<<<<<<<<<<
  *         return False
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_bad_prefix_FSM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_bad_prefix_FSM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_hit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_hit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -1504,14 +1505,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
   }
   __pyx_t_2 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_3, __pyx_v_word) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_word);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_5) {
 
-    /* "bundler/extensions/first.pyx":24
+    /* "bundler/extensions/first.pyx":34
  *     # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *     if self.bad_prefix_FSM.hit(word):
  *         return False             # <<<<<<<<<<<<<<
@@ -1523,7 +1524,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "bundler/extensions/first.pyx":23
+    /* "bundler/extensions/first.pyx":33
  * 
  *     # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *     if self.bad_prefix_FSM.hit(word):             # <<<<<<<<<<<<<<
@@ -1532,19 +1533,19 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
   }
 
-  /* "bundler/extensions/first.pyx":28
+  /* "bundler/extensions/first.pyx":38
  *     # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
  *     # Check to see if our original word beats itself.
  *     if not self.c_auto.before_automorphs(word, word, prefix):             # <<<<<<<<<<<<<<
  *         return False
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_6 = NULL;
   __pyx_t_7 = 0;
@@ -1561,7 +1562,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_v_word, __pyx_t_4};
-    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -1570,14 +1571,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_v_word, __pyx_t_4};
-    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 3+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else
   #endif
   {
-    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_8 = PyTuple_New(3+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if (__pyx_t_6) {
       __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -1591,17 +1592,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __Pyx_GIVEREF(__pyx_t_4);
     PyTuple_SET_ITEM(__pyx_t_8, 2+__pyx_t_7, __pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 28, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_9 = ((!__pyx_t_5) != 0);
   if (__pyx_t_9) {
 
-    /* "bundler/extensions/first.pyx":29
+    /* "bundler/extensions/first.pyx":39
  *     # Check to see if our original word beats itself.
  *     if not self.c_auto.before_automorphs(word, word, prefix):
  *         return False             # <<<<<<<<<<<<<<
@@ -1613,7 +1614,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_r = Py_False;
     goto __pyx_L0;
 
-    /* "bundler/extensions/first.pyx":28
+    /* "bundler/extensions/first.pyx":38
  *     # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
  *     # Check to see if our original word beats itself.
  *     if not self.c_auto.before_automorphs(word, word, prefix):             # <<<<<<<<<<<<<<
@@ -1622,32 +1623,32 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
   }
 
-  /* "bundler/extensions/first.pyx":31
+  /* "bundler/extensions/first.pyx":41
  *         return False
  * 
  *     seen.insert(word)             # <<<<<<<<<<<<<<
  *     to_do.push(word)
  * 
  */
-  __pyx_t_10 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_10 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
   try {
     __pyx_v_seen.insert(__pyx_t_10);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    __PYX_ERR(0, 31, __pyx_L1_error)
+    __PYX_ERR(0, 41, __pyx_L1_error)
   }
 
-  /* "bundler/extensions/first.pyx":32
+  /* "bundler/extensions/first.pyx":42
  * 
  *     seen.insert(word)
  *     to_do.push(word)             # <<<<<<<<<<<<<<
  * 
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  */
-  __pyx_t_10 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_10 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
   __pyx_v_to_do.push(__pyx_t_10);
 
-  /* "bundler/extensions/first.pyx":34
+  /* "bundler/extensions/first.pyx":44
  *     to_do.push(word)
  * 
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.             # <<<<<<<<<<<<<<
@@ -1658,7 +1659,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_t_9 = ((!(__pyx_v_to_do.empty() != 0)) != 0);
     if (!__pyx_t_9) break;
 
-    /* "bundler/extensions/first.pyx":35
+    /* "bundler/extensions/first.pyx":45
  * 
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *         reached = to_do.front()             # <<<<<<<<<<<<<<
@@ -1667,7 +1668,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
     __pyx_v_reached = __pyx_v_to_do.front();
 
-    /* "bundler/extensions/first.pyx":36
+    /* "bundler/extensions/first.pyx":46
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *         reached = to_do.front()
  *         to_do.pop()  # Get the next equivalent word to check.             # <<<<<<<<<<<<<<
@@ -1676,29 +1677,29 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
     __pyx_v_to_do.pop();
 
-    /* "bundler/extensions/first.pyx":37
+    /* "bundler/extensions/first.pyx":47
  *         reached = to_do.front()
  *         to_do.pop()  # Get the next equivalent word to check.
  *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)             # <<<<<<<<<<<<<<
  *         for i in range(int(returns.size())):
  *             b = returns[i].first
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_find_balanced_relators_FSM); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_find_balanced_relators_FSM); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_hits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_hits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_reached); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_reached); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_8 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_GIVEREF(__pyx_t_8);
     PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_8);
     __pyx_t_8 = 0;
-    __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if ((__pyx_v_prefix != 0)) {
       __Pyx_INCREF(__pyx_int_1);
@@ -1707,18 +1708,18 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __Pyx_INCREF(__pyx_int_2);
       __pyx_t_4 = __pyx_int_2;
     }
-    if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_repeat, __pyx_t_4) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_repeat, __pyx_t_4) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    __pyx_t_11 = __pyx_convert_vector_from_py_std_3a__3a_pair_3c_int_2c___pyx_t_7bundler_10extensions_5first_IWord_3e___(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L1_error)
+    __pyx_t_11 = __pyx_convert_vector_from_py_std_3a__3a_pair_3c_int_2c___pyx_t_7bundler_10extensions_5first_IWord_3e___(__pyx_t_4); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_returns = __pyx_t_11;
 
-    /* "bundler/extensions/first.pyx":38
+    /* "bundler/extensions/first.pyx":48
  *         to_do.pop()  # Get the next equivalent word to check.
  *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  *         for i in range(int(returns.size())):             # <<<<<<<<<<<<<<
@@ -1730,7 +1731,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_13; __pyx_t_7+=1) {
       __pyx_v_i = __pyx_t_7;
 
-      /* "bundler/extensions/first.pyx":39
+      /* "bundler/extensions/first.pyx":49
  *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  *         for i in range(int(returns.size())):
  *             b = returns[i].first             # <<<<<<<<<<<<<<
@@ -1740,7 +1741,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_t_14 = (__pyx_v_returns[__pyx_v_i]).first;
       __pyx_v_b = __pyx_t_14;
 
-      /* "bundler/extensions/first.pyx":40
+      /* "bundler/extensions/first.pyx":50
  *         for i in range(int(returns.size())):
  *             b = returns[i].first
  *             replace = returns[i].second             # <<<<<<<<<<<<<<
@@ -1750,7 +1751,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_t_10 = (__pyx_v_returns[__pyx_v_i]).second;
       __pyx_v_replace = __pyx_t_10;
 
-      /* "bundler/extensions/first.pyx":41
+      /* "bundler/extensions/first.pyx":51
  *             b = returns[i].first
  *             replace = returns[i].second
  *             if b >= len_word + longest_relator: break             # <<<<<<<<<<<<<<
@@ -1762,7 +1763,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         goto __pyx_L8_break;
       }
 
-      /* "bundler/extensions/first.pyx":42
+      /* "bundler/extensions/first.pyx":52
  *             replace = returns[i].second
  *             if b >= len_word + longest_relator: break
  *             len_replace = replace.size()             # <<<<<<<<<<<<<<
@@ -1771,7 +1772,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_len_replace = __pyx_v_replace.size();
 
-      /* "bundler/extensions/first.pyx":43
+      /* "bundler/extensions/first.pyx":53
  *             if b >= len_word + longest_relator: break
  *             len_replace = replace.size()
  *             if len_replace > len_word: continue             # <<<<<<<<<<<<<<
@@ -1783,7 +1784,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         goto __pyx_L7_continue;
       }
 
-      /* "bundler/extensions/first.pyx":44
+      /* "bundler/extensions/first.pyx":54
  *             len_replace = replace.size()
  *             if len_replace > len_word: continue
  *             a = b - len_replace  # There is a replacement to be made between a & b.             # <<<<<<<<<<<<<<
@@ -1792,7 +1793,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_a = (__pyx_v_b - __pyx_v_len_replace);
 
-      /* "bundler/extensions/first.pyx":45
+      /* "bundler/extensions/first.pyx":55
  *             if len_replace > len_word: continue
  *             a = b - len_replace  # There is a replacement to be made between a & b.
  *             if a >= len_word: continue             # <<<<<<<<<<<<<<
@@ -1804,7 +1805,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         goto __pyx_L7_continue;
       }
 
-      /* "bundler/extensions/first.pyx":47
+      /* "bundler/extensions/first.pyx":57
  *             if a >= len_word: continue
  * 
  *             next_word.clear()             # <<<<<<<<<<<<<<
@@ -1813,7 +1814,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_next_word.clear();
 
-      /* "bundler/extensions/first.pyx":48
+      /* "bundler/extensions/first.pyx":58
  * 
  *             next_word.clear()
  *             for j in range(len_word):             # <<<<<<<<<<<<<<
@@ -1825,7 +1826,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
         __pyx_v_j = __pyx_t_16;
 
-        /* "bundler/extensions/first.pyx":49
+        /* "bundler/extensions/first.pyx":59
  *             next_word.clear()
  *             for j in range(len_word):
  *                 k = (j - a) % len_word             # <<<<<<<<<<<<<<
@@ -1835,11 +1836,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_t_17 = (__pyx_v_j - __pyx_v_a);
         if (unlikely(__pyx_v_len_word == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-          __PYX_ERR(0, 49, __pyx_L1_error)
+          __PYX_ERR(0, 59, __pyx_L1_error)
         }
         __pyx_v_k = __Pyx_mod_int(__pyx_t_17, __pyx_v_len_word);
 
-        /* "bundler/extensions/first.pyx":50
+        /* "bundler/extensions/first.pyx":60
  *             for j in range(len_word):
  *                 k = (j - a) % len_word
  *                 next_word.push_back(replace[k] if k < len_replace else reached[j])             # <<<<<<<<<<<<<<
@@ -1855,11 +1856,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
           __pyx_v_next_word.push_back(__pyx_t_18);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 50, __pyx_L1_error)
+          __PYX_ERR(0, 60, __pyx_L1_error)
         }
       }
 
-      /* "bundler/extensions/first.pyx":53
+      /* "bundler/extensions/first.pyx":63
  *             # next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
  * 
  *             if seen.count(next_word) != 0: continue  # Only consider new words.             # <<<<<<<<<<<<<<
@@ -1871,21 +1872,21 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         goto __pyx_L7_continue;
       }
 
-      /* "bundler/extensions/first.pyx":56
+      /* "bundler/extensions/first.pyx":66
  *             # Test for trivial simplifications.
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_simpler_FSM); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_simpler_FSM); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_hit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_hit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __pyx_t_8 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_t_8 = NULL;
@@ -1901,14 +1902,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_8, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 56, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (__pyx_t_9) {
 
-        /* "bundler/extensions/first.pyx":57
+        /* "bundler/extensions/first.pyx":67
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):
  *                 return False             # <<<<<<<<<<<<<<
@@ -1920,7 +1921,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":56
+        /* "bundler/extensions/first.pyx":66
  *             # Test for trivial simplifications.
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):             # <<<<<<<<<<<<<<
@@ -1929,24 +1930,24 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":59
+      /* "bundler/extensions/first.pyx":69
  *                 return False
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_8 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_6 = NULL;
       __pyx_t_14 = 0;
@@ -1963,7 +1964,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_8, __pyx_t_2};
-        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -1973,7 +1974,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_8, __pyx_t_2};
-        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -1981,7 +1982,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       } else
       #endif
       {
-        __pyx_t_19 = PyTuple_New(3+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_19 = PyTuple_New(3+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 69, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         if (__pyx_t_6) {
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -1995,17 +1996,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         PyTuple_SET_ITEM(__pyx_t_19, 2+__pyx_t_14, __pyx_t_2);
         __pyx_t_8 = 0;
         __pyx_t_2 = 0;
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 69, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_5 = ((!__pyx_t_9) != 0);
       if (__pyx_t_5) {
 
-        /* "bundler/extensions/first.pyx":60
+        /* "bundler/extensions/first.pyx":70
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):
  *                 return False             # <<<<<<<<<<<<<<
@@ -2017,7 +2018,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":59
+        /* "bundler/extensions/first.pyx":69
  *                 return False
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):             # <<<<<<<<<<<<<<
@@ -2026,7 +2027,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":62
+      /* "bundler/extensions/first.pyx":72
  *                 return False
  * 
  *             s = int(seen.size())             # <<<<<<<<<<<<<<
@@ -2035,7 +2036,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_s = ((int)__pyx_v_seen.size());
 
-      /* "bundler/extensions/first.pyx":63
+      /* "bundler/extensions/first.pyx":73
  * 
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
@@ -2045,7 +2046,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_t_5 = ((__pyx_v_s == __pyx_v_max_tree_size) != 0);
       if (__pyx_t_5) {
 
-        /* "bundler/extensions/first.pyx":64
+        /* "bundler/extensions/first.pyx":74
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.
  *                 return True             # <<<<<<<<<<<<<<
@@ -2057,7 +2058,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_True;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":63
+        /* "bundler/extensions/first.pyx":73
  * 
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
@@ -2066,7 +2067,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":67
+      /* "bundler/extensions/first.pyx":77
  * 
  *             # Add it to the reachable word list.
  *             seen.insert(next_word)             # <<<<<<<<<<<<<<
@@ -2077,10 +2078,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_v_seen.insert(__pyx_v_next_word);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 67, __pyx_L1_error)
+        __PYX_ERR(0, 77, __pyx_L1_error)
       }
 
-      /* "bundler/extensions/first.pyx":68
+      /* "bundler/extensions/first.pyx":78
  *             # Add it to the reachable word list.
  *             seen.insert(next_word)
  *             to_do.push(next_word)             # <<<<<<<<<<<<<<
@@ -2093,7 +2094,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_L8_break:;
   }
 
-  /* "bundler/extensions/first.pyx":70
+  /* "bundler/extensions/first.pyx":80
  *             to_do.push(next_word)
  * 
  *     return True             # <<<<<<<<<<<<<<
@@ -2109,8 +2110,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  * ctypedef vector[int] IWord
  * 
  * def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):             # <<<<<<<<<<<<<<
+ *     ''' Determines if a word is lex first in its class.
  * 
- *     cdef int len_word = len(word)  # Let's save some highly used data.
  */
 
   /* function exit code */
@@ -2637,7 +2638,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 48, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -2651,8 +2652,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * ctypedef vector[int] IWord
  * 
  * def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):             # <<<<<<<<<<<<<<
+ *     ''' Determines if a word is lex first in its class.
  * 
- *     cdef int len_word = len(word)  # Let's save some highly used data.
  */
   __pyx_tuple_ = PyTuple_Pack(20, __pyx_n_s_self, __pyx_n_s_word, __pyx_n_s_max_tree_size, __pyx_n_s_prefix, __pyx_n_s_longest_relator, __pyx_n_s_len_word, __pyx_n_s_to_do, __pyx_n_s_seen, __pyx_n_s_next_word, __pyx_n_s_replace, __pyx_n_s_match, __pyx_n_s_reached, __pyx_n_s_returns, __pyx_n_s_a, __pyx_n_s_b, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_s, __pyx_n_s_len_replace); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
@@ -2944,8 +2945,8 @@ if (!__Pyx_RefNanny) {
  * ctypedef vector[int] IWord
  * 
  * def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):             # <<<<<<<<<<<<<<
+ *     ''' Determines if a word is lex first in its class.
  * 
- *     cdef int len_word = len(word)  # Let's save some highly used data.
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7bundler_10extensions_5first_1first_in_class, NULL, __pyx_n_s_bundler_extensions_first); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

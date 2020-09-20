@@ -179,80 +179,13 @@ class WordGenerator():
         ''' Convert str |--> tuple. '''
         return tuple(self.letter_lookup[letter] for letter in word)
     
-    def first_in_class(self, word, max_tree_size=None, prefix=False):
-        ''' Determines if a word is lex first in its class.
-        
-        Uses relators and automorphs to find alternative representatives. Gives up after finding
-        max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all
-        equivalent words of the same length in which case the result returned is absolutely correct.
-        
-        If prefix == True, only prefix stable stable moves are performed, i.e. if it is discovered
-        that u ~ v then uw ~ vw for all words w.
-        
-        This function is the heart of the grow phase, speed is critical here.'''
-        
-        
-        if max_tree_size is None: max_tree_size = self.options.largest_class
-        return first_in_class(self, word, max_tree_size, prefix, self.longest_relator)
-        len_word = len(word)  # Let's save some highly used data.
-        
-        X = first_in_class(self, word, max_tree_size, prefix, self.longest_relator)
-        
-        # If it contains any bad prefix or simplification then it can be (trivially) made better.
-        if self.bad_prefix_FSM.hit(word):
-            assert not X
-            return False
-        
-        # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
-        
-        # Check to see if our original word beats itself.
-        if not self.c_auto.before_automorphs(word, word, prefix):
-            assert not X
-            return False
-        
-        seen = set([word])  # This records all words that we have seen.
-        to_do = deque([word])  # This is a deque of all words that have yet to be processed.
-        
-        while to_do:  # Keep going while there are still unprocessed words in the queue.
-            reached = to_do.popleft()  # Get the next equivalent word to check.
-            
-            for b, replace in self.find_balanced_relators_FSM.hits(reached, repeat=1 if prefix else 2):
-                if b >= len_word + self.longest_relator: break
-                if len(replace) > len_word: continue
-                a = b - len(replace)  # There is a replacement to be made between a & b.
-                if a >= len_word: continue
-                
-                next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
-                
-                if next_word not in seen:  # Only consider new words.
-                    # Test for trivial simplifications.
-                    if self.simpler_FSM.hit(next_word):
-                        assert not X
-                        return False
-                    
-                    if not self.c_auto.before_automorphs(word, next_word, prefix):
-                        assert not X
-                        return False
-                    
-                    # If we've hit the max_tree_size then give up.
-                    if len(seen) == max_tree_size:
-                        assert X
-                        return True
-                    
-                    # Add it to the reachable word list.
-                    seen.add(next_word)
-                    to_do.append(next_word)
-        
-        assert X
-        return True
-    
     def valid_prefix(self, word, depth):
         ''' Return whether the given word is a valid prefix. '''
         
         if word[0] not in self.valid_starting_characters: return False
         if self.cnf_FSM.distance(word) > depth - len(word): return False
         
-        if not self.first_in_class(word, max_tree_size=self.options.largest_class_prefix, prefix=True): return False
+        if not first_in_class(self, word, self.options.largest_class_prefix, True, self.longest_relator): return False
         
         return True
     
@@ -263,7 +196,7 @@ class WordGenerator():
         if self.loop_invariant_FSM.has_cycle(word, self.options.basic_search_range): return False
         
         if not self.word_filter(self, word): return False
-        if not self.first_in_class(word, prefix=False): return False
+        if not first_in_class(self, word, self.options.largest_class, False, self.longest_relator): return False
         
         return True
     

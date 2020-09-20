@@ -9,6 +9,16 @@ from libcpp.vector cimport vector
 ctypedef vector[int] IWord
 
 def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int longest_relator):
+    ''' Determines if a word is lex first in its class.
+    
+    Uses relators and automorphs to find alternative representatives. Gives up after finding
+    max_tree_size alternatives, if max_tree_size <= 0 this will run until it has found all
+    equivalent words of the same length in which case the result returned is absolutely correct.
+    
+    If prefix == True, only prefix stable stable moves are performed, i.e. if it is discovered
+    that u ~ v then uw ~ vw for all words w.
+    
+    This function is the heart of the grow phase, speed is critical here.'''
 
     cdef int len_word = len(word)  # Let's save some highly used data.
     cdef queue[IWord] to_do  # This is a deque of all words that have yet to be processed.
