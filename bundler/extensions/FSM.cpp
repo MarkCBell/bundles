@@ -875,7 +875,7 @@ typedef struct arrayobject arrayobject;
 #endif
 struct __pyx_obj_7bundler_10extensions_3FSM_FSM;
 struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits;
-struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2;
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
 
 /* "bundler/extensions/FSM.pyx":13
  * from libcpp.vector cimport vector
@@ -887,13 +887,13 @@ struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2;
 typedef std::vector<int>  __pyx_t_7bundler_10extensions_3FSM_IWord;
 
 /* "bundler/extensions/FSM.pyx":85
- *         return self.hit2(word)
+ *         return self.c_hit(word)
  * 
- *     cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
-struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2 {
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits {
   int __pyx_n;
   int repeat;
 };
@@ -956,8 +956,8 @@ struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits {
  */
 
 struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM {
-  int (*hit2)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord);
-  std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*hits2)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2 *__pyx_optional_args);
+  int (*c_hit)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord);
+  std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*c_hits)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args);
 };
 static struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *__pyx_vtabptr_7bundler_10extensions_3FSM_FSM;
 
@@ -1710,8 +1710,8 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word); /* proto*/
-static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_hits2(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2 *__pyx_optional_args); /* proto*/
+static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word); /* proto*/
+static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args); /* proto*/
 
 /* Module declarations from 'cpython.version' */
 
@@ -3131,7 +3131,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
  *     def distance(self, tuple word):
  *         return self.distance_to_yield[self(word)]             # <<<<<<<<<<<<<<
  * 
- *     cdef bint hit2(self, IWord word):
+ *     cdef bint c_hit(self, IWord word):
  */
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(__pyx_v_self->distance_to_yield == Py_None)) {
@@ -3185,12 +3185,12 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
 /* "bundler/extensions/FSM.pyx":67
  *         return self.distance_to_yield[self(word)]
  * 
- *     cdef bint hit2(self, IWord word):             # <<<<<<<<<<<<<<
+ *     cdef bint c_hit(self, IWord word):             # <<<<<<<<<<<<<<
  *         cdef int index = 0, letter
  *         cdef int state = 0
  */
 
-static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word) {
+static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word) {
   int __pyx_v_index;
   int __pyx_v_letter;
   int __pyx_v_state;
@@ -3207,11 +3207,11 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundle
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("hit2", 0);
+  __Pyx_RefNannySetupContext("c_hit", 0);
 
   /* "bundler/extensions/FSM.pyx":68
  * 
- *     cdef bint hit2(self, IWord word):
+ *     cdef bint c_hit(self, IWord word):
  *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
  *         cdef int state = 0
  *         for index in range(int(word.size())):
@@ -3219,7 +3219,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundle
   __pyx_v_index = 0;
 
   /* "bundler/extensions/FSM.pyx":69
- *     cdef bint hit2(self, IWord word):
+ *     cdef bint c_hit(self, IWord word):
  *         cdef int index = 0, letter
  *         cdef int state = 0             # <<<<<<<<<<<<<<
  *         for index in range(int(word.size())):
@@ -3353,7 +3353,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundle
   /* "bundler/extensions/FSM.pyx":67
  *         return self.distance_to_yield[self(word)]
  * 
- *     cdef bint hit2(self, IWord word):             # <<<<<<<<<<<<<<
+ *     cdef bint c_hit(self, IWord word):             # <<<<<<<<<<<<<<
  *         cdef int index = 0, letter
  *         cdef int state = 0
  */
@@ -3364,7 +3364,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_hit2(struct __pyx_obj_7bundle
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_WriteUnraisable("bundler.extensions.FSM.FSM.hit2", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("bundler.extensions.FSM.FSM.c_hit", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -3414,13 +3414,13 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
   /* "bundler/extensions/FSM.pyx":83
  *         ''' Return whether word meets any state that yields. '''
  *         # return any(self.hits(word))
- *         return self.hit2(word)             # <<<<<<<<<<<<<<
+ *         return self.c_hit(word)             # <<<<<<<<<<<<<<
  * 
- *     cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 83, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->hit2(__pyx_v_self, __pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->c_hit(__pyx_v_self, __pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -3446,14 +3446,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
 }
 
 /* "bundler/extensions/FSM.pyx":85
- *         return self.hit2(word)
+ *         return self.c_hit(word)
  * 
- *     cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
 
-static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_hits2(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2 *__pyx_optional_args) {
+static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args) {
   int __pyx_v_repeat = ((int)1);
   int __pyx_v_index;
   int __pyx_v_letter;
@@ -3479,7 +3479,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_RefNannySetupContext("hits2", 0);
+  __Pyx_RefNannySetupContext("c_hits", 0);
   if (__pyx_optional_args) {
     if (__pyx_optional_args->__pyx_n > 0) {
       __pyx_v_repeat = __pyx_optional_args->repeat;
@@ -3487,7 +3487,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   }
 
   /* "bundler/extensions/FSM.pyx":87
- *     cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
  *         cdef int state = 0
@@ -3652,9 +3652,9 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   goto __pyx_L0;
 
   /* "bundler/extensions/FSM.pyx":85
- *         return self.hit2(word)
+ *         return self.c_hit(word)
  * 
- *     cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
@@ -3664,7 +3664,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_WriteUnraisable("bundler.extensions.FSM.FSM.hits2", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
+  __Pyx_WriteUnraisable("bundler.extensions.FSM.FSM.c_hits", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __Pyx_pretend_to_initialize(&__pyx_r);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_x);
@@ -6454,8 +6454,8 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   __pyx_vtabptr_7bundler_10extensions_3FSM_FSM = &__pyx_vtable_7bundler_10extensions_3FSM_FSM;
-  __pyx_vtable_7bundler_10extensions_3FSM_FSM.hit2 = (int (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord))__pyx_f_7bundler_10extensions_3FSM_3FSM_hit2;
-  __pyx_vtable_7bundler_10extensions_3FSM_FSM.hits2 = (std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_hits2 *__pyx_optional_args))__pyx_f_7bundler_10extensions_3FSM_3FSM_hits2;
+  __pyx_vtable_7bundler_10extensions_3FSM_FSM.c_hit = (int (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord))__pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit;
+  __pyx_vtable_7bundler_10extensions_3FSM_FSM.c_hits = (std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args))__pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits;
   if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_7bundler_10extensions_3FSM_FSM.tp_print = 0;

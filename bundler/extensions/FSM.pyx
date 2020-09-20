@@ -64,7 +64,7 @@ cdef class FSM:
     def distance(self, tuple word):
         return self.distance_to_yield[self(word)]
     
-    cdef bint hit2(self, IWord word):
+    cdef bint c_hit(self, IWord word):
         cdef int index = 0, letter
         cdef int state = 0
         for index in range(int(word.size())):
@@ -80,9 +80,9 @@ cdef class FSM:
     def hit(self, tuple word):
         ''' Return whether word meets any state that yields. '''
         # return any(self.hits(word))
-        return self.hit2(word)
+        return self.c_hit(word)
     
-    cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):
+    cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):
         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
         cdef int index = 0, letter
         cdef int state = 0
