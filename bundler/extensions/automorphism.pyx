@@ -1,5 +1,7 @@
 from libc.stdlib cimport calloc, free
 
+from bundler.extensions.automorphism cimport Automorph
+
 cdef bint is_cyclic_ordered(int* A, int* B, int l, int* S, int* f):
     ''' Return whether A is <= all cyclic perumtations of B.
     
@@ -31,31 +33,21 @@ cdef bint is_cyclic_ordered(int* A, int* B, int l, int* S, int* f):
     # Compare A to the (inplace) cycled B.
     for i in range(l):
         if A[i] < B[j]:
-            return True
+            return True  # A < cycled(B)
         elif A[i] > B[j]:
-            return False
+            return False  # A > cycled(B)
         j += 1
         if j == l:  # Wrap around.
             j = 0
     
-    return True
+    return True  # A == cycled(B)
 
 cdef class Automorph:
-    cdef list alphabet
-    cdef int len_alphabet
-    cdef int len_alphabet1
-    cdef int stop
-    cdef int* inverse
-    cdef int num_automorphisms
-    cdef bint* any_missing
-    cdef bint* missing
-    cdef int* automorphisms
     
     def __init__(self, list alphabet, list inverse, list automorphisms):
         cdef list missing, auto
         cdef int i, j
-        self.alphabet = alphabet
-        self.len_alphabet = len(self.alphabet)
+        self.len_alphabet = len(alphabet)
         self.len_alphabet1 = self.len_alphabet + 1
         self.stop = self.len_alphabet
         self.inverse = <int *> calloc(self.len_alphabet1, sizeof(int))  # +1 for stop character.
@@ -81,9 +73,9 @@ cdef class Automorph:
         free(self.missing)
         free(self.automorphisms)
     
-    def before_automorphs(self, tuple word, tuple next_word, bint prefix=False):
+    cdef bint c_before_automorphs(self, IWord& word, IWord& next_word, bint prefix=False):
         ''' Return whether word is before all cyclic permutations of all automorphs of next_word and next_word^-1. '''
-        cdef int l0 = len(word)
+        cdef int l0 = word.size()
         cdef int i, j, l = l0 + (1 if prefix else 0)
         cdef bint bad
         cdef int* wd = <int *> calloc(l, sizeof(int))
@@ -140,10 +132,12 @@ cdef class Automorph:
             free(automorphed)
             free(tmp1)
             free(tmp2)
+
+    def before_automorphs(self, tuple word, tuple next_word, bint prefix=False):
+        return self.c_before_automorphs(word, next_word, prefix)
         
         # for missing, automorphism in self.automorphisms:
             # if not (missing and prefix) and all(letter not in next_word for letter in missing) and not is_cyclic_ordered(word, tuple(automorphism[letter] for letter in other), prefix):
                 # return False
         # 
         # return True
-

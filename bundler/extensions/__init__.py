@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 from .FSM import FSM
 from .automorphism import Automorph
-from .first import first_in_class
+from .first import FirstInClass
 
 EMPTY_TUPLE = tuple()
 

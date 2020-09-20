@@ -5,25 +5,16 @@ import array
 
 from libc.stdlib cimport calloc, free
 from libcpp.pair cimport pair
-# from libcpp.utility cimport make_pair
 from libcpp.queue cimport queue
 from libcpp.set cimport set
 from libcpp.vector cimport vector
 
-ctypedef vector[int] IWord
+from bundler.extensions.FSM cimport FSM
 
 from collections import defaultdict
 from queue import Queue
 
 cdef class FSM:
-    cdef list alphabet
-    cdef int alphabet_len
-    cdef array.array machine
-    cdef int machine_len
-    cdef dict yield_states
-    cdef dict distance_to_yield
-    cdef array.array has_yield
-    
     def __init__(self, alphabet, machine, yield_states):
         self.alphabet = alphabet
         self.alphabet_len = len(self.alphabet)
@@ -64,7 +55,7 @@ cdef class FSM:
     def distance(self, tuple word):
         return self.distance_to_yield[self(word)]
     
-    cdef bint c_hit(self, IWord word):
+    cdef bint c_hit(self, IWord& word):
         cdef int index = 0, letter
         cdef int state = 0
         for index in range(int(word.size())):
@@ -82,17 +73,19 @@ cdef class FSM:
         # return any(self.hits(word))
         return self.c_hit(word)
     
-    cdef vector[pair[int, IWord]] c_hits(self, IWord word, int repeat=1):
+    cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=1):
         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
         cdef int index = 0, letter
         cdef int state = 0
+        cdef int i
         cdef vector[pair[int, IWord]] returns
         for _ in range(repeat):
-            for index in range(int(word.size())):
-                letter = word[index]
+            for i in range(int(word.size())):
+                letter = word[i]
                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+                index += 1
                 for x in self.yield_states.get(state, []):
-                    returns.push_back(pair[int, IWord](index+1, x))
+                    returns.push_back(pair[int, IWord](index, x))
         
         return returns
     

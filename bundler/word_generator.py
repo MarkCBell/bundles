@@ -6,7 +6,7 @@ from random import randint
 import curver
 
 from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph
-from .extensions.first import first_in_class
+from .extensions import FirstInClass
 
 EMPTY_TUPLE = tuple()
 
@@ -133,6 +133,8 @@ class WordGenerator():
         if self.options.show_progress: print('Bad prefix FSM')
         self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: (len(a), a) < (len(b), b)))
         
+        self.FIC = FirstInClass(self.longest_relator, self.find_balanced_relators_FSM, self.bad_prefix_FSM, self.simpler_FSM, self.c_auto)
+        
         if self.options.show_progress: print('Loop invariant FSM')
         seeds = self.surfaces.curver.triangulation.edge_curves()
         self.loop_invariant_FSM = action_FSM(self.curver_action, seeds, self.options.loop_invariant_fsm_depth)
@@ -185,10 +187,11 @@ class WordGenerator():
         if word[0] not in self.valid_starting_characters: return False
         if self.cnf_FSM.distance(word) > depth - len(word): return False
         
-        if not first_in_class(self, word, self.options.largest_class_prefix, True, self.longest_relator): return False
+        if not self.FIC.is_first(word, True, self.options.largest_class_prefix): return False
         
         return True
     
+    @profile
     def valid_word(self, word):
         ''' Return whether the given word is valid. '''
         
@@ -196,7 +199,7 @@ class WordGenerator():
         if self.loop_invariant_FSM.has_cycle(word, self.options.basic_search_range): return False
         
         if not self.word_filter(self, word): return False
-        if not first_in_class(self, word, self.options.largest_class, False, self.longest_relator): return False
+        if not self.FIC.is_first(word, False, self.options.largest_class): return False
         
         return True
     
