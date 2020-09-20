@@ -1,5 +1,16 @@
+# distutils: language = c++
+
 from cpython cimport array
 import array
+
+from libc.stdlib cimport calloc, free
+from libcpp.pair cimport pair
+# from libcpp.utility cimport make_pair
+from libcpp.queue cimport queue
+from libcpp.set cimport set
+from libcpp.vector cimport vector
+
+ctypedef vector[int] IWord
 
 from collections import defaultdict
 from queue import Queue
@@ -53,12 +64,11 @@ cdef class FSM:
     def distance(self, tuple word):
         return self.distance_to_yield[self(word)]
     
-    def hit(self, tuple word):
-        ''' Return whether word meets any state that yields. '''
-        # return any(self.hits(word))
-        cdef int index, letter
+    cdef bint hit2(self, IWord word):
+        cdef int index = 0, letter
         cdef int state = 0
-        for index, letter in enumerate(word):
+        for index in range(int(word.size())):
+            letter = word[index]
             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
             if state < 0:
                 raise ValueError('Invalid transition to state {}'.format(state))
@@ -67,16 +77,37 @@ cdef class FSM:
         
         return False
     
-    def hits(self, tuple word):
+    def hit(self, tuple word):
+        ''' Return whether word meets any state that yields. '''
+        # return any(self.hits(word))
+        return self.hit2(word)
+    
+    cdef vector[pair[int, IWord]] hits2(self, IWord word, int repeat=1):
         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
-        cdef int index, letter
+        cdef int index = 0, letter
         cdef int state = 0
-        for index, letter in enumerate(word):
-            state = self.machine.data.as_ints[state * self.alphabet_len + letter]
-            if state < 0:
-                raise ValueError('Invalid transition to state {}'.format(state))
-            for x in self.yield_states.get(state, []):
-                yield (index+1, x)
+        cdef vector[pair[int, IWord]] returns
+        for _ in range(repeat):
+            for index in range(int(word.size())):
+                letter = word[index]
+                state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+                for x in self.yield_states.get(state, []):
+                    returns.push_back(pair[int, IWord](index+1, x))
+        
+        return returns
+    
+    def hits(self, tuple word, int repeat=1):
+        ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
+        cdef int index = 0, letter
+        cdef int state = 0
+        for _ in range(repeat):
+            for letter in word:
+                state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+                index += 1
+                if state < 0:
+                    raise ValueError('Invalid transition to state {}'.format(state))
+                for x in self.yield_states.get(state, []):
+                    yield (index, x)
 
     def has_cycle(self, tuple word, int depth=-1):
         ''' Return whether there is a state such that self(word, state) == state. '''

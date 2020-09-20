@@ -4,6 +4,7 @@ from collections import OrderedDict
 
 from .FSM import FSM
 from .automorphism import Automorph
+from .first import first_in_class
 
 EMPTY_TUPLE = tuple()
 
@@ -23,7 +24,7 @@ def build_c_FSM(alphabet, machine, hits):
     
     return FSM(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
 
-def word_accepting_FSM(alphabet, acceptable_words):
+def word_accepting_FSM(alphabet, acceptable_words, transform=lambda x: x):
     ''' Given an alphabet and a list of acceptable_words in that alphabet, this
         builds a FSM that hits all occurances of these words within a given string.
         
@@ -43,7 +44,7 @@ def word_accepting_FSM(alphabet, acceptable_words):
     # Now grow the machine.
     while not tree.empty():
         word = tree.get()
-        accepting_states[word] = suffixes(word).intersection(acceptable_words_set)
+        accepting_states[word] = set(transform(item) for item in suffixes(word).intersection(acceptable_words_set))
         
         state = dict()
         

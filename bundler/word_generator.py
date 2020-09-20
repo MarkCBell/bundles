@@ -6,6 +6,7 @@ from random import randint
 import curver
 
 from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph
+from .extensions.first import first_in_class
 
 EMPTY_TUPLE = tuple()
 
@@ -76,11 +77,10 @@ class WordGenerator():
             return list(R)
 
         relators = shuffle_relators(relators)
-        balanced_relators = [relator for relator in relators if len(relator[0]) == len(relator[1])]
+        self.balanced_relators = dict(relator for relator in relators if len(relator[0]) == len(relator[1]))
         
-        self.balanced_relator_lookup = dict(balanced_relators)
-        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, [a for a, _ in balanced_relators])
-        self.longest_relator = max(len(a) for a, _ in balanced_relators)
+        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, self.balanced_relators)  # , transform=self.balanced_relators.get)
+        self.longest_relator = max(len(a) for a in self.balanced_relators)
         
         # Let's build some FSM to help us search for these faster.
         self.curver_action = {letter: self.surfaces.curver(self.letter_generators[letter]) for letter in self.generators}
@@ -192,17 +192,22 @@ class WordGenerator():
         
         This function is the heart of the grow phase, speed is critical here.'''
         
+        
         if max_tree_size is None: max_tree_size = self.options.largest_class
         len_word = len(word)  # Let's save some highly used data.
         
+        X = first_in_class(self, word, max_tree_size, prefix, self.longest_relator)
+        
         # If it contains any bad prefix or simplification then it can be (trivially) made better.
         if self.bad_prefix_FSM.hit(word):
+            assert not X
             return False
         
         # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
         
         # Check to see if our original word beats itself.
         if not self.c_auto.before_automorphs(word, word, prefix):
+            assert not X
             return False
         
         seen = set([word])  # This records all words that we have seen.
@@ -211,30 +216,36 @@ class WordGenerator():
         while to_do:  # Keep going while there are still unprocessed words in the queue.
             reached = to_do.popleft()  # Get the next equivalent word to check.
             
-            for b, match in self.find_balanced_relators_FSM.hits(reached if prefix else reached + reached):
-                a = b - len(match)
+            for b, replace in self.find_balanced_relators_FSM.hits(reached, repeat=2 if prefix else 1):
+                replace = self.balanced_relators[replace]
+                if len(replace) > len_word: continue
+                a = b - len(replace)
                 # There is a replacement to be made between a & b.
-                if a > len_word: continue
+                if a >= len_word: continue
                 if b >= len_word + self.longest_relator: break
                 
-                replace = self.balanced_relator_lookup[match]
                 next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
                 
                 if next_word not in seen:  # Only consider new words.
                     # Test for trivial simplifications.
                     if self.simpler_FSM.hit(next_word):
+                        assert not X
                         return False
                     
                     if not self.c_auto.before_automorphs(word, next_word, prefix):
+                        assert not X
                         return False
                     
                     # If we've hit the max_tree_size then give up.
-                    if len(seen) == max_tree_size: return True
+                    if len(seen) == max_tree_size:
+                        assert X
+                        return True
                     
                     # Add it to the reachable word list.
                     seen.add(next_word)
                     to_do.append(next_word)
         
+        assert X
         return True
     
     def valid_prefix(self, word, depth):
