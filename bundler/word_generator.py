@@ -77,9 +77,9 @@ class WordGenerator():
             return list(R)
 
         relators = shuffle_relators(relators)
-        self.balanced_relators = dict(relator for relator in relators if len(relator[0]) == len(relator[1]))
-        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, self.balanced_relators, transform=self.balanced_relators.get)
-        self.longest_relator = max(len(a) for a in self.balanced_relators)
+        balanced_relators = dict(relator for relator in relators if len(relator[0]) == len(relator[1]))
+        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, balanced_relators, transform=balanced_relators.get)
+        self.longest_relator = max(len(a) for a in balanced_relators)
         
         # Let's build some FSM to help us search for these faster.
         self.curver_action = {letter: self.surfaces.curver(self.letter_generators[letter]) for letter in self.generators}
