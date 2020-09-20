@@ -109,7 +109,7 @@ cdef class Automorph:
                 # if any(letter in next_word for letter in self.missing[i]): continue
                 bad = False
                 for j in range(l):
-                    if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:
+                    if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:
                         bad = True
                         break
                 if bad: continue

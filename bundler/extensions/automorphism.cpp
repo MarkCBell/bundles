@@ -2397,7 +2397,7 @@ static int __pyx_f_7bundler_10extensions_12automorphism_9Automorph_c_before_auto
  *                 # if any(letter in next_word for letter in self.missing[i]): continue
  *                 bad = False             # <<<<<<<<<<<<<<
  *                 for j in range(l):
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:
  */
       __pyx_v_bad = 0;
 
@@ -2405,7 +2405,7 @@ static int __pyx_f_7bundler_10extensions_12automorphism_9Automorph_c_before_auto
  *                 # if any(letter in next_word for letter in self.missing[i]): continue
  *                 bad = False
  *                 for j in range(l):             # <<<<<<<<<<<<<<
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:
  *                         bad = True
  */
       __pyx_t_7 = __pyx_v_l;
@@ -2416,16 +2416,16 @@ static int __pyx_f_7bundler_10extensions_12automorphism_9Automorph_c_before_auto
         /* "bundler/extensions/automorphism.pyx":112
  *                 bad = False
  *                 for j in range(l):
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:             # <<<<<<<<<<<<<<
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:             # <<<<<<<<<<<<<<
  *                         bad = True
  *                         break
  */
-        __pyx_t_5 = (((__pyx_v_self->missing[((__pyx_v_self->len_alphabet1 * __pyx_v_i) + (__pyx_v_nxt_wd[__pyx_v_j]))]) == 1) != 0);
+        __pyx_t_5 = ((__pyx_v_self->missing[((__pyx_v_self->len_alphabet1 * __pyx_v_i) + (__pyx_v_nxt_wd[__pyx_v_j]))]) != 0);
         if (__pyx_t_5) {
 
           /* "bundler/extensions/automorphism.pyx":113
  *                 for j in range(l):
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:
  *                         bad = True             # <<<<<<<<<<<<<<
  *                         break
  *                 if bad: continue
@@ -2433,7 +2433,7 @@ static int __pyx_f_7bundler_10extensions_12automorphism_9Automorph_c_before_auto
           __pyx_v_bad = 1;
 
           /* "bundler/extensions/automorphism.pyx":114
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:
  *                         bad = True
  *                         break             # <<<<<<<<<<<<<<
  *                 if bad: continue
@@ -2444,7 +2444,7 @@ static int __pyx_f_7bundler_10extensions_12automorphism_9Automorph_c_before_auto
           /* "bundler/extensions/automorphism.pyx":112
  *                 bad = False
  *                 for j in range(l):
- *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]] == 1:             # <<<<<<<<<<<<<<
+ *                     if self.missing[self.len_alphabet1 * i + nxt_wd[j]]:             # <<<<<<<<<<<<<<
  *                         bad = True
  *                         break
  */
