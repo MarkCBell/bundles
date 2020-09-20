@@ -78,8 +78,7 @@ class WordGenerator():
 
         relators = shuffle_relators(relators)
         self.balanced_relators = dict(relator for relator in relators if len(relator[0]) == len(relator[1]))
-        
-        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, self.balanced_relators)  # , transform=self.balanced_relators.get)
+        self.find_balanced_relators_FSM = word_accepting_FSM(self.generators, self.balanced_relators, transform=self.balanced_relators.get)
         self.longest_relator = max(len(a) for a in self.balanced_relators)
         
         # Let's build some FSM to help us search for these faster.
@@ -194,6 +193,7 @@ class WordGenerator():
         
         
         if max_tree_size is None: max_tree_size = self.options.largest_class
+        return first_in_class(self, word, max_tree_size, prefix, self.longest_relator)
         len_word = len(word)  # Let's save some highly used data.
         
         X = first_in_class(self, word, max_tree_size, prefix, self.longest_relator)
@@ -216,13 +216,11 @@ class WordGenerator():
         while to_do:  # Keep going while there are still unprocessed words in the queue.
             reached = to_do.popleft()  # Get the next equivalent word to check.
             
-            for b, replace in self.find_balanced_relators_FSM.hits(reached, repeat=2 if prefix else 1):
-                replace = self.balanced_relators[replace]
-                if len(replace) > len_word: continue
-                a = b - len(replace)
-                # There is a replacement to be made between a & b.
-                if a >= len_word: continue
+            for b, replace in self.find_balanced_relators_FSM.hits(reached, repeat=1 if prefix else 2):
                 if b >= len_word + self.longest_relator: break
+                if len(replace) > len_word: continue
+                a = b - len(replace)  # There is a replacement to be made between a & b.
+                if a >= len_word: continue
                 
                 next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
                 

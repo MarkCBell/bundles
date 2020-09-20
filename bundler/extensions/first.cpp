@@ -1013,35 +1013,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallMethO(PyObject *func, PyObject
 /* PyObjectCallOneArg.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObject *arg);
 
-/* GetItemInt.proto */
-#define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_Fast(o, (Py_ssize_t)i, is_list, wraparound, boundscheck) :\
-    (is_list ? (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL) :\
-               __Pyx_GetItemInt_Generic(o, to_py_func(i))))
-#define __Pyx_GetItemInt_List(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_List_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
-    (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL))
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
-                                                              int wraparound, int boundscheck);
-#define __Pyx_GetItemInt_Tuple(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
-    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
-    __Pyx_GetItemInt_Tuple_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
-    (PyErr_SetString(PyExc_IndexError, "tuple index out of range"), (PyObject*)NULL))
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
-                                                              int wraparound, int boundscheck);
-static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
-                                                     int is_list, int wraparound, int boundscheck);
-
-/* ObjectGetItem.proto */
-#if CYTHON_USE_TYPE_SLOTS
-static CYTHON_INLINE PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject* key);
-#else
-#define __Pyx_PyObject_GetItem(obj, key)  PyObject_GetItem(obj, key)
-#endif
-
 /* None.proto */
 static CYTHON_INLINE int __Pyx_mod_int(int, int);
 
@@ -1295,7 +1266,6 @@ static const char __pyx_k_max_tree_size[] = "max_tree_size";
 static const char __pyx_k_bad_prefix_FSM[] = "bad_prefix_FSM";
 static const char __pyx_k_first_in_class[] = "first_in_class";
 static const char __pyx_k_longest_relator[] = "longest_relator";
-static const char __pyx_k_balanced_relators[] = "balanced_relators";
 static const char __pyx_k_before_automorphs[] = "before_automorphs";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_bundler_extensions_first[] = "bundler.extensions.first";
@@ -1304,7 +1274,6 @@ static const char __pyx_k_bundler_extensions_first_pyx[] = "bundler/extensions/f
 static PyObject *__pyx_n_s_a;
 static PyObject *__pyx_n_s_b;
 static PyObject *__pyx_n_s_bad_prefix_FSM;
-static PyObject *__pyx_n_s_balanced_relators;
 static PyObject *__pyx_n_s_before_automorphs;
 static PyObject *__pyx_n_s_bundler_extensions_first;
 static PyObject *__pyx_kp_s_bundler_extensions_first_pyx;
@@ -1694,7 +1663,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *         reached = to_do.front()             # <<<<<<<<<<<<<<
  *         to_do.pop()  # Get the next equivalent word to check.
- *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)
+ *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  */
     __pyx_v_reached = __pyx_v_to_do.front();
 
@@ -1702,7 +1671,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  *     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *         reached = to_do.front()
  *         to_do.pop()  # Get the next equivalent word to check.             # <<<<<<<<<<<<<<
- *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)
+ *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  *         for i in range(int(returns.size())):
  */
     __pyx_v_to_do.pop();
@@ -1710,7 +1679,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     /* "bundler/extensions/first.pyx":37
  *         reached = to_do.front()
  *         to_do.pop()  # Get the next equivalent word to check.
- *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)             # <<<<<<<<<<<<<<
+ *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)             # <<<<<<<<<<<<<<
  *         for i in range(int(returns.size())):
  *             b = returns[i].first
  */
@@ -1732,11 +1701,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_t_8 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 37, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     if ((__pyx_v_prefix != 0)) {
-      __Pyx_INCREF(__pyx_int_2);
-      __pyx_t_4 = __pyx_int_2;
-    } else {
       __Pyx_INCREF(__pyx_int_1);
       __pyx_t_4 = __pyx_int_1;
+    } else {
+      __Pyx_INCREF(__pyx_int_2);
+      __pyx_t_4 = __pyx_int_2;
     }
     if (PyDict_SetItem(__pyx_t_8, __pyx_n_s_repeat, __pyx_t_4) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -1751,7 +1720,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
 
     /* "bundler/extensions/first.pyx":38
  *         to_do.pop()  # Get the next equivalent word to check.
- *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)
+ *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  *         for i in range(int(returns.size())):             # <<<<<<<<<<<<<<
  *             b = returns[i].first
  *             replace = returns[i].second
@@ -1762,11 +1731,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_v_i = __pyx_t_7;
 
       /* "bundler/extensions/first.pyx":39
- *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)
+ *         returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
  *         for i in range(int(returns.size())):
  *             b = returns[i].first             # <<<<<<<<<<<<<<
  *             replace = returns[i].second
- *             replace = self.balanced_relators[tuple(replace)]
+ *             if b >= len_word + longest_relator: break
  */
       __pyx_t_14 = (__pyx_v_returns[__pyx_v_i]).first;
       __pyx_v_b = __pyx_t_14;
@@ -1775,7 +1744,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  *         for i in range(int(returns.size())):
  *             b = returns[i].first
  *             replace = returns[i].second             # <<<<<<<<<<<<<<
- *             replace = self.balanced_relators[tuple(replace)]
+ *             if b >= len_word + longest_relator: break
  *             len_replace = replace.size()
  */
       __pyx_t_10 = (__pyx_v_returns[__pyx_v_i]).second;
@@ -1784,40 +1753,30 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       /* "bundler/extensions/first.pyx":41
  *             b = returns[i].first
  *             replace = returns[i].second
- *             replace = self.balanced_relators[tuple(replace)]             # <<<<<<<<<<<<<<
+ *             if b >= len_word + longest_relator: break             # <<<<<<<<<<<<<<
  *             len_replace = replace.size()
  *             if len_replace > len_word: continue
  */
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_balanced_relators); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_8 = __pyx_convert_vector_to_py_int(__pyx_v_replace); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 41, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_2 = __Pyx_PySequence_Tuple(__pyx_t_8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 41, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_10 = __pyx_convert_vector_from_py_int(__pyx_t_8); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_v_replace = __pyx_t_10;
+      __pyx_t_9 = ((__pyx_v_b >= (__pyx_v_len_word + __pyx_v_longest_relator)) != 0);
+      if (__pyx_t_9) {
+        goto __pyx_L8_break;
+      }
 
       /* "bundler/extensions/first.pyx":42
  *             replace = returns[i].second
- *             replace = self.balanced_relators[tuple(replace)]
+ *             if b >= len_word + longest_relator: break
  *             len_replace = replace.size()             # <<<<<<<<<<<<<<
  *             if len_replace > len_word: continue
- *             a = b - len_replace
+ *             a = b - len_replace  # There is a replacement to be made between a & b.
  */
       __pyx_v_len_replace = __pyx_v_replace.size();
 
       /* "bundler/extensions/first.pyx":43
- *             replace = self.balanced_relators[tuple(replace)]
+ *             if b >= len_word + longest_relator: break
  *             len_replace = replace.size()
  *             if len_replace > len_word: continue             # <<<<<<<<<<<<<<
- *             a = b - len_replace
- *             # There is a replacement to be made between a & b.
+ *             a = b - len_replace  # There is a replacement to be made between a & b.
+ *             if a >= len_word: continue
  */
       __pyx_t_9 = ((__pyx_v_len_replace > __pyx_v_len_word) != 0);
       if (__pyx_t_9) {
@@ -1827,18 +1786,18 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       /* "bundler/extensions/first.pyx":44
  *             len_replace = replace.size()
  *             if len_replace > len_word: continue
- *             a = b - len_replace             # <<<<<<<<<<<<<<
- *             # There is a replacement to be made between a & b.
+ *             a = b - len_replace  # There is a replacement to be made between a & b.             # <<<<<<<<<<<<<<
  *             if a >= len_word: continue
+ * 
  */
       __pyx_v_a = (__pyx_v_b - __pyx_v_len_replace);
 
-      /* "bundler/extensions/first.pyx":46
- *             a = b - len_replace
- *             # There is a replacement to be made between a & b.
+      /* "bundler/extensions/first.pyx":45
+ *             if len_replace > len_word: continue
+ *             a = b - len_replace  # There is a replacement to be made between a & b.
  *             if a >= len_word: continue             # <<<<<<<<<<<<<<
- *             if b >= len_word + longest_relator: break
  * 
+ *             next_word.clear()
  */
       __pyx_t_9 = ((__pyx_v_a >= __pyx_v_len_word) != 0);
       if (__pyx_t_9) {
@@ -1846,19 +1805,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       }
 
       /* "bundler/extensions/first.pyx":47
- *             # There is a replacement to be made between a & b.
  *             if a >= len_word: continue
- *             if b >= len_word + longest_relator: break             # <<<<<<<<<<<<<<
- * 
- *             next_word.clear()
- */
-      __pyx_t_9 = ((__pyx_v_b >= (__pyx_v_len_word + __pyx_v_longest_relator)) != 0);
-      if (__pyx_t_9) {
-        goto __pyx_L8_break;
-      }
-
-      /* "bundler/extensions/first.pyx":49
- *             if b >= len_word + longest_relator: break
  * 
  *             next_word.clear()             # <<<<<<<<<<<<<<
  *             for j in range(len_word):
@@ -1866,7 +1813,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_next_word.clear();
 
-      /* "bundler/extensions/first.pyx":50
+      /* "bundler/extensions/first.pyx":48
  * 
  *             next_word.clear()
  *             for j in range(len_word):             # <<<<<<<<<<<<<<
@@ -1878,7 +1825,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
         __pyx_v_j = __pyx_t_16;
 
-        /* "bundler/extensions/first.pyx":51
+        /* "bundler/extensions/first.pyx":49
  *             next_word.clear()
  *             for j in range(len_word):
  *                 k = (j - a) % len_word             # <<<<<<<<<<<<<<
@@ -1888,11 +1835,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_t_17 = (__pyx_v_j - __pyx_v_a);
         if (unlikely(__pyx_v_len_word == 0)) {
           PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-          __PYX_ERR(0, 51, __pyx_L1_error)
+          __PYX_ERR(0, 49, __pyx_L1_error)
         }
         __pyx_v_k = __Pyx_mod_int(__pyx_t_17, __pyx_v_len_word);
 
-        /* "bundler/extensions/first.pyx":52
+        /* "bundler/extensions/first.pyx":50
  *             for j in range(len_word):
  *                 k = (j - a) % len_word
  *                 next_word.push_back(replace[k] if k < len_replace else reached[j])             # <<<<<<<<<<<<<<
@@ -1908,11 +1855,11 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
           __pyx_v_next_word.push_back(__pyx_t_18);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 52, __pyx_L1_error)
+          __PYX_ERR(0, 50, __pyx_L1_error)
         }
       }
 
-      /* "bundler/extensions/first.pyx":55
+      /* "bundler/extensions/first.pyx":53
  *             # next_word = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
  * 
  *             if seen.count(next_word) != 0: continue  # Only consider new words.             # <<<<<<<<<<<<<<
@@ -1924,44 +1871,44 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         goto __pyx_L7_continue;
       }
 
-      /* "bundler/extensions/first.pyx":58
+      /* "bundler/extensions/first.pyx":56
  *             # Test for trivial simplifications.
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_simpler_FSM); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_simpler_FSM); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_hit); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_hit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 58, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __pyx_t_3 = __Pyx_PySequence_Tuple(__pyx_t_8); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-        __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
-        if (likely(__pyx_t_2)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-          __Pyx_INCREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_8 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_2))) {
+        __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_2);
+        if (likely(__pyx_t_8)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+          __Pyx_INCREF(__pyx_t_8);
           __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_4, function);
+          __Pyx_DECREF_SET(__pyx_t_2, function);
         }
       }
-      __pyx_t_8 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_4, __pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3);
-      __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_4 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_8, __pyx_t_3) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3);
+      __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 58, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 56, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 56, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 58, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_9) {
 
-        /* "bundler/extensions/first.pyx":59
+        /* "bundler/extensions/first.pyx":57
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):
  *                 return False             # <<<<<<<<<<<<<<
@@ -1973,7 +1920,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":58
+        /* "bundler/extensions/first.pyx":56
  *             # Test for trivial simplifications.
  * 
  *             if self.simpler_FSM.hit(tuple(next_word)):             # <<<<<<<<<<<<<<
@@ -1982,25 +1929,25 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":61
+      /* "bundler/extensions/first.pyx":59
  *                 return False
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_2 = __Pyx_PySequence_Tuple(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_c_auto); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_before_automorphs); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_2 = __pyx_convert_vector_to_py_int(__pyx_v_next_word); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_8 = __Pyx_PySequence_Tuple(__pyx_t_2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __pyx_t_2 = __Pyx_PyBool_FromLong(__pyx_v_prefix); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
       __pyx_t_6 = NULL;
       __pyx_t_14 = 0;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -2015,26 +1962,26 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       }
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
-        PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_2, __pyx_t_4};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+        PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_8, __pyx_t_2};
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-        PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_2, __pyx_t_4};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
+        PyObject *__pyx_temp[4] = {__pyx_t_6, __pyx_v_word, __pyx_t_8, __pyx_t_2};
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 3+__pyx_t_14); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_GOTREF(__pyx_t_4);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_19 = PyTuple_New(3+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 61, __pyx_L1_error)
+        __pyx_t_19 = PyTuple_New(3+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 59, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
         if (__pyx_t_6) {
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -2042,23 +1989,23 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __Pyx_INCREF(__pyx_v_word);
         __Pyx_GIVEREF(__pyx_v_word);
         PyTuple_SET_ITEM(__pyx_t_19, 0+__pyx_t_14, __pyx_v_word);
+        __Pyx_GIVEREF(__pyx_t_8);
+        PyTuple_SET_ITEM(__pyx_t_19, 1+__pyx_t_14, __pyx_t_8);
         __Pyx_GIVEREF(__pyx_t_2);
-        PyTuple_SET_ITEM(__pyx_t_19, 1+__pyx_t_14, __pyx_t_2);
-        __Pyx_GIVEREF(__pyx_t_4);
-        PyTuple_SET_ITEM(__pyx_t_19, 2+__pyx_t_14, __pyx_t_4);
+        PyTuple_SET_ITEM(__pyx_t_19, 2+__pyx_t_14, __pyx_t_2);
+        __pyx_t_8 = 0;
         __pyx_t_2 = 0;
-        __pyx_t_4 = 0;
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 61, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_19, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 59, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 61, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+      __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_5 = ((!__pyx_t_9) != 0);
       if (__pyx_t_5) {
 
-        /* "bundler/extensions/first.pyx":62
+        /* "bundler/extensions/first.pyx":60
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):
  *                 return False             # <<<<<<<<<<<<<<
@@ -2070,7 +2017,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_False;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":61
+        /* "bundler/extensions/first.pyx":59
  *                 return False
  * 
  *             if not self.c_auto.before_automorphs(word, tuple(next_word), prefix):             # <<<<<<<<<<<<<<
@@ -2079,7 +2026,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":64
+      /* "bundler/extensions/first.pyx":62
  *                 return False
  * 
  *             s = int(seen.size())             # <<<<<<<<<<<<<<
@@ -2088,7 +2035,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       __pyx_v_s = ((int)__pyx_v_seen.size());
 
-      /* "bundler/extensions/first.pyx":65
+      /* "bundler/extensions/first.pyx":63
  * 
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
@@ -2098,7 +2045,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
       __pyx_t_5 = ((__pyx_v_s == __pyx_v_max_tree_size) != 0);
       if (__pyx_t_5) {
 
-        /* "bundler/extensions/first.pyx":66
+        /* "bundler/extensions/first.pyx":64
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.
  *                 return True             # <<<<<<<<<<<<<<
@@ -2110,7 +2057,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_r = Py_True;
         goto __pyx_L0;
 
-        /* "bundler/extensions/first.pyx":65
+        /* "bundler/extensions/first.pyx":63
  * 
  *             s = int(seen.size())
  *             if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
@@ -2119,7 +2066,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
  */
       }
 
-      /* "bundler/extensions/first.pyx":69
+      /* "bundler/extensions/first.pyx":67
  * 
  *             # Add it to the reachable word list.
  *             seen.insert(next_word)             # <<<<<<<<<<<<<<
@@ -2130,10 +2077,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
         __pyx_v_seen.insert(__pyx_v_next_word);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 69, __pyx_L1_error)
+        __PYX_ERR(0, 67, __pyx_L1_error)
       }
 
-      /* "bundler/extensions/first.pyx":70
+      /* "bundler/extensions/first.pyx":68
  *             # Add it to the reachable word list.
  *             seen.insert(next_word)
  *             to_do.push(next_word)             # <<<<<<<<<<<<<<
@@ -2146,7 +2093,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_first_in_class(CYTHON_UNU
     __pyx_L8_break:;
   }
 
-  /* "bundler/extensions/first.pyx":72
+  /* "bundler/extensions/first.pyx":70
  *             to_do.push(next_word)
  * 
  *     return True             # <<<<<<<<<<<<<<
@@ -2654,7 +2601,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
   {&__pyx_n_s_b, __pyx_k_b, sizeof(__pyx_k_b), 0, 0, 1, 1},
   {&__pyx_n_s_bad_prefix_FSM, __pyx_k_bad_prefix_FSM, sizeof(__pyx_k_bad_prefix_FSM), 0, 0, 1, 1},
-  {&__pyx_n_s_balanced_relators, __pyx_k_balanced_relators, sizeof(__pyx_k_balanced_relators), 0, 0, 1, 1},
   {&__pyx_n_s_before_automorphs, __pyx_k_before_automorphs, sizeof(__pyx_k_before_automorphs), 0, 0, 1, 1},
   {&__pyx_n_s_bundler_extensions_first, __pyx_k_bundler_extensions_first, sizeof(__pyx_k_bundler_extensions_first), 0, 0, 1, 1},
   {&__pyx_kp_s_bundler_extensions_first_pyx, __pyx_k_bundler_extensions_first_pyx, sizeof(__pyx_k_bundler_extensions_first_pyx), 0, 0, 1, 0},
@@ -3505,122 +3451,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_CallOneArg(PyObject *func, PyObjec
     result = __Pyx_PyObject_Call(func, args, NULL);
     Py_DECREF(args);
     return result;
-}
-#endif
-
-/* GetItemInt */
-static PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
-    PyObject *r;
-    if (!j) return NULL;
-    r = PyObject_GetItem(o, j);
-    Py_DECREF(j);
-    return r;
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
-                                                              CYTHON_NCP_UNUSED int wraparound,
-                                                              CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    Py_ssize_t wrapped_i = i;
-    if (wraparound & unlikely(i < 0)) {
-        wrapped_i += PyList_GET_SIZE(o);
-    }
-    if ((!boundscheck) || likely(__Pyx_is_valid_index(wrapped_i, PyList_GET_SIZE(o)))) {
-        PyObject *r = PyList_GET_ITEM(o, wrapped_i);
-        Py_INCREF(r);
-        return r;
-    }
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-#else
-    return PySequence_GetItem(o, i);
-#endif
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
-                                                              CYTHON_NCP_UNUSED int wraparound,
-                                                              CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    Py_ssize_t wrapped_i = i;
-    if (wraparound & unlikely(i < 0)) {
-        wrapped_i += PyTuple_GET_SIZE(o);
-    }
-    if ((!boundscheck) || likely(__Pyx_is_valid_index(wrapped_i, PyTuple_GET_SIZE(o)))) {
-        PyObject *r = PyTuple_GET_ITEM(o, wrapped_i);
-        Py_INCREF(r);
-        return r;
-    }
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-#else
-    return PySequence_GetItem(o, i);
-#endif
-}
-static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, int is_list,
-                                                     CYTHON_NCP_UNUSED int wraparound,
-                                                     CYTHON_NCP_UNUSED int boundscheck) {
-#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS && CYTHON_USE_TYPE_SLOTS
-    if (is_list || PyList_CheckExact(o)) {
-        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyList_GET_SIZE(o);
-        if ((!boundscheck) || (likely(__Pyx_is_valid_index(n, PyList_GET_SIZE(o))))) {
-            PyObject *r = PyList_GET_ITEM(o, n);
-            Py_INCREF(r);
-            return r;
-        }
-    }
-    else if (PyTuple_CheckExact(o)) {
-        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyTuple_GET_SIZE(o);
-        if ((!boundscheck) || likely(__Pyx_is_valid_index(n, PyTuple_GET_SIZE(o)))) {
-            PyObject *r = PyTuple_GET_ITEM(o, n);
-            Py_INCREF(r);
-            return r;
-        }
-    } else {
-        PySequenceMethods *m = Py_TYPE(o)->tp_as_sequence;
-        if (likely(m && m->sq_item)) {
-            if (wraparound && unlikely(i < 0) && likely(m->sq_length)) {
-                Py_ssize_t l = m->sq_length(o);
-                if (likely(l >= 0)) {
-                    i += l;
-                } else {
-                    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
-                        return NULL;
-                    PyErr_Clear();
-                }
-            }
-            return m->sq_item(o, i);
-        }
-    }
-#else
-    if (is_list || PySequence_Check(o)) {
-        return PySequence_GetItem(o, i);
-    }
-#endif
-    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
-}
-
-/* ObjectGetItem */
-#if CYTHON_USE_TYPE_SLOTS
-static PyObject *__Pyx_PyObject_GetIndex(PyObject *obj, PyObject* index) {
-    PyObject *runerr;
-    Py_ssize_t key_value;
-    PySequenceMethods *m = Py_TYPE(obj)->tp_as_sequence;
-    if (unlikely(!(m && m->sq_item))) {
-        PyErr_Format(PyExc_TypeError, "'%.200s' object is not subscriptable", Py_TYPE(obj)->tp_name);
-        return NULL;
-    }
-    key_value = __Pyx_PyIndex_AsSsize_t(index);
-    if (likely(key_value != -1 || !(runerr = PyErr_Occurred()))) {
-        return __Pyx_GetItemInt_Fast(obj, key_value, 0, 1, 1);
-    }
-    if (PyErr_GivenExceptionMatches(runerr, PyExc_OverflowError)) {
-        PyErr_Clear();
-        PyErr_Format(PyExc_IndexError, "cannot fit '%.200s' into an index-sized integer", Py_TYPE(index)->tp_name);
-    }
-    return NULL;
-}
-static PyObject *__Pyx_PyObject_GetItem(PyObject *obj, PyObject* key) {
-    PyMappingMethods *m = Py_TYPE(obj)->tp_as_mapping;
-    if (likely(m && m->mp_subscript)) {
-        return m->mp_subscript(obj, key);
-    }
-    return __Pyx_PyObject_GetIndex(obj, key);
 }
 #endif
 

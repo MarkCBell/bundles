@@ -34,17 +34,15 @@ def first_in_class(object self, tuple word, int max_tree_size, bint prefix, int 
     while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
         reached = to_do.front()
         to_do.pop()  # Get the next equivalent word to check.
-        returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=2 if prefix else 1)
+        returns = self.find_balanced_relators_FSM.hits(tuple(reached), repeat=1 if prefix else 2)
         for i in range(int(returns.size())):
             b = returns[i].first
             replace = returns[i].second
-            replace = self.balanced_relators[tuple(replace)]
+            if b >= len_word + longest_relator: break
             len_replace = replace.size()
             if len_replace > len_word: continue
-            a = b - len_replace
-            # There is a replacement to be made between a & b.
+            a = b - len_replace  # There is a replacement to be made between a & b.
             if a >= len_word: continue
-            if b >= len_word + longest_relator: break
             
             next_word.clear()
             for j in range(len_word):
