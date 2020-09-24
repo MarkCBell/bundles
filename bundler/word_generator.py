@@ -32,10 +32,6 @@ class WordGenerator():
         
         self.valid_starting_characters = set(letter for letter in self.generators if not any(all(term < letter for term in clause) for clause in self.MCG_must_contain))
         
-        # Now construct a machine for performing automorphisms.
-        MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms.split('|')]
-        self.c_auto = Automorph(self.generators, self.inverse_lookup, [(list(self.repr_word(missing)), list(self.repr_word(output))) for missing, _, output in MCG_automorphisms])
-        
         # We find (some of) the major relators:
         if self.options.show_progress: print('Listing relators.')
         relators = []
@@ -133,7 +129,9 @@ class WordGenerator():
         if self.options.show_progress: print('Bad prefix FSM')
         self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: (len(a), a) < (len(b), b)))
         
-        self.FIC = FirstInClass(self.longest_relator, self.find_balanced_relators_FSM, self.bad_prefix_FSM, self.simpler_FSM, self.c_auto)
+        # Now construct a machine for determining whether a word is first in its class.
+        MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms.split('|')]
+        self.FIC = FirstInClass(self.generators, self.inverse_lookup, self.longest_relator, self.find_balanced_relators_FSM, self.bad_prefix_FSM, self.simpler_FSM, [(list(self.repr_word(missing)), list(self.repr_word(output))) for missing, _, output in MCG_automorphisms])
         
         if self.options.show_progress: print('Loop invariant FSM')
         seeds = self.surfaces.curver.triangulation.edge_curves()

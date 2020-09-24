@@ -17,6 +17,9 @@ cdef class FSM:
     cdef dict distance_to_yield
     cdef array.array has_yield
     
+    cdef vector[IWord] yield_states2
+    cdef vector[int] yield_states2_starts
+    
     cdef bint c_hit(self, IWord& word)
     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=*)
 

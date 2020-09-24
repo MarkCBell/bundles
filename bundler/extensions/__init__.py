@@ -102,7 +102,7 @@ def CNF_FSM(alphabet, clauses):
     flags = dict((letter, sum(2**i for i, clause in enumerate(clauses) if letter in clause)) for letter in alphabet)
     
     machine = OrderedDict()
-    accepting_states = {states[-1]: [True]}
+    accepting_states = {states[-1]: [tuple()]}  # Just need to return something to make this a yield state.
     for state in states:
         arrows = dict()
         for letter in alphabet:

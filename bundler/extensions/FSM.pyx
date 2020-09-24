@@ -16,12 +16,24 @@ from queue import Queue
 
 cdef class FSM:
     def __init__(self, alphabet, machine, yield_states):
+        cdef int start
+        cdef IWord x
+        
         self.alphabet = alphabet
         self.alphabet_len = len(self.alphabet)
         self.machine = array.array('i', machine)
         self.machine_len = len(self.machine) // self.alphabet_len
         self.yield_states = yield_states
         self.has_yield = array.array('i', [1 if self.yield_states.get(state, []) else 0 for state in range(self.machine_len)])
+        
+        start = 0
+        self.yield_states2_starts.push_back(0)
+        for i in range(self.machine_len):
+            yields = self.yield_states.get(i, [])
+            for x in yields:
+                self.yield_states2.push_back(x)
+            start += len(yields)
+            self.yield_states2_starts.push_back(start)
         
         reverse_arrows = defaultdict(list)
         for state in range(self.machine_len):
@@ -77,15 +89,16 @@ cdef class FSM:
         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
         cdef int index = 0, letter
         cdef int state = 0
-        cdef int i
+        cdef int i, j
+        cdef int start, end
         cdef vector[pair[int, IWord]] returns
         for _ in range(repeat):
             for i in range(int(word.size())):
                 letter = word[i]
                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
                 index += 1
-                for x in self.yield_states.get(state, []):
-                    returns.push_back(pair[int, IWord](index, x))
+                for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
+                    returns.push_back(pair[int, IWord](index, self.yield_states2[j]))
         
         return returns
     
