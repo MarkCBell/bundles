@@ -875,6 +875,7 @@ typedef struct arrayobject arrayobject;
 #endif
 struct __pyx_obj_7bundler_10extensions_3FSM_FSM;
 struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits;
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit;
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
 
 /* "bundler/extensions/FSM.pxd":9
@@ -886,15 +887,27 @@ struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
  */
 typedef std::vector<int>  __pyx_t_7bundler_10extensions_3FSM_IWord;
 
+/* "bundler/extensions/FSM.pxd":23
+ *     cdef vector[int] yield_states2_starts
+ * 
+ *     cdef bint c_hit(self, IWord& word, int run=*)             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=*)
+ * 
+ */
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit {
+  int __pyx_n;
+  int run;
+};
+
 /* "bundler/extensions/FSM.pxd":24
  * 
- *     cdef bint c_hit(self, IWord& word)
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=*)             # <<<<<<<<<<<<<<
+ *     cdef bint c_hit(self, IWord& word, int run=*)
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=*)             # <<<<<<<<<<<<<<
  * 
  */
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits {
   int __pyx_n;
-  int repeat;
+  int run;
 };
 
 /* "bundler/extensions/FSM.pxd":11
@@ -919,31 +932,31 @@ struct __pyx_obj_7bundler_10extensions_3FSM_FSM {
 };
 
 
-/* "bundler/extensions/FSM.pyx":105
+/* "bundler/extensions/FSM.pyx":107
  *         return returns
  * 
- *     def hits(self, tuple word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
 struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits {
   PyObject_HEAD
   int __pyx_v__;
+  int __pyx_v_i;
   int __pyx_v_index;
+  int __pyx_v_length;
   int __pyx_v_letter;
-  int __pyx_v_repeat;
+  int __pyx_v_run;
   struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self;
   int __pyx_v_state;
   PyObject *__pyx_v_word;
   PyObject *__pyx_v_x;
-  int __pyx_t_0;
+  Py_ssize_t __pyx_t_0;
   int __pyx_t_1;
   int __pyx_t_2;
-  PyObject *__pyx_t_3;
-  Py_ssize_t __pyx_t_4;
-  PyObject *__pyx_t_5;
-  Py_ssize_t __pyx_t_6;
-  PyObject *(*__pyx_t_7)(PyObject *);
+  int __pyx_t_3;
+  PyObject *__pyx_t_4;
+  PyObject *(*__pyx_t_5)(PyObject *);
 };
 
 
@@ -957,7 +970,7 @@ struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits {
  */
 
 struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM {
-  int (*c_hit)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &);
+  int (*c_hit)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit *__pyx_optional_args);
   std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*c_hits)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args);
 };
 static struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *__pyx_vtabptr_7bundler_10extensions_3FSM_FSM;
@@ -1717,7 +1730,7 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
-static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word); /* proto*/
+static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit *__pyx_optional_args); /* proto*/
 static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args); /* proto*/
 
 /* Module declarations from 'cpython.version' */
@@ -1842,6 +1855,7 @@ static const char __pyx_k_FSM[] = "FSM";
 static const char __pyx_k_get[] = "get";
 static const char __pyx_k_new[] = "__new__";
 static const char __pyx_k_put[] = "put";
+static const char __pyx_k_run[] = "run";
 static const char __pyx_k_args[] = "args";
 static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_hits[] = "hits";
@@ -1864,7 +1878,6 @@ static const char __pyx_k_format[] = "format";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
-static const char __pyx_k_repeat[] = "repeat";
 static const char __pyx_k_update[] = "update";
 static const char __pyx_k_machine[] = "machine";
 static const char __pyx_k_FSM_hits[] = "FSM.hits";
@@ -1936,7 +1949,7 @@ static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
 static PyObject *__pyx_n_s_reduce_ex;
-static PyObject *__pyx_n_s_repeat;
+static PyObject *__pyx_n_s_run;
 static PyObject *__pyx_n_s_send;
 static PyObject *__pyx_n_s_setstate;
 static PyObject *__pyx_n_s_setstate_cython;
@@ -1951,7 +1964,7 @@ static int __pyx_pf_7bundler_10extensions_3FSM_3FSM___init__(struct __pyx_obj_7b
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_state); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_repeat); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_depth); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13__reduce_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_15__setstate_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
@@ -3316,7 +3329,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
  *     def distance(self, tuple word):
  *         return self.distance_to_yield[self(word)]             # <<<<<<<<<<<<<<
  * 
- *     cdef bint c_hit(self, IWord& word):
+ *     cdef bint c_hit(self, IWord& word, int run=-1):
  */
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(__pyx_v_self->distance_to_yield == Py_None)) {
@@ -3370,19 +3383,21 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
 /* "bundler/extensions/FSM.pyx":70
  *         return self.distance_to_yield[self(word)]
  * 
- *     cdef bint c_hit(self, IWord& word):             # <<<<<<<<<<<<<<
- *         cdef int index = 0, letter
+ *     cdef bint c_hit(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
+ *         cdef int index = 0
  *         cdef int state = 0
  */
 
-static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word) {
+static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit *__pyx_optional_args) {
+  int __pyx_v_run = ((int)-1);
   int __pyx_v_index;
-  int __pyx_v_letter;
   int __pyx_v_state;
+  int __pyx_v_length;
+  CYTHON_UNUSED int __pyx_v__;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
-  long __pyx_t_1;
-  long __pyx_t_2;
+  int __pyx_t_1;
+  int __pyx_t_2;
   int __pyx_t_3;
   int __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
@@ -3393,58 +3408,67 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("c_hit", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_run = __pyx_optional_args->run;
+    }
+  }
 
   /* "bundler/extensions/FSM.pyx":71
  * 
- *     cdef bint c_hit(self, IWord& word):
- *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
+ *     cdef bint c_hit(self, IWord& word, int run=-1):
+ *         cdef int index = 0             # <<<<<<<<<<<<<<
  *         cdef int state = 0
- *         for index in range(int(word.size())):
+ *         cdef int length = word.size()
  */
   __pyx_v_index = 0;
 
   /* "bundler/extensions/FSM.pyx":72
- *     cdef bint c_hit(self, IWord& word):
- *         cdef int index = 0, letter
+ *     cdef bint c_hit(self, IWord& word, int run=-1):
+ *         cdef int index = 0
  *         cdef int state = 0             # <<<<<<<<<<<<<<
- *         for index in range(int(word.size())):
- *             letter = word[index]
+ *         cdef int length = word.size()
+ *         for _ in range(length if run < 0 else run):
  */
   __pyx_v_state = 0;
 
   /* "bundler/extensions/FSM.pyx":73
- *         cdef int index = 0, letter
+ *         cdef int index = 0
  *         cdef int state = 0
- *         for index in range(int(word.size())):             # <<<<<<<<<<<<<<
- *             letter = word[index]
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         cdef int length = word.size()             # <<<<<<<<<<<<<<
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  */
-  __pyx_t_1 = ((long)__pyx_v_word.size());
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_index = __pyx_t_3;
+  __pyx_v_length = __pyx_v_word.size();
 
-    /* "bundler/extensions/FSM.pyx":74
+  /* "bundler/extensions/FSM.pyx":74
  *         cdef int state = 0
- *         for index in range(int(word.size())):
- *             letter = word[index]             # <<<<<<<<<<<<<<
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         cdef int length = word.size()
+ *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:
  */
-    __pyx_v_letter = (__pyx_v_word[__pyx_v_index]);
+  if (((__pyx_v_run < 0) != 0)) {
+    __pyx_t_1 = __pyx_v_length;
+  } else {
+    __pyx_t_1 = __pyx_v_run;
+  }
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v__ = __pyx_t_3;
 
     /* "bundler/extensions/FSM.pyx":75
- *         for index in range(int(word.size())):
- *             letter = word[index]
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
+ *         cdef int length = word.size()
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  */
-    __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + __pyx_v_letter)]);
+    __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + (__pyx_v_word[__pyx_v_index]))]);
 
     /* "bundler/extensions/FSM.pyx":76
- *             letter = word[index]
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:
@@ -3453,7 +3477,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
     if (unlikely(__pyx_t_4)) {
 
       /* "bundler/extensions/FSM.pyx":77
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
  *             if self.has_yield.data.as_ints[state]:
@@ -3487,8 +3511,8 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
       __PYX_ERR(0, 77, __pyx_L1_error)
 
       /* "bundler/extensions/FSM.pyx":76
- *             letter = word[index]
- *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:
@@ -3500,7 +3524,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:             # <<<<<<<<<<<<<<
  *                 return True
- * 
+ *             index += 1
  */
     __pyx_t_4 = ((__pyx_v_self->has_yield->data.as_ints[__pyx_v_state]) != 0);
     if (__pyx_t_4) {
@@ -3509,8 +3533,8 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:
  *                 return True             # <<<<<<<<<<<<<<
- * 
- *         return False
+ *             index += 1
+ *             if index == length: index = 0
  */
       __pyx_r = 1;
       goto __pyx_L0;
@@ -3520,13 +3544,34 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:             # <<<<<<<<<<<<<<
  *                 return True
+ *             index += 1
+ */
+    }
+
+    /* "bundler/extensions/FSM.pyx":80
+ *             if self.has_yield.data.as_ints[state]:
+ *                 return True
+ *             index += 1             # <<<<<<<<<<<<<<
+ *             if index == length: index = 0
  * 
  */
+    __pyx_v_index = (__pyx_v_index + 1);
+
+    /* "bundler/extensions/FSM.pyx":81
+ *                 return True
+ *             index += 1
+ *             if index == length: index = 0             # <<<<<<<<<<<<<<
+ * 
+ *         return False
+ */
+    __pyx_t_4 = ((__pyx_v_index == __pyx_v_length) != 0);
+    if (__pyx_t_4) {
+      __pyx_v_index = 0;
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":81
- *                 return True
+  /* "bundler/extensions/FSM.pyx":83
+ *             if index == length: index = 0
  * 
  *         return False             # <<<<<<<<<<<<<<
  * 
@@ -3538,8 +3583,8 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   /* "bundler/extensions/FSM.pyx":70
  *         return self.distance_to_yield[self(word)]
  * 
- *     cdef bint c_hit(self, IWord& word):             # <<<<<<<<<<<<<<
- *         cdef int index = 0, letter
+ *     cdef bint c_hit(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
+ *         cdef int index = 0
  *         cdef int state = 0
  */
 
@@ -3556,7 +3601,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":83
+/* "bundler/extensions/FSM.pyx":85
  *         return False
  * 
  *     def hit(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3574,7 +3619,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7hit(PyObject *__pyx_v
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("hit (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 83, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 85, __pyx_L1_error)
   __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject*)__pyx_v_word));
 
   /* function exit code */
@@ -3596,22 +3641,22 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("hit", 0);
 
-  /* "bundler/extensions/FSM.pyx":86
+  /* "bundler/extensions/FSM.pyx":88
  *         ''' Return whether word meets any state that yields. '''
  *         # return any(self.hits(word))
  *         return self.c_hit(word)             # <<<<<<<<<<<<<<
  * 
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=1):
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->c_hit(__pyx_v_self, __pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->c_hit(__pyx_v_self, __pyx_t_1, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":83
+  /* "bundler/extensions/FSM.pyx":85
  *         return False
  * 
  *     def hit(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3630,19 +3675,19 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":88
+/* "bundler/extensions/FSM.pyx":90
  *         return self.c_hit(word)
  * 
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
- *         cdef int index = 0, letter
+ *         cdef int index = 0
  */
 
 static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, __pyx_t_7bundler_10extensions_3FSM_IWord &__pyx_v_word, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args) {
-  int __pyx_v_repeat = ((int)1);
+  int __pyx_v_run = ((int)-1);
   int __pyx_v_index;
-  int __pyx_v_letter;
   int __pyx_v_state;
+  int __pyx_v_length;
   int __pyx_v_i;
   int __pyx_v_j;
   std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __pyx_v_returns;
@@ -3652,143 +3697,162 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   int __pyx_t_1;
   int __pyx_t_2;
   int __pyx_t_3;
-  long __pyx_t_4;
-  long __pyx_t_5;
+  int __pyx_t_4;
+  int __pyx_t_5;
   int __pyx_t_6;
-  int __pyx_t_7;
+  std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord>  __pyx_t_7;
   int __pyx_t_8;
-  int __pyx_t_9;
-  std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord>  __pyx_t_10;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("c_hits", 0);
   if (__pyx_optional_args) {
     if (__pyx_optional_args->__pyx_n > 0) {
-      __pyx_v_repeat = __pyx_optional_args->repeat;
+      __pyx_v_run = __pyx_optional_args->run;
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":90
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=1):
+  /* "bundler/extensions/FSM.pyx":92
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
- *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
+ *         cdef int index = 0             # <<<<<<<<<<<<<<
  *         cdef int state = 0
- *         cdef int i, j
+ *         cdef int length = word.size()
  */
   __pyx_v_index = 0;
 
-  /* "bundler/extensions/FSM.pyx":91
+  /* "bundler/extensions/FSM.pyx":93
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
- *         cdef int index = 0, letter
+ *         cdef int index = 0
  *         cdef int state = 0             # <<<<<<<<<<<<<<
- *         cdef int i, j
- *         cdef int start, end
+ *         cdef int length = word.size()
+ *         cdef int i = 0, j
  */
   __pyx_v_state = 0;
 
-  /* "bundler/extensions/FSM.pyx":95
- *         cdef int start, end
+  /* "bundler/extensions/FSM.pyx":94
+ *         cdef int index = 0
+ *         cdef int state = 0
+ *         cdef int length = word.size()             # <<<<<<<<<<<<<<
+ *         cdef int i = 0, j
  *         cdef vector[pair[int, IWord]] returns
- *         for _ in range(repeat):             # <<<<<<<<<<<<<<
- *             for i in range(int(word.size())):
- *                 letter = word[i]
  */
-  __pyx_t_1 = __pyx_v_repeat;
+  __pyx_v_length = __pyx_v_word.size();
+
+  /* "bundler/extensions/FSM.pyx":95
+ *         cdef int state = 0
+ *         cdef int length = word.size()
+ *         cdef int i = 0, j             # <<<<<<<<<<<<<<
+ *         cdef vector[pair[int, IWord]] returns
+ *         for _ in range(length if run < 0 else run):
+ */
+  __pyx_v_i = 0;
+
+  /* "bundler/extensions/FSM.pyx":97
+ *         cdef int i = 0, j
+ *         cdef vector[pair[int, IWord]] returns
+ *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             i += 1
+ */
+  if (((__pyx_v_run < 0) != 0)) {
+    __pyx_t_1 = __pyx_v_length;
+  } else {
+    __pyx_t_1 = __pyx_v_run;
+  }
   __pyx_t_2 = __pyx_t_1;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v__ = __pyx_t_3;
 
-    /* "bundler/extensions/FSM.pyx":96
+    /* "bundler/extensions/FSM.pyx":98
  *         cdef vector[pair[int, IWord]] returns
- *         for _ in range(repeat):
- *             for i in range(int(word.size())):             # <<<<<<<<<<<<<<
- *                 letter = word[i]
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
+ *             i += 1
+ *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
  */
-    __pyx_t_4 = ((long)__pyx_v_word.size());
+    __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + (__pyx_v_word[__pyx_v_index]))]);
+
+    /* "bundler/extensions/FSM.pyx":99
+ *         for _ in range(length if run < 0 else run):
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             i += 1             # <<<<<<<<<<<<<<
+ *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
+ *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
+ */
+    __pyx_v_i = (__pyx_v_i + 1);
+
+    /* "bundler/extensions/FSM.pyx":100
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             i += 1
+ *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):             # <<<<<<<<<<<<<<
+ *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
+ *             index += 1
+ */
+    __pyx_t_4 = (__pyx_v_self->yield_states2_starts[(__pyx_v_state + 1)]);
     __pyx_t_5 = __pyx_t_4;
-    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
-      __pyx_v_i = __pyx_t_6;
+    for (__pyx_t_6 = (__pyx_v_self->yield_states2_starts[__pyx_v_state]); __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+      __pyx_v_j = __pyx_t_6;
 
-      /* "bundler/extensions/FSM.pyx":97
- *         for _ in range(repeat):
- *             for i in range(int(word.size())):
- *                 letter = word[i]             # <<<<<<<<<<<<<<
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
+      /* "bundler/extensions/FSM.pyx":101
+ *             i += 1
+ *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
+ *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))             # <<<<<<<<<<<<<<
+ *             index += 1
+ *             if index == length: index = 0
  */
-      __pyx_v_letter = (__pyx_v_word[__pyx_v_i]);
+      try {
+        __pyx_t_7 = std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> (__pyx_v_i, (__pyx_v_self->yield_states2[__pyx_v_j]));
+      } catch(...) {
+        __Pyx_CppExn2PyErr();
+        __PYX_ERR(0, 101, __pyx_L1_error)
+      }
+      try {
+        __pyx_v_returns.push_back(__pyx_t_7);
+      } catch(...) {
+        __Pyx_CppExn2PyErr();
+        __PYX_ERR(0, 101, __pyx_L1_error)
+      }
+    }
 
-      /* "bundler/extensions/FSM.pyx":98
- *             for i in range(int(word.size())):
- *                 letter = word[i]
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
- *                 index += 1
- *                 for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
- */
-      __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + __pyx_v_letter)]);
-
-      /* "bundler/extensions/FSM.pyx":99
- *                 letter = word[i]
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1             # <<<<<<<<<<<<<<
- *                 for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
- *                     returns.push_back(pair[int, IWord](index, self.yield_states2[j]))
- */
-      __pyx_v_index = (__pyx_v_index + 1);
-
-      /* "bundler/extensions/FSM.pyx":100
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
- *                 for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):             # <<<<<<<<<<<<<<
- *                     returns.push_back(pair[int, IWord](index, self.yield_states2[j]))
+    /* "bundler/extensions/FSM.pyx":102
+ *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
+ *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
+ *             index += 1             # <<<<<<<<<<<<<<
+ *             if index == length: index = 0
  * 
  */
-      __pyx_t_7 = (__pyx_v_self->yield_states2_starts[(__pyx_v_state + 1)]);
-      __pyx_t_8 = __pyx_t_7;
-      for (__pyx_t_9 = (__pyx_v_self->yield_states2_starts[__pyx_v_state]); __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
-        __pyx_v_j = __pyx_t_9;
+    __pyx_v_index = (__pyx_v_index + 1);
 
-        /* "bundler/extensions/FSM.pyx":101
- *                 index += 1
- *                 for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
- *                     returns.push_back(pair[int, IWord](index, self.yield_states2[j]))             # <<<<<<<<<<<<<<
+    /* "bundler/extensions/FSM.pyx":103
+ *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
+ *             index += 1
+ *             if index == length: index = 0             # <<<<<<<<<<<<<<
  * 
  *         return returns
  */
-        try {
-          __pyx_t_10 = std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> (__pyx_v_index, (__pyx_v_self->yield_states2[__pyx_v_j]));
-        } catch(...) {
-          __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 101, __pyx_L1_error)
-        }
-        try {
-          __pyx_v_returns.push_back(__pyx_t_10);
-        } catch(...) {
-          __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 101, __pyx_L1_error)
-        }
-      }
+    __pyx_t_8 = ((__pyx_v_index == __pyx_v_length) != 0);
+    if (__pyx_t_8) {
+      __pyx_v_index = 0;
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":103
- *                     returns.push_back(pair[int, IWord](index, self.yield_states2[j]))
+  /* "bundler/extensions/FSM.pyx":105
+ *             if index == length: index = 0
  * 
  *         return returns             # <<<<<<<<<<<<<<
  * 
- *     def hits(self, tuple word, int repeat=1):
+ *     def hits(self, tuple word, int run=-1):
  */
   __pyx_r = __pyx_v_returns;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":88
+  /* "bundler/extensions/FSM.pyx":90
  *         return self.c_hit(word)
  * 
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
- *         cdef int index = 0, letter
+ *         cdef int index = 0
  */
 
   /* function exit code */
@@ -3801,10 +3865,10 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
 }
 static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "bundler/extensions/FSM.pyx":105
+/* "bundler/extensions/FSM.pyx":107
  *         return returns
  * 
- *     def hits(self, tuple word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
@@ -3814,7 +3878,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
 static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_8hits[] = " Process word and yield (index, x) for all states that word hits that have things to yield. ";
 static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_word = 0;
-  int __pyx_v_repeat;
+  int __pyx_v_run;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3822,7 +3886,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("hits (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_word,&__pyx_n_s_repeat,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_word,&__pyx_n_s_run,0};
     PyObject* values[2] = {0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -3843,12 +3907,12 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
         CYTHON_FALLTHROUGH;
         case  1:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_repeat);
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_run);
           if (value) { values[1] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hits") < 0)) __PYX_ERR(0, 105, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hits") < 0)) __PYX_ERR(0, 107, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3861,21 +3925,21 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
     }
     __pyx_v_word = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_repeat = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_repeat == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 105, __pyx_L3_error)
+      __pyx_v_run = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_run == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 107, __pyx_L3_error)
     } else {
-      __pyx_v_repeat = ((int)1);
+      __pyx_v_run = ((int)-1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("hits", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 105, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("hits", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 107, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bundler.extensions.FSM.FSM.hits", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 105, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_repeat);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_run);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3886,7 +3950,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_repeat) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run) {
   struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3898,7 +3962,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj
   if (unlikely(!__pyx_cur_scope)) {
     __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 105, __pyx_L1_error)
+    __PYX_ERR(0, 107, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3908,9 +3972,9 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj
   __pyx_cur_scope->__pyx_v_word = __pyx_v_word;
   __Pyx_INCREF(__pyx_cur_scope->__pyx_v_word);
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_word);
-  __pyx_cur_scope->__pyx_v_repeat = __pyx_v_repeat;
+  __pyx_cur_scope->__pyx_v_run = __pyx_v_run;
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_hits, __pyx_n_s_FSM_hits, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 105, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_hits, __pyx_n_s_FSM_hits, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 107, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -3930,19 +3994,16 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
 {
   struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *__pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)__pyx_generator->closure);
   PyObject *__pyx_r = NULL;
-  int __pyx_t_1;
+  Py_ssize_t __pyx_t_1;
   int __pyx_t_2;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  Py_ssize_t __pyx_t_5;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
+  PyObject *__pyx_t_7 = NULL;
   int __pyx_t_8;
   PyObject *__pyx_t_9 = NULL;
-  PyObject *__pyx_t_10 = NULL;
-  PyObject *__pyx_t_11 = NULL;
-  Py_ssize_t __pyx_t_12;
-  PyObject *(*__pyx_t_13)(PyObject *);
+  PyObject *(*__pyx_t_10)(PyObject *);
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3950,279 +4011,300 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   __Pyx_RefNannySetupContext("hits", 0);
   switch (__pyx_generator->resume_label) {
     case 0: goto __pyx_L3_first_run;
-    case 1: goto __pyx_L11_resume_from_yield;
+    case 1: goto __pyx_L9_resume_from_yield;
     default: /* CPython raises the right error here */
     __Pyx_RefNannyFinishContext();
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 107, __pyx_L1_error)
 
-  /* "bundler/extensions/FSM.pyx":107
- *     def hits(self, tuple word, int repeat=1):
+  /* "bundler/extensions/FSM.pyx":109
+ *     def hits(self, tuple word, int run=-1):
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
  *         cdef int state = 0
- *         for _ in range(repeat):
+ *         cdef int length = len(word)
  */
   __pyx_cur_scope->__pyx_v_index = 0;
 
-  /* "bundler/extensions/FSM.pyx":108
+  /* "bundler/extensions/FSM.pyx":110
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  *         cdef int state = 0             # <<<<<<<<<<<<<<
- *         for _ in range(repeat):
- *             for letter in word:
+ *         cdef int length = len(word)
+ *         cdef int i = 0
  */
   __pyx_cur_scope->__pyx_v_state = 0;
 
-  /* "bundler/extensions/FSM.pyx":109
+  /* "bundler/extensions/FSM.pyx":111
  *         cdef int index = 0, letter
  *         cdef int state = 0
- *         for _ in range(repeat):             # <<<<<<<<<<<<<<
- *             for letter in word:
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
+ *         cdef int length = len(word)             # <<<<<<<<<<<<<<
+ *         cdef int i = 0
+ *         for _ in range(length if run < 0 else run):
  */
-  __pyx_t_1 = __pyx_cur_scope->__pyx_v_repeat;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_cur_scope->__pyx_v__ = __pyx_t_3;
+  if (unlikely(__pyx_cur_scope->__pyx_v_word == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(0, 111, __pyx_L1_error)
+  }
+  __pyx_t_1 = PyTuple_GET_SIZE(__pyx_cur_scope->__pyx_v_word); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_cur_scope->__pyx_v_length = __pyx_t_1;
 
-    /* "bundler/extensions/FSM.pyx":110
+  /* "bundler/extensions/FSM.pyx":112
  *         cdef int state = 0
- *         for _ in range(repeat):
- *             for letter in word:             # <<<<<<<<<<<<<<
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
+ *         cdef int length = len(word)
+ *         cdef int i = 0             # <<<<<<<<<<<<<<
+ *         for _ in range(length if run < 0 else run):
+ *             i += 1
  */
+  __pyx_cur_scope->__pyx_v_i = 0;
+
+  /* "bundler/extensions/FSM.pyx":113
+ *         cdef int length = len(word)
+ *         cdef int i = 0
+ *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
+ *             i += 1
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ */
+  if (((__pyx_cur_scope->__pyx_v_run < 0) != 0)) {
+    __pyx_t_2 = __pyx_cur_scope->__pyx_v_length;
+  } else {
+    __pyx_t_2 = __pyx_cur_scope->__pyx_v_run;
+  }
+  __pyx_t_3 = __pyx_t_2;
+  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+    __pyx_cur_scope->__pyx_v__ = __pyx_t_4;
+
+    /* "bundler/extensions/FSM.pyx":114
+ *         cdef int i = 0
+ *         for _ in range(length if run < 0 else run):
+ *             i += 1             # <<<<<<<<<<<<<<
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             if state < 0:
+ */
+    __pyx_cur_scope->__pyx_v_i = (__pyx_cur_scope->__pyx_v_i + 1);
+
+    /* "bundler/extensions/FSM.pyx":115
+ *         for _ in range(length if run < 0 else run):
+ *             i += 1
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
+ *             if state < 0:
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ */
+    __pyx_t_5 = __Pyx_PyInt_From_int((__pyx_cur_scope->__pyx_v_state * __pyx_cur_scope->__pyx_v_self->alphabet_len)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
     if (unlikely(__pyx_cur_scope->__pyx_v_word == Py_None)) {
-      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-      __PYX_ERR(0, 110, __pyx_L1_error)
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 115, __pyx_L1_error)
     }
-    __pyx_t_4 = __pyx_cur_scope->__pyx_v_word; __Pyx_INCREF(__pyx_t_4); __pyx_t_5 = 0;
-    for (;;) {
-      if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
-      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_5); __Pyx_INCREF(__pyx_t_6); __pyx_t_5++; if (unlikely(0 < 0)) __PYX_ERR(0, 110, __pyx_L1_error)
-      #else
-      __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_cur_scope->__pyx_v_word, __pyx_cur_scope->__pyx_v_index, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_t_1 = __Pyx_PyIndex_AsSsize_t(__pyx_t_7); if (unlikely((__pyx_t_1 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_cur_scope->__pyx_v_state = (__pyx_cur_scope->__pyx_v_self->machine->data.as_ints[__pyx_t_1]);
+
+    /* "bundler/extensions/FSM.pyx":116
+ *             i += 1
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             if state < 0:             # <<<<<<<<<<<<<<
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ *             for x in self.yield_states.get(state, []):
+ */
+    __pyx_t_8 = ((__pyx_cur_scope->__pyx_v_state < 0) != 0);
+    if (unlikely(__pyx_t_8)) {
+
+      /* "bundler/extensions/FSM.pyx":117
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             if state < 0:
+ *                 raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
+ *             for x in self.yield_states.get(state, []):
+ *                 yield (i, x)
+ */
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      #endif
-      __pyx_t_7 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_cur_scope->__pyx_v_letter = __pyx_t_7;
-
-      /* "bundler/extensions/FSM.pyx":111
- *         for _ in range(repeat):
- *             for letter in word:
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
- *                 index += 1
- *                 if state < 0:
- */
-      __pyx_cur_scope->__pyx_v_state = (__pyx_cur_scope->__pyx_v_self->machine->data.as_ints[((__pyx_cur_scope->__pyx_v_state * __pyx_cur_scope->__pyx_v_self->alphabet_len) + __pyx_cur_scope->__pyx_v_letter)]);
-
-      /* "bundler/extensions/FSM.pyx":112
- *             for letter in word:
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1             # <<<<<<<<<<<<<<
- *                 if state < 0:
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- */
-      __pyx_cur_scope->__pyx_v_index = (__pyx_cur_scope->__pyx_v_index + 1);
-
-      /* "bundler/extensions/FSM.pyx":113
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
- *                 if state < 0:             # <<<<<<<<<<<<<<
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- *                 for x in self.yield_states.get(state, []):
- */
-      __pyx_t_8 = ((__pyx_cur_scope->__pyx_v_state < 0) != 0);
-      if (unlikely(__pyx_t_8)) {
-
-        /* "bundler/extensions/FSM.pyx":114
- *                 index += 1
- *                 if state < 0:
- *                     raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
- *                 for x in self.yield_states.get(state, []):
- *                     yield (index, x)
- */
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 114, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 114, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_11 = NULL;
-        if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_9))) {
-          __pyx_t_11 = PyMethod_GET_SELF(__pyx_t_9);
-          if (likely(__pyx_t_11)) {
-            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_9);
-            __Pyx_INCREF(__pyx_t_11);
-            __Pyx_INCREF(function);
-            __Pyx_DECREF_SET(__pyx_t_9, function);
-          }
+      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_9 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
+        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_6);
+        if (likely(__pyx_t_9)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+          __Pyx_INCREF(__pyx_t_9);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_6, function);
         }
-        __pyx_t_6 = (__pyx_t_11) ? __Pyx_PyObject_Call2Args(__pyx_t_9, __pyx_t_11, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_10);
-        __Pyx_XDECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 114, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 114, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_9);
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_Raise(__pyx_t_9, 0, 0, 0);
-        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-        __PYX_ERR(0, 114, __pyx_L1_error)
-
-        /* "bundler/extensions/FSM.pyx":113
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
- *                 if state < 0:             # <<<<<<<<<<<<<<
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- *                 for x in self.yield_states.get(state, []):
- */
       }
+      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_9, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __Pyx_Raise(__pyx_t_6, 0, 0, 0);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __PYX_ERR(0, 117, __pyx_L1_error)
 
-      /* "bundler/extensions/FSM.pyx":115
- *                 if state < 0:
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- *                 for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
- *                     yield (index, x)
+      /* "bundler/extensions/FSM.pyx":116
+ *             i += 1
+ *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
+ *             if state < 0:             # <<<<<<<<<<<<<<
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ *             for x in self.yield_states.get(state, []):
+ */
+    }
+
+    /* "bundler/extensions/FSM.pyx":118
+ *             if state < 0:
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ *             for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
+ *                 yield (i, x)
+ *             index += 1
+ */
+    if (unlikely(__pyx_cur_scope->__pyx_v_self->yield_states == Py_None)) {
+      PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "get");
+      __PYX_ERR(0, 118, __pyx_L1_error)
+    }
+    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_5 = __Pyx_PyDict_GetItemDefault(__pyx_cur_scope->__pyx_v_self->yield_states, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    if (likely(PyList_CheckExact(__pyx_t_5)) || PyTuple_CheckExact(__pyx_t_5)) {
+      __pyx_t_7 = __pyx_t_5; __Pyx_INCREF(__pyx_t_7); __pyx_t_1 = 0;
+      __pyx_t_10 = NULL;
+    } else {
+      __pyx_t_1 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 118, __pyx_L1_error)
+    }
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    for (;;) {
+      if (likely(!__pyx_t_10)) {
+        if (likely(PyList_CheckExact(__pyx_t_7))) {
+          if (__pyx_t_1 >= PyList_GET_SIZE(__pyx_t_7)) break;
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 118, __pyx_L1_error)
+          #else
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          #endif
+        } else {
+          if (__pyx_t_1 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 118, __pyx_L1_error)
+          #else
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          #endif
+        }
+      } else {
+        __pyx_t_5 = __pyx_t_10(__pyx_t_7);
+        if (unlikely(!__pyx_t_5)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+            else __PYX_ERR(0, 118, __pyx_L1_error)
+          }
+          break;
+        }
+        __Pyx_GOTREF(__pyx_t_5);
+      }
+      __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_x);
+      __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_x, __pyx_t_5);
+      __Pyx_GIVEREF(__pyx_t_5);
+      __pyx_t_5 = 0;
+
+      /* "bundler/extensions/FSM.pyx":119
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ *             for x in self.yield_states.get(state, []):
+ *                 yield (i, x)             # <<<<<<<<<<<<<<
+ *             index += 1
+ *             if index == length: index = 0
+ */
+      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_i); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_GIVEREF(__pyx_t_5);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5);
+      __Pyx_INCREF(__pyx_cur_scope->__pyx_v_x);
+      __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_x);
+      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_cur_scope->__pyx_v_x);
+      __pyx_t_5 = 0;
+      __pyx_r = __pyx_t_6;
+      __pyx_t_6 = 0;
+      __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
+      __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
+      __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
+      __pyx_cur_scope->__pyx_t_3 = __pyx_t_4;
+      __Pyx_XGIVEREF(__pyx_t_7);
+      __pyx_cur_scope->__pyx_t_4 = __pyx_t_7;
+      __pyx_cur_scope->__pyx_t_5 = __pyx_t_10;
+      __Pyx_XGIVEREF(__pyx_r);
+      __Pyx_RefNannyFinishContext();
+      __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
+      /* return from generator, yielding value */
+      __pyx_generator->resume_label = 1;
+      return __pyx_r;
+      __pyx_L9_resume_from_yield:;
+      __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
+      __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
+      __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
+      __pyx_t_4 = __pyx_cur_scope->__pyx_t_3;
+      __pyx_t_7 = __pyx_cur_scope->__pyx_t_4;
+      __pyx_cur_scope->__pyx_t_4 = 0;
+      __Pyx_XGOTREF(__pyx_t_7);
+      __pyx_t_10 = __pyx_cur_scope->__pyx_t_5;
+      if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 119, __pyx_L1_error)
+
+      /* "bundler/extensions/FSM.pyx":118
+ *             if state < 0:
+ *                 raise ValueError('Invalid transition to state {}'.format(state))
+ *             for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
+ *                 yield (i, x)
+ *             index += 1
+ */
+    }
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+    /* "bundler/extensions/FSM.pyx":120
+ *             for x in self.yield_states.get(state, []):
+ *                 yield (i, x)
+ *             index += 1             # <<<<<<<<<<<<<<
+ *             if index == length: index = 0
  * 
  */
-      if (unlikely(__pyx_cur_scope->__pyx_v_self->yield_states == Py_None)) {
-        PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "get");
-        __PYX_ERR(0, 115, __pyx_L1_error)
-      }
-      __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 115, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_9);
-      __pyx_t_6 = PyList_New(0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_10 = __Pyx_PyDict_GetItemDefault(__pyx_cur_scope->__pyx_v_self->yield_states, __pyx_t_9, __pyx_t_6); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 115, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (likely(PyList_CheckExact(__pyx_t_10)) || PyTuple_CheckExact(__pyx_t_10)) {
-        __pyx_t_6 = __pyx_t_10; __Pyx_INCREF(__pyx_t_6); __pyx_t_12 = 0;
-        __pyx_t_13 = NULL;
-      } else {
-        __pyx_t_12 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_t_10); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_13 = Py_TYPE(__pyx_t_6)->tp_iternext; if (unlikely(!__pyx_t_13)) __PYX_ERR(0, 115, __pyx_L1_error)
-      }
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      for (;;) {
-        if (likely(!__pyx_t_13)) {
-          if (likely(PyList_CheckExact(__pyx_t_6))) {
-            if (__pyx_t_12 >= PyList_GET_SIZE(__pyx_t_6)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_10 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_12); __Pyx_INCREF(__pyx_t_10); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 115, __pyx_L1_error)
-            #else
-            __pyx_t_10 = PySequence_ITEM(__pyx_t_6, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 115, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_10);
-            #endif
-          } else {
-            if (__pyx_t_12 >= PyTuple_GET_SIZE(__pyx_t_6)) break;
-            #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_10 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_12); __Pyx_INCREF(__pyx_t_10); __pyx_t_12++; if (unlikely(0 < 0)) __PYX_ERR(0, 115, __pyx_L1_error)
-            #else
-            __pyx_t_10 = PySequence_ITEM(__pyx_t_6, __pyx_t_12); __pyx_t_12++; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 115, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_10);
-            #endif
-          }
-        } else {
-          __pyx_t_10 = __pyx_t_13(__pyx_t_6);
-          if (unlikely(!__pyx_t_10)) {
-            PyObject* exc_type = PyErr_Occurred();
-            if (exc_type) {
-              if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 115, __pyx_L1_error)
-            }
-            break;
-          }
-          __Pyx_GOTREF(__pyx_t_10);
-        }
-        __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_x);
-        __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_x, __pyx_t_10);
-        __Pyx_GIVEREF(__pyx_t_10);
-        __pyx_t_10 = 0;
+    __pyx_cur_scope->__pyx_v_index = (__pyx_cur_scope->__pyx_v_index + 1);
 
-        /* "bundler/extensions/FSM.pyx":116
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- *                 for x in self.yield_states.get(state, []):
- *                     yield (index, x)             # <<<<<<<<<<<<<<
+    /* "bundler/extensions/FSM.pyx":121
+ *                 yield (i, x)
+ *             index += 1
+ *             if index == length: index = 0             # <<<<<<<<<<<<<<
  * 
  *     def has_cycle(self, tuple word, int depth=-1):
  */
-        __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_index); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 116, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 116, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_9);
-        __Pyx_GIVEREF(__pyx_t_10);
-        PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_10);
-        __Pyx_INCREF(__pyx_cur_scope->__pyx_v_x);
-        __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_x);
-        PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_cur_scope->__pyx_v_x);
-        __pyx_t_10 = 0;
-        __pyx_r = __pyx_t_9;
-        __pyx_t_9 = 0;
-        __pyx_cur_scope->__pyx_t_0 = __pyx_t_1;
-        __pyx_cur_scope->__pyx_t_1 = __pyx_t_2;
-        __pyx_cur_scope->__pyx_t_2 = __pyx_t_3;
-        __Pyx_XGIVEREF(__pyx_t_4);
-        __pyx_cur_scope->__pyx_t_3 = __pyx_t_4;
-        __pyx_cur_scope->__pyx_t_4 = __pyx_t_5;
-        __Pyx_XGIVEREF(__pyx_t_6);
-        __pyx_cur_scope->__pyx_t_5 = __pyx_t_6;
-        __pyx_cur_scope->__pyx_t_6 = __pyx_t_12;
-        __pyx_cur_scope->__pyx_t_7 = __pyx_t_13;
-        __Pyx_XGIVEREF(__pyx_r);
-        __Pyx_RefNannyFinishContext();
-        __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
-        /* return from generator, yielding value */
-        __pyx_generator->resume_label = 1;
-        return __pyx_r;
-        __pyx_L11_resume_from_yield:;
-        __pyx_t_1 = __pyx_cur_scope->__pyx_t_0;
-        __pyx_t_2 = __pyx_cur_scope->__pyx_t_1;
-        __pyx_t_3 = __pyx_cur_scope->__pyx_t_2;
-        __pyx_t_4 = __pyx_cur_scope->__pyx_t_3;
-        __pyx_cur_scope->__pyx_t_3 = 0;
-        __Pyx_XGOTREF(__pyx_t_4);
-        __pyx_t_5 = __pyx_cur_scope->__pyx_t_4;
-        __pyx_t_6 = __pyx_cur_scope->__pyx_t_5;
-        __pyx_cur_scope->__pyx_t_5 = 0;
-        __Pyx_XGOTREF(__pyx_t_6);
-        __pyx_t_12 = __pyx_cur_scope->__pyx_t_6;
-        __pyx_t_13 = __pyx_cur_scope->__pyx_t_7;
-        if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 116, __pyx_L1_error)
-
-        /* "bundler/extensions/FSM.pyx":115
- *                 if state < 0:
- *                     raise ValueError('Invalid transition to state {}'.format(state))
- *                 for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
- *                     yield (index, x)
- * 
- */
-      }
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-
-      /* "bundler/extensions/FSM.pyx":110
- *         cdef int state = 0
- *         for _ in range(repeat):
- *             for letter in word:             # <<<<<<<<<<<<<<
- *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
- *                 index += 1
- */
+    __pyx_t_8 = ((__pyx_cur_scope->__pyx_v_index == __pyx_cur_scope->__pyx_v_length) != 0);
+    if (__pyx_t_8) {
+      __pyx_cur_scope->__pyx_v_index = 0;
     }
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "bundler/extensions/FSM.pyx":105
+  /* "bundler/extensions/FSM.pyx":107
  *         return returns
  * 
- *     def hits(self, tuple word, int repeat=1):             # <<<<<<<<<<<<<<
+ *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
@@ -4231,11 +4313,10 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   PyErr_SetNone(PyExc_StopIteration);
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_9);
-  __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_AddTraceback("hits", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
@@ -4248,8 +4329,8 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":118
- *                     yield (index, x)
+/* "bundler/extensions/FSM.pyx":123
+ *             if index == length: index = 0
  * 
  *     def has_cycle(self, tuple word, int depth=-1):             # <<<<<<<<<<<<<<
  *         ''' Return whether there is a state such that self(word, state) == state. '''
@@ -4295,7 +4376,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "has_cycle") < 0)) __PYX_ERR(0, 118, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "has_cycle") < 0)) __PYX_ERR(0, 123, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4308,20 +4389,20 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *
     }
     __pyx_v_word = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_depth = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 118, __pyx_L3_error)
+      __pyx_v_depth = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L3_error)
     } else {
       __pyx_v_depth = ((int)-1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("has_cycle", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 118, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("has_cycle", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 123, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bundler.extensions.FSM.FSM.has_cycle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 118, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 123, __pyx_L1_error)
   __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_depth);
 
   /* function exit code */
@@ -4357,14 +4438,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("has_cycle", 0);
 
-  /* "bundler/extensions/FSM.pyx":120
+  /* "bundler/extensions/FSM.pyx":125
  *     def has_cycle(self, tuple word, int depth=-1):
  *         ''' Return whether there is a state such that self(word, state) == state. '''
  *         cdef array.array converted_word = array.array('i', word)             # <<<<<<<<<<<<<<
  *         cdef int l = len(word)
  *         cdef int c, state, letter, i
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_u_i);
   __Pyx_GIVEREF(__pyx_n_u_i);
@@ -4372,13 +4453,13 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   __Pyx_INCREF(__pyx_v_word);
   __Pyx_GIVEREF(__pyx_v_word);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_word);
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_converted_word = ((arrayobject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "bundler/extensions/FSM.pyx":121
+  /* "bundler/extensions/FSM.pyx":126
  *         ''' Return whether there is a state such that self(word, state) == state. '''
  *         cdef array.array converted_word = array.array('i', word)
  *         cdef int l = len(word)             # <<<<<<<<<<<<<<
@@ -4387,12 +4468,12 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
   if (unlikely(__pyx_v_word == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 121, __pyx_L1_error)
+    __PYX_ERR(0, 126, __pyx_L1_error)
   }
-  __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 121, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 126, __pyx_L1_error)
   __pyx_v_l = __pyx_t_3;
 
-  /* "bundler/extensions/FSM.pyx":124
+  /* "bundler/extensions/FSM.pyx":129
  *         cdef int c, state, letter, i
  * 
  *         if depth < 0: depth = self.machine_len             # <<<<<<<<<<<<<<
@@ -4405,7 +4486,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     __pyx_v_depth = __pyx_t_5;
   }
 
-  /* "bundler/extensions/FSM.pyx":126
+  /* "bundler/extensions/FSM.pyx":131
  *         if depth < 0: depth = self.machine_len
  * 
  *         for c in range(depth):             # <<<<<<<<<<<<<<
@@ -4417,7 +4498,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_c = __pyx_t_7;
 
-    /* "bundler/extensions/FSM.pyx":127
+    /* "bundler/extensions/FSM.pyx":132
  * 
  *         for c in range(depth):
  *             state = c             # <<<<<<<<<<<<<<
@@ -4426,7 +4507,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
     __pyx_v_state = __pyx_v_c;
 
-    /* "bundler/extensions/FSM.pyx":128
+    /* "bundler/extensions/FSM.pyx":133
  *         for c in range(depth):
  *             state = c
  *             for i in range(l):             # <<<<<<<<<<<<<<
@@ -4438,7 +4519,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
       __pyx_v_i = __pyx_t_10;
 
-      /* "bundler/extensions/FSM.pyx":129
+      /* "bundler/extensions/FSM.pyx":134
  *             state = c
  *             for i in range(l):
  *                 letter = converted_word.data.as_ints[i]             # <<<<<<<<<<<<<<
@@ -4447,7 +4528,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
       __pyx_v_letter = (__pyx_v_converted_word->data.as_ints[__pyx_v_i]);
 
-      /* "bundler/extensions/FSM.pyx":130
+      /* "bundler/extensions/FSM.pyx":135
  *             for i in range(l):
  *                 letter = converted_word.data.as_ints[i]
  *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
@@ -4456,7 +4537,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
       __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + __pyx_v_letter)]);
 
-      /* "bundler/extensions/FSM.pyx":131
+      /* "bundler/extensions/FSM.pyx":136
  *                 letter = converted_word.data.as_ints[i]
  *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
  *                 if state < 0: break             # <<<<<<<<<<<<<<
@@ -4470,7 +4551,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     }
     __pyx_L7_break:;
 
-    /* "bundler/extensions/FSM.pyx":133
+    /* "bundler/extensions/FSM.pyx":138
  *                 if state < 0: break
  * 
  *             if state == c:             # <<<<<<<<<<<<<<
@@ -4480,7 +4561,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     __pyx_t_4 = ((__pyx_v_state == __pyx_v_c) != 0);
     if (__pyx_t_4) {
 
-      /* "bundler/extensions/FSM.pyx":134
+      /* "bundler/extensions/FSM.pyx":139
  * 
  *             if state == c:
  *                 return True             # <<<<<<<<<<<<<<
@@ -4492,7 +4573,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
       __pyx_r = Py_True;
       goto __pyx_L0;
 
-      /* "bundler/extensions/FSM.pyx":133
+      /* "bundler/extensions/FSM.pyx":138
  *                 if state < 0: break
  * 
  *             if state == c:             # <<<<<<<<<<<<<<
@@ -4502,7 +4583,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":136
+  /* "bundler/extensions/FSM.pyx":141
  *                 return True
  * 
  *         return False             # <<<<<<<<<<<<<<
@@ -4513,8 +4594,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":118
- *                     yield (index, x)
+  /* "bundler/extensions/FSM.pyx":123
+ *             if index == length: index = 0
  * 
  *     def has_cycle(self, tuple word, int depth=-1):             # <<<<<<<<<<<<<<
  *         ''' Return whether there is a state such that self(word, state) == state. '''
@@ -6574,8 +6655,7 @@ static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct__hits
   Py_CLEAR(p->__pyx_v_self);
   Py_CLEAR(p->__pyx_v_word);
   Py_CLEAR(p->__pyx_v_x);
-  Py_CLEAR(p->__pyx_t_3);
-  Py_CLEAR(p->__pyx_t_5);
+  Py_CLEAR(p->__pyx_t_4);
   if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits)))) {
     __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__hits[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)o);
   } else {
@@ -6595,11 +6675,8 @@ static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct__hits
   if (p->__pyx_v_x) {
     e = (*v)(p->__pyx_v_x, a); if (e) return e;
   }
-  if (p->__pyx_t_3) {
-    e = (*v)(p->__pyx_t_3, a); if (e) return e;
-  }
-  if (p->__pyx_t_5) {
-    e = (*v)(p->__pyx_t_5, a); if (e) return e;
+  if (p->__pyx_t_4) {
+    e = (*v)(p->__pyx_t_4, a); if (e) return e;
   }
   return 0;
 }
@@ -6763,7 +6840,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
-  {&__pyx_n_s_repeat, __pyx_k_repeat, sizeof(__pyx_k_repeat), 0, 0, 1, 1},
+  {&__pyx_n_s_run, __pyx_k_run, sizeof(__pyx_k_run), 0, 0, 1, 1},
   {&__pyx_n_s_send, __pyx_k_send, sizeof(__pyx_k_send), 0, 0, 1, 1},
   {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
   {&__pyx_n_s_setstate_cython, __pyx_k_setstate_cython, sizeof(__pyx_k_setstate_cython), 0, 0, 1, 1},
@@ -6856,7 +6933,7 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
   __pyx_vtabptr_7bundler_10extensions_3FSM_FSM = &__pyx_vtable_7bundler_10extensions_3FSM_FSM;
-  __pyx_vtable_7bundler_10extensions_3FSM_FSM.c_hit = (int (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &))__pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit;
+  __pyx_vtable_7bundler_10extensions_3FSM_FSM.c_hit = (int (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit *__pyx_optional_args))__pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit;
   __pyx_vtable_7bundler_10extensions_3FSM_FSM.c_hits = (std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args))__pyx_f_7bundler_10extensions_3FSM_3FSM_c_hits;
   if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
@@ -6869,7 +6946,7 @@ static int __Pyx_modinit_type_init_code(void) {
   if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FSM, (PyObject *)&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_ptype_7bundler_10extensions_3FSM_FSM = &__pyx_type_7bundler_10extensions_3FSM_FSM;
-  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits.tp_print = 0;
   #endif

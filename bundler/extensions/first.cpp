@@ -876,6 +876,7 @@ typedef struct arrayobject arrayobject;
 #endif
 struct __pyx_obj_7bundler_10extensions_3FSM_FSM;
 struct __pyx_obj_7bundler_10extensions_5first_FirstInClass;
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit;
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
 
 /* "bundler/extensions/FSM.pxd":9
@@ -887,15 +888,27 @@ struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
  */
 typedef std::vector<int>  __pyx_t_7bundler_10extensions_3FSM_IWord;
 
+/* "bundler/extensions/FSM.pxd":23
+ *     cdef vector[int] yield_states2_starts
+ * 
+ *     cdef bint c_hit(self, IWord& word, int run=*)             # <<<<<<<<<<<<<<
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=*)
+ * 
+ */
+struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit {
+  int __pyx_n;
+  int run;
+};
+
 /* "bundler/extensions/FSM.pxd":24
  * 
- *     cdef bint c_hit(self, IWord& word)
- *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int repeat=*)             # <<<<<<<<<<<<<<
+ *     cdef bint c_hit(self, IWord& word, int run=*)
+ *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=*)             # <<<<<<<<<<<<<<
  * 
  */
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits {
   int __pyx_n;
-  int repeat;
+  int run;
 };
 
 /* "bundler/extensions/first.pyx":11
@@ -964,7 +977,7 @@ struct __pyx_obj_7bundler_10extensions_5first_FirstInClass {
  */
 
 struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM {
-  int (*c_hit)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &);
+  int (*c_hit)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit *__pyx_optional_args);
   std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  (*c_hits)(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, __pyx_t_7bundler_10extensions_3FSM_IWord &, struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits *__pyx_optional_args);
 };
 static struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *__pyx_vtabptr_7bundler_10extensions_3FSM_FSM;
@@ -3140,6 +3153,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
   int __pyx_v_s;
   int __pyx_v_len_replace;
   int __pyx_v_l;
+  int __pyx_v_nl;
+  int __pyx_v_len_word_relators;
   int *__pyx_v_tmp;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3154,13 +3169,15 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
   int __pyx_t_9;
   int __pyx_t_10;
   __Pyx_FakeReference<int> __pyx_t_11;
-  char const *__pyx_t_12;
-  PyObject *__pyx_t_13 = NULL;
-  PyObject *__pyx_t_14 = NULL;
+  struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit __pyx_t_12;
+  int __pyx_t_13;
+  char const *__pyx_t_14;
   PyObject *__pyx_t_15 = NULL;
   PyObject *__pyx_t_16 = NULL;
   PyObject *__pyx_t_17 = NULL;
   PyObject *__pyx_t_18 = NULL;
+  PyObject *__pyx_t_19 = NULL;
+  PyObject *__pyx_t_20 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -3189,8 +3206,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  *         cdef int len_replace
  * 
  *         cdef int l = len_word + (1 if prefix else 0)             # <<<<<<<<<<<<<<
- * 
- *         # Scratch memory for automorphism testing.
+ *         cdef int nl = len_word + (1 if not prefix else 0)
+ *         cdef int len_word_relators = len_word if prefix else len_word + self.longest_relator
  */
   if ((__pyx_v_prefix != 0)) {
     __pyx_t_2 = 1;
@@ -3199,7 +3216,35 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
   }
   __pyx_v_l = (__pyx_v_len_word + __pyx_t_2);
 
-  /* "bundler/extensions/first.pyx":182
+  /* "bundler/extensions/first.pyx":180
+ * 
+ *         cdef int l = len_word + (1 if prefix else 0)
+ *         cdef int nl = len_word + (1 if not prefix else 0)             # <<<<<<<<<<<<<<
+ *         cdef int len_word_relators = len_word if prefix else len_word + self.longest_relator
+ * 
+ */
+  if (((!(__pyx_v_prefix != 0)) != 0)) {
+    __pyx_t_2 = 1;
+  } else {
+    __pyx_t_2 = 0;
+  }
+  __pyx_v_nl = (__pyx_v_len_word + __pyx_t_2);
+
+  /* "bundler/extensions/first.pyx":181
+ *         cdef int l = len_word + (1 if prefix else 0)
+ *         cdef int nl = len_word + (1 if not prefix else 0)
+ *         cdef int len_word_relators = len_word if prefix else len_word + self.longest_relator             # <<<<<<<<<<<<<<
+ * 
+ *         # Scratch memory for automorphism testing.
+ */
+  if ((__pyx_v_prefix != 0)) {
+    __pyx_t_3 = __pyx_v_len_word;
+  } else {
+    __pyx_t_3 = (__pyx_v_len_word + __pyx_v_self->longest_relator);
+  }
+  __pyx_v_len_word_relators = __pyx_t_3;
+
+  /* "bundler/extensions/first.pyx":184
  * 
  *         # Scratch memory for automorphism testing.
  *         cdef int* tmp = <int *> calloc(8*l, sizeof(int))             # <<<<<<<<<<<<<<
@@ -3208,7 +3253,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
   __pyx_v_tmp = ((int *)calloc((8 * __pyx_v_l), (sizeof(int))));
 
-  /* "bundler/extensions/first.pyx":184
+  /* "bundler/extensions/first.pyx":186
  *         cdef int* tmp = <int *> calloc(8*l, sizeof(int))
  * 
  *         try:             # <<<<<<<<<<<<<<
@@ -3217,17 +3262,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
   /*try:*/ {
 
-    /* "bundler/extensions/first.pyx":186
+    /* "bundler/extensions/first.pyx":188
  *         try:
  *             # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *             if self.bad_prefix_FSM.c_hit(wrd):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-    __pyx_t_3 = (((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->bad_prefix_FSM->__pyx_vtab)->c_hit(__pyx_v_self->bad_prefix_FSM, __pyx_v_wrd) != 0);
-    if (__pyx_t_3) {
+    __pyx_t_4 = (((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->bad_prefix_FSM->__pyx_vtab)->c_hit(__pyx_v_self->bad_prefix_FSM, __pyx_v_wrd, NULL) != 0);
+    if (__pyx_t_4) {
 
-      /* "bundler/extensions/first.pyx":187
+      /* "bundler/extensions/first.pyx":189
  *             # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *             if self.bad_prefix_FSM.c_hit(wrd):
  *                 return False             # <<<<<<<<<<<<<<
@@ -3239,7 +3284,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
       __pyx_r = Py_False;
       goto __pyx_L3_return;
 
-      /* "bundler/extensions/first.pyx":186
+      /* "bundler/extensions/first.pyx":188
  *         try:
  *             # If it contains any bad prefix or simplification then it can be (trivially) made better.
  *             if self.bad_prefix_FSM.c_hit(wrd):             # <<<<<<<<<<<<<<
@@ -3248,17 +3293,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
     }
 
-    /* "bundler/extensions/first.pyx":191
+    /* "bundler/extensions/first.pyx":193
  *             # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
  *             # Check to see if our original word beats itself.
  *             if not self.c_before_automorphs(wrd, wrd, prefix, tmp):             # <<<<<<<<<<<<<<
  *                 return False
  * 
  */
-    __pyx_t_3 = ((!(((struct __pyx_vtabstruct_7bundler_10extensions_5first_FirstInClass *)__pyx_v_self->__pyx_vtab)->c_before_automorphs(__pyx_v_self, __pyx_v_wrd, __pyx_v_wrd, __pyx_v_prefix, __pyx_v_tmp) != 0)) != 0);
-    if (__pyx_t_3) {
+    __pyx_t_4 = ((!(((struct __pyx_vtabstruct_7bundler_10extensions_5first_FirstInClass *)__pyx_v_self->__pyx_vtab)->c_before_automorphs(__pyx_v_self, __pyx_v_wrd, __pyx_v_wrd, __pyx_v_prefix, __pyx_v_tmp) != 0)) != 0);
+    if (__pyx_t_4) {
 
-      /* "bundler/extensions/first.pyx":192
+      /* "bundler/extensions/first.pyx":194
  *             # Check to see if our original word beats itself.
  *             if not self.c_before_automorphs(wrd, wrd, prefix, tmp):
  *                 return False             # <<<<<<<<<<<<<<
@@ -3270,7 +3315,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
       __pyx_r = Py_False;
       goto __pyx_L3_return;
 
-      /* "bundler/extensions/first.pyx":191
+      /* "bundler/extensions/first.pyx":193
  *             # There is no point in testing whether simpler_FSM hits word already since word ended in next_good_suffix.
  *             # Check to see if our original word beats itself.
  *             if not self.c_before_automorphs(wrd, wrd, prefix, tmp):             # <<<<<<<<<<<<<<
@@ -3279,7 +3324,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
     }
 
-    /* "bundler/extensions/first.pyx":194
+    /* "bundler/extensions/first.pyx":196
  *                 return False
  * 
  *             seen.insert(wrd)             # <<<<<<<<<<<<<<
@@ -3290,10 +3335,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
       __pyx_v_seen.insert(__pyx_v_wrd);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 194, __pyx_L4_error)
+      __PYX_ERR(0, 196, __pyx_L4_error)
     }
 
-    /* "bundler/extensions/first.pyx":195
+    /* "bundler/extensions/first.pyx":197
  * 
  *             seen.insert(wrd)
  *             to_do.push(wrd)             # <<<<<<<<<<<<<<
@@ -3302,7 +3347,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
     __pyx_v_to_do.push(__pyx_v_wrd);
 
-    /* "bundler/extensions/first.pyx":197
+    /* "bundler/extensions/first.pyx":199
  *             to_do.push(wrd)
  * 
  *             next_wrd.resize(len_word)             # <<<<<<<<<<<<<<
@@ -3313,10 +3358,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
       __pyx_v_next_wrd.resize(__pyx_v_len_word);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      __PYX_ERR(0, 197, __pyx_L4_error)
+      __PYX_ERR(0, 199, __pyx_L4_error)
     }
 
-    /* "bundler/extensions/first.pyx":199
+    /* "bundler/extensions/first.pyx":201
  *             next_wrd.resize(len_word)
  * 
  *             while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.             # <<<<<<<<<<<<<<
@@ -3324,110 +3369,93 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  *                 to_do.pop()  # Get the next equivalent word to check.
  */
     while (1) {
-      __pyx_t_3 = ((!(__pyx_v_to_do.empty() != 0)) != 0);
-      if (!__pyx_t_3) break;
+      __pyx_t_4 = ((!(__pyx_v_to_do.empty() != 0)) != 0);
+      if (!__pyx_t_4) break;
 
-      /* "bundler/extensions/first.pyx":200
+      /* "bundler/extensions/first.pyx":202
  * 
  *             while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *                 reached = to_do.front()             # <<<<<<<<<<<<<<
  *                 to_do.pop()  # Get the next equivalent word to check.
- *                 returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)
+ *                 returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)
  */
       __pyx_v_reached = __pyx_v_to_do.front();
 
-      /* "bundler/extensions/first.pyx":201
+      /* "bundler/extensions/first.pyx":203
  *             while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
  *                 reached = to_do.front()
  *                 to_do.pop()  # Get the next equivalent word to check.             # <<<<<<<<<<<<<<
- *                 returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)
+ *                 returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)
  *                 for i in range(int(returns.size())):
  */
       __pyx_v_to_do.pop();
 
-      /* "bundler/extensions/first.pyx":202
+      /* "bundler/extensions/first.pyx":204
  *                 reached = to_do.front()
  *                 to_do.pop()  # Get the next equivalent word to check.
- *                 returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)             # <<<<<<<<<<<<<<
+ *                 returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)             # <<<<<<<<<<<<<<
  *                 for i in range(int(returns.size())):
  *                     b = returns[i].first
  */
-      if ((__pyx_v_prefix != 0)) {
-        __pyx_t_4 = 1;
-      } else {
-        __pyx_t_4 = 2;
-      }
       __pyx_t_6.__pyx_n = 1;
-      __pyx_t_6.repeat = __pyx_t_4;
+      __pyx_t_6.run = __pyx_v_len_word_relators;
       __pyx_t_5 = ((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->find_balanced_relators_FSM->__pyx_vtab)->c_hits(__pyx_v_self->find_balanced_relators_FSM, __pyx_v_reached, &__pyx_t_6); 
       __pyx_v_returns = __pyx_t_5;
 
-      /* "bundler/extensions/first.pyx":203
+      /* "bundler/extensions/first.pyx":205
  *                 to_do.pop()  # Get the next equivalent word to check.
- *                 returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)
+ *                 returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)
  *                 for i in range(int(returns.size())):             # <<<<<<<<<<<<<<
  *                     b = returns[i].first
  *                     replace = returns[i].second
  */
       __pyx_t_2 = ((long)__pyx_v_returns.size());
       __pyx_t_7 = __pyx_t_2;
-      for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_7; __pyx_t_4+=1) {
-        __pyx_v_i = __pyx_t_4;
+      for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
+        __pyx_v_i = __pyx_t_3;
 
-        /* "bundler/extensions/first.pyx":204
- *                 returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)
+        /* "bundler/extensions/first.pyx":206
+ *                 returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)
  *                 for i in range(int(returns.size())):
  *                     b = returns[i].first             # <<<<<<<<<<<<<<
  *                     replace = returns[i].second
- *                     if b >= len_word + self.longest_relator: break
+ *                     len_replace = replace.size()
  */
         __pyx_t_8 = (__pyx_v_returns[__pyx_v_i]).first;
         __pyx_v_b = __pyx_t_8;
 
-        /* "bundler/extensions/first.pyx":205
+        /* "bundler/extensions/first.pyx":207
  *                 for i in range(int(returns.size())):
  *                     b = returns[i].first
  *                     replace = returns[i].second             # <<<<<<<<<<<<<<
- *                     if b >= len_word + self.longest_relator: break
  *                     len_replace = replace.size()
+ *                     if len_replace > len_word: continue
  */
         __pyx_t_1 = (__pyx_v_returns[__pyx_v_i]).second;
         __pyx_v_replace = __pyx_t_1;
 
-        /* "bundler/extensions/first.pyx":206
+        /* "bundler/extensions/first.pyx":208
  *                     b = returns[i].first
  *                     replace = returns[i].second
- *                     if b >= len_word + self.longest_relator: break             # <<<<<<<<<<<<<<
- *                     len_replace = replace.size()
- *                     if len_replace > len_word: continue
- */
-        __pyx_t_3 = ((__pyx_v_b >= (__pyx_v_len_word + __pyx_v_self->longest_relator)) != 0);
-        if (__pyx_t_3) {
-          goto __pyx_L11_break;
-        }
-
-        /* "bundler/extensions/first.pyx":207
- *                     replace = returns[i].second
- *                     if b >= len_word + self.longest_relator: break
  *                     len_replace = replace.size()             # <<<<<<<<<<<<<<
  *                     if len_replace > len_word: continue
  *                     a = b - len_replace  # There is a replacement to be made between a & b.
  */
         __pyx_v_len_replace = __pyx_v_replace.size();
 
-        /* "bundler/extensions/first.pyx":208
- *                     if b >= len_word + self.longest_relator: break
+        /* "bundler/extensions/first.pyx":209
+ *                     replace = returns[i].second
  *                     len_replace = replace.size()
  *                     if len_replace > len_word: continue             # <<<<<<<<<<<<<<
  *                     a = b - len_replace  # There is a replacement to be made between a & b.
  *                     if a >= len_word: continue
  */
-        __pyx_t_3 = ((__pyx_v_len_replace > __pyx_v_len_word) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_4 = ((__pyx_v_len_replace > __pyx_v_len_word) != 0);
+        if (__pyx_t_4) {
           goto __pyx_L10_continue;
         }
 
-        /* "bundler/extensions/first.pyx":209
+        /* "bundler/extensions/first.pyx":210
  *                     len_replace = replace.size()
  *                     if len_replace > len_word: continue
  *                     a = b - len_replace  # There is a replacement to be made between a & b.             # <<<<<<<<<<<<<<
@@ -3436,23 +3464,23 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
         __pyx_v_a = (__pyx_v_b - __pyx_v_len_replace);
 
-        /* "bundler/extensions/first.pyx":210
+        /* "bundler/extensions/first.pyx":211
  *                     if len_replace > len_word: continue
  *                     a = b - len_replace  # There is a replacement to be made between a & b.
  *                     if a >= len_word: continue             # <<<<<<<<<<<<<<
  * 
  *                     # next_wrd = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
  */
-        __pyx_t_3 = ((__pyx_v_a >= __pyx_v_len_word) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_4 = ((__pyx_v_a >= __pyx_v_len_word) != 0);
+        if (__pyx_t_4) {
           goto __pyx_L10_continue;
         }
 
-        /* "bundler/extensions/first.pyx":213
+        /* "bundler/extensions/first.pyx":214
  * 
  *                     # next_wrd = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
- *                     k = 0 if a == 0 else len_word - a             # <<<<<<<<<<<<<<
- *                     for j in range(len_word):
+ *                     k = 0 if a == 0 else len_word - a  # k = -a % len_word.             # <<<<<<<<<<<<<<
+ *                     for j in range(len_word):  # k = (j - a) % len_word
  *                         next_wrd[j] = replace[k] if k < len_replace else reached[j]
  */
         if (((__pyx_v_a == 0) != 0)) {
@@ -3462,10 +3490,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
         }
         __pyx_v_k = __pyx_t_8;
 
-        /* "bundler/extensions/first.pyx":214
+        /* "bundler/extensions/first.pyx":215
  *                     # next_wrd = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
- *                     k = 0 if a == 0 else len_word - a
- *                     for j in range(len_word):             # <<<<<<<<<<<<<<
+ *                     k = 0 if a == 0 else len_word - a  # k = -a % len_word.
+ *                     for j in range(len_word):  # k = (j - a) % len_word             # <<<<<<<<<<<<<<
  *                         next_wrd[j] = replace[k] if k < len_replace else reached[j]
  *                         k += 1
  */
@@ -3474,9 +3502,9 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
         for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
           __pyx_v_j = __pyx_t_10;
 
-          /* "bundler/extensions/first.pyx":215
- *                     k = 0 if a == 0 else len_word - a
- *                     for j in range(len_word):
+          /* "bundler/extensions/first.pyx":216
+ *                     k = 0 if a == 0 else len_word - a  # k = -a % len_word.
+ *                     for j in range(len_word):  # k = (j - a) % len_word
  *                         next_wrd[j] = replace[k] if k < len_replace else reached[j]             # <<<<<<<<<<<<<<
  *                         k += 1
  *                         if k == len_word: k = 0
@@ -3488,8 +3516,8 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
           }
           (__pyx_v_next_wrd[__pyx_v_j]) = __pyx_t_11;
 
-          /* "bundler/extensions/first.pyx":216
- *                     for j in range(len_word):
+          /* "bundler/extensions/first.pyx":217
+ *                     for j in range(len_word):  # k = (j - a) % len_word
  *                         next_wrd[j] = replace[k] if k < len_replace else reached[j]
  *                         k += 1             # <<<<<<<<<<<<<<
  *                         if k == len_word: k = 0
@@ -3497,85 +3525,88 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
           __pyx_v_k = (__pyx_v_k + 1);
 
-          /* "bundler/extensions/first.pyx":217
+          /* "bundler/extensions/first.pyx":218
  *                         next_wrd[j] = replace[k] if k < len_replace else reached[j]
  *                         k += 1
  *                         if k == len_word: k = 0             # <<<<<<<<<<<<<<
  * 
  *                     if seen.count(next_wrd) != 0: continue  # Only consider new words.
  */
-          __pyx_t_3 = ((__pyx_v_k == __pyx_v_len_word) != 0);
-          if (__pyx_t_3) {
+          __pyx_t_4 = ((__pyx_v_k == __pyx_v_len_word) != 0);
+          if (__pyx_t_4) {
             __pyx_v_k = 0;
           }
         }
 
-        /* "bundler/extensions/first.pyx":219
+        /* "bundler/extensions/first.pyx":220
  *                         if k == len_word: k = 0
  * 
  *                     if seen.count(next_wrd) != 0: continue  # Only consider new words.             # <<<<<<<<<<<<<<
  * 
  *                     # Test for trivial simplifications.
  */
-        __pyx_t_3 = ((__pyx_v_seen.count(__pyx_v_next_wrd) != 0) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_4 = ((__pyx_v_seen.count(__pyx_v_next_wrd) != 0) != 0);
+        if (__pyx_t_4) {
           goto __pyx_L10_continue;
         }
 
-        /* "bundler/extensions/first.pyx":222
+        /* "bundler/extensions/first.pyx":223
  * 
  *                     # Test for trivial simplifications.
- *                     if self.simpler_FSM.c_hit(next_wrd):             # <<<<<<<<<<<<<<
+ *                     if self.simpler_FSM.c_hit(next_wrd, run=nl):             # <<<<<<<<<<<<<<
  *                         return False
  * 
  */
-        __pyx_t_3 = (((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->simpler_FSM->__pyx_vtab)->c_hit(__pyx_v_self->simpler_FSM, __pyx_v_next_wrd) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_12.__pyx_n = 1;
+        __pyx_t_12.run = __pyx_v_nl;
+        __pyx_t_4 = ((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->simpler_FSM->__pyx_vtab)->c_hit(__pyx_v_self->simpler_FSM, __pyx_v_next_wrd, &__pyx_t_12); 
+        __pyx_t_13 = (__pyx_t_4 != 0);
+        if (__pyx_t_13) {
+
+          /* "bundler/extensions/first.pyx":224
+ *                     # Test for trivial simplifications.
+ *                     if self.simpler_FSM.c_hit(next_wrd, run=nl):
+ *                         return False             # <<<<<<<<<<<<<<
+ * 
+ *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):
+ */
+          __Pyx_XDECREF(__pyx_r);
+          __Pyx_INCREF(Py_False);
+          __pyx_r = Py_False;
+          goto __pyx_L3_return;
 
           /* "bundler/extensions/first.pyx":223
- *                     # Test for trivial simplifications.
- *                     if self.simpler_FSM.c_hit(next_wrd):
- *                         return False             # <<<<<<<<<<<<<<
- * 
- *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):
- */
-          __Pyx_XDECREF(__pyx_r);
-          __Pyx_INCREF(Py_False);
-          __pyx_r = Py_False;
-          goto __pyx_L3_return;
-
-          /* "bundler/extensions/first.pyx":222
  * 
  *                     # Test for trivial simplifications.
- *                     if self.simpler_FSM.c_hit(next_wrd):             # <<<<<<<<<<<<<<
+ *                     if self.simpler_FSM.c_hit(next_wrd, run=nl):             # <<<<<<<<<<<<<<
  *                         return False
  * 
  */
         }
 
-        /* "bundler/extensions/first.pyx":225
+        /* "bundler/extensions/first.pyx":226
  *                         return False
  * 
  *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):             # <<<<<<<<<<<<<<
  *                         return False
  * 
  */
-        __pyx_t_3 = ((!(((struct __pyx_vtabstruct_7bundler_10extensions_5first_FirstInClass *)__pyx_v_self->__pyx_vtab)->c_before_automorphs(__pyx_v_self, __pyx_v_wrd, __pyx_v_next_wrd, __pyx_v_prefix, __pyx_v_tmp) != 0)) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_13 = ((!(((struct __pyx_vtabstruct_7bundler_10extensions_5first_FirstInClass *)__pyx_v_self->__pyx_vtab)->c_before_automorphs(__pyx_v_self, __pyx_v_wrd, __pyx_v_next_wrd, __pyx_v_prefix, __pyx_v_tmp) != 0)) != 0);
+        if (__pyx_t_13) {
+
+          /* "bundler/extensions/first.pyx":227
+ * 
+ *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):
+ *                         return False             # <<<<<<<<<<<<<<
+ * 
+ *                     s = seen.size()
+ */
+          __Pyx_XDECREF(__pyx_r);
+          __Pyx_INCREF(Py_False);
+          __pyx_r = Py_False;
+          goto __pyx_L3_return;
 
           /* "bundler/extensions/first.pyx":226
- * 
- *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):
- *                         return False             # <<<<<<<<<<<<<<
- * 
- *                     s = int(seen.size())
- */
-          __Pyx_XDECREF(__pyx_r);
-          __Pyx_INCREF(Py_False);
-          __pyx_r = Py_False;
-          goto __pyx_L3_return;
-
-          /* "bundler/extensions/first.pyx":225
  *                         return False
  * 
  *                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):             # <<<<<<<<<<<<<<
@@ -3584,27 +3615,27 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
  */
         }
 
-        /* "bundler/extensions/first.pyx":228
+        /* "bundler/extensions/first.pyx":229
  *                         return False
  * 
- *                     s = int(seen.size())             # <<<<<<<<<<<<<<
+ *                     s = seen.size()             # <<<<<<<<<<<<<<
  *                     if s == max_tree_size:  # If we've hit the max_tree_size then give up.
  *                         return True
  */
-        __pyx_v_s = ((int)__pyx_v_seen.size());
+        __pyx_v_s = __pyx_v_seen.size();
 
-        /* "bundler/extensions/first.pyx":229
+        /* "bundler/extensions/first.pyx":230
  * 
- *                     s = int(seen.size())
+ *                     s = seen.size()
  *                     if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
  *                         return True
  * 
  */
-        __pyx_t_3 = ((__pyx_v_s == __pyx_v_max_tree_size) != 0);
-        if (__pyx_t_3) {
+        __pyx_t_13 = ((__pyx_v_s == __pyx_v_max_tree_size) != 0);
+        if (__pyx_t_13) {
 
-          /* "bundler/extensions/first.pyx":230
- *                     s = int(seen.size())
+          /* "bundler/extensions/first.pyx":231
+ *                     s = seen.size()
  *                     if s == max_tree_size:  # If we've hit the max_tree_size then give up.
  *                         return True             # <<<<<<<<<<<<<<
  * 
@@ -3615,16 +3646,16 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
           __pyx_r = Py_True;
           goto __pyx_L3_return;
 
-          /* "bundler/extensions/first.pyx":229
+          /* "bundler/extensions/first.pyx":230
  * 
- *                     s = int(seen.size())
+ *                     s = seen.size()
  *                     if s == max_tree_size:  # If we've hit the max_tree_size then give up.             # <<<<<<<<<<<<<<
  *                         return True
  * 
  */
         }
 
-        /* "bundler/extensions/first.pyx":233
+        /* "bundler/extensions/first.pyx":234
  * 
  *                     # Add it to the reachable word list.
  *                     seen.insert(next_wrd)             # <<<<<<<<<<<<<<
@@ -3635,10 +3666,10 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
           __pyx_v_seen.insert(__pyx_v_next_wrd);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          __PYX_ERR(0, 233, __pyx_L4_error)
+          __PYX_ERR(0, 234, __pyx_L4_error)
         }
 
-        /* "bundler/extensions/first.pyx":234
+        /* "bundler/extensions/first.pyx":235
  *                     # Add it to the reachable word list.
  *                     seen.insert(next_wrd)
  *                     to_do.push(next_wrd)             # <<<<<<<<<<<<<<
@@ -3648,10 +3679,9 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
         __pyx_v_to_do.push(__pyx_v_next_wrd);
         __pyx_L10_continue:;
       }
-      __pyx_L11_break:;
     }
 
-    /* "bundler/extensions/first.pyx":236
+    /* "bundler/extensions/first.pyx":237
  *                     to_do.push(next_wrd)
  * 
  *             return True             # <<<<<<<<<<<<<<
@@ -3664,7 +3694,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
     goto __pyx_L3_return;
   }
 
-  /* "bundler/extensions/first.pyx":238
+  /* "bundler/extensions/first.pyx":239
  *             return True
  *         finally:
  *             free(tmp)             # <<<<<<<<<<<<<<
@@ -3675,39 +3705,39 @@ static PyObject *__pyx_pf_7bundler_10extensions_5first_12FirstInClass_4is_first(
     /*exception exit:*/{
       __Pyx_PyThreadState_declare
       __Pyx_PyThreadState_assign
-      __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0;
-      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_16, &__pyx_t_17, &__pyx_t_18);
-      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15) < 0)) __Pyx_ErrFetch(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
-      __Pyx_XGOTREF(__pyx_t_13);
-      __Pyx_XGOTREF(__pyx_t_14);
+      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_18, &__pyx_t_19, &__pyx_t_20);
+      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17) < 0)) __Pyx_ErrFetch(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17);
       __Pyx_XGOTREF(__pyx_t_15);
       __Pyx_XGOTREF(__pyx_t_16);
       __Pyx_XGOTREF(__pyx_t_17);
       __Pyx_XGOTREF(__pyx_t_18);
-      __pyx_t_4 = __pyx_lineno; __pyx_t_8 = __pyx_clineno; __pyx_t_12 = __pyx_filename;
+      __Pyx_XGOTREF(__pyx_t_19);
+      __Pyx_XGOTREF(__pyx_t_20);
+      __pyx_t_3 = __pyx_lineno; __pyx_t_8 = __pyx_clineno; __pyx_t_14 = __pyx_filename;
       {
         free(__pyx_v_tmp);
       }
       if (PY_MAJOR_VERSION >= 3) {
-        __Pyx_XGIVEREF(__pyx_t_16);
-        __Pyx_XGIVEREF(__pyx_t_17);
         __Pyx_XGIVEREF(__pyx_t_18);
-        __Pyx_ExceptionReset(__pyx_t_16, __pyx_t_17, __pyx_t_18);
+        __Pyx_XGIVEREF(__pyx_t_19);
+        __Pyx_XGIVEREF(__pyx_t_20);
+        __Pyx_ExceptionReset(__pyx_t_18, __pyx_t_19, __pyx_t_20);
       }
-      __Pyx_XGIVEREF(__pyx_t_13);
-      __Pyx_XGIVEREF(__pyx_t_14);
       __Pyx_XGIVEREF(__pyx_t_15);
-      __Pyx_ErrRestore(__pyx_t_13, __pyx_t_14, __pyx_t_15);
-      __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0;
-      __pyx_lineno = __pyx_t_4; __pyx_clineno = __pyx_t_8; __pyx_filename = __pyx_t_12;
+      __Pyx_XGIVEREF(__pyx_t_16);
+      __Pyx_XGIVEREF(__pyx_t_17);
+      __Pyx_ErrRestore(__pyx_t_15, __pyx_t_16, __pyx_t_17);
+      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0; __pyx_t_20 = 0;
+      __pyx_lineno = __pyx_t_3; __pyx_clineno = __pyx_t_8; __pyx_filename = __pyx_t_14;
       goto __pyx_L1_error;
     }
     __pyx_L3_return: {
-      __pyx_t_18 = __pyx_r;
+      __pyx_t_20 = __pyx_r;
       __pyx_r = 0;
       free(__pyx_v_tmp);
-      __pyx_r = __pyx_t_18;
-      __pyx_t_18 = 0;
+      __pyx_r = __pyx_t_20;
+      __pyx_t_20 = 0;
       goto __pyx_L0;
     }
   }

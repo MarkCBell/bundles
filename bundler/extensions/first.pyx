@@ -177,6 +177,8 @@ cdef class FirstInClass:
         cdef int len_replace
         
         cdef int l = len_word + (1 if prefix else 0)
+        cdef int nl = len_word + (1 if not prefix else 0)
+        cdef int len_word_relators = len_word if prefix else len_word + self.longest_relator
         
         # Scratch memory for automorphism testing.
         cdef int* tmp = <int *> calloc(8*l, sizeof(int))
@@ -199,19 +201,18 @@ cdef class FirstInClass:
             while not to_do.empty():  # Keep going while there are still unprocessed words in the queue.
                 reached = to_do.front()
                 to_do.pop()  # Get the next equivalent word to check.
-                returns = self.find_balanced_relators_FSM.c_hits(reached, repeat=1 if prefix else 2)
+                returns = self.find_balanced_relators_FSM.c_hits(reached, run=len_word_relators)
                 for i in range(int(returns.size())):
                     b = returns[i].first
                     replace = returns[i].second
-                    if b >= len_word + self.longest_relator: break
                     len_replace = replace.size()
                     if len_replace > len_word: continue
                     a = b - len_replace  # There is a replacement to be made between a & b.
                     if a >= len_word: continue
                     
                     # next_wrd = reached[:a] + replace + reached[b:] if b <= len_word else replace[len_word-a:] + reached[b-len_word:a] + replace[:len_word-a]
-                    k = 0 if a == 0 else len_word - a
-                    for j in range(len_word):
+                    k = 0 if a == 0 else len_word - a  # k = -a % len_word.
+                    for j in range(len_word):  # k = (j - a) % len_word
                         next_wrd[j] = replace[k] if k < len_replace else reached[j]
                         k += 1
                         if k == len_word: k = 0
@@ -219,13 +220,13 @@ cdef class FirstInClass:
                     if seen.count(next_wrd) != 0: continue  # Only consider new words.
                     
                     # Test for trivial simplifications.
-                    if self.simpler_FSM.c_hit(next_wrd):
+                    if self.simpler_FSM.c_hit(next_wrd, run=nl):
                         return False
                     
                     if not self.c_before_automorphs(wrd, next_wrd, prefix, tmp):
                         return False
                     
-                    s = int(seen.size())
+                    s = seen.size()
                     if s == max_tree_size:  # If we've hit the max_tree_size then give up.
                         return True
                     

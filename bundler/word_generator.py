@@ -189,6 +189,7 @@ class WordGenerator():
         
         return True
     
+    @profile
     def valid_word(self, word):
         ''' Return whether the given word is valid. '''
         
