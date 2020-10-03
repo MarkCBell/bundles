@@ -5,7 +5,7 @@ from random import randint
 
 import curver
 
-from .extensions import word_accepting_FSM, action_FSM, CNF_FSM, Automorph
+from .extensions import word_accepting_FSM, action_FSM, CNF_FSM
 from .extensions import FirstInClass
 
 EMPTY_TUPLE = tuple()

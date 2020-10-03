@@ -1,4 +1,3 @@
-
 contexttimer
 curver
 cython
@@ -6,5 +5,5 @@ decorator
 flipper
 numpy
 pandas
+snappy
 sympy
-
