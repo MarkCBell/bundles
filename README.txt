@@ -20,3 +20,6 @@ To generate a new census, install dependencies and compile the packages extensio
 
 Then start one by doing, for example:
     $ python generate.py --name S_1_2 --depth 6
+
+For more performance, also install one of the realalg extension (cypari, cypari2 or Sagemath):
+    $ pip install cypari
