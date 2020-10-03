@@ -12,14 +12,15 @@ or:
 Originally this project could build surface bundles where the fibre is a closed surface.
 If you need access to this functionality checkout the tag: v0.1.0.
 However, this should be used with caution.
-In many cases SnapPy could not tell if two bundles were isometric and so although these lists are complete they likely contain duplicates.
+In many cases SnapPy could not tell if two bundles were isometric.
+So although these lists are complete they likely contain duplicates.
 
-To generate a new census, install dependencies, compile the packages extensions and make the folders for outputting data by running:
+To generate a new census, first install dependencies and compile the packages extensions by running:
     $ pip install -r requirements.txt
     $ python setup.py build_ext --inplace
 
 Then start one by doing, for example:
-    $ python generate.py --name S_1_2 --depth 6
+    $ python generate.py --name S_1_2 --depth 8
 
 For more performance, also install one of the realalg extension (cypari, cypari2 or Sagemath):
     $ pip install cypari
