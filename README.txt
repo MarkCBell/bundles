@@ -14,7 +14,7 @@ If you need access to this functionality checkout the tag: v0.1.0.
 However, this should be used with caution.
 In many cases SnapPy could not tell if two bundles were isometric and so although these lists are complete they likely contain duplicates.
 
-To generate a new census, install dependencies and compile the packages extensions by running:
+To generate a new census, install dependencies, compile the packages extensions and make the folders for outputting data by running:
     $ pip install -r requirements.txt
     $ python setup.py build_ext --inplace
 

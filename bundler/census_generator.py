@@ -65,6 +65,9 @@ class CensusGenerator():
             curver=curver.load(self.surface_name),
             )
         self.word_generator = WordGenerator(self.generators, self.automorph, self.MCG_must_contain, self.word_filter, self.surfaces, self.options)
+        
+        for path in [self.options.word_parts, self.options.properties_parts, self.options.word, self.options.properties, self.options.census]:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
     
     def map(self, function, generator):
         if self.options.cores == 1:
