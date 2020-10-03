@@ -874,7 +874,10 @@ struct arrayobject;
 typedef struct arrayobject arrayobject;
 #endif
 struct __pyx_obj_7bundler_10extensions_3FSM_FSM;
-struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits;
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts;
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr;
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr;
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits;
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hit;
 struct __pyx_opt_args_7bundler_10extensions_3FSM_3FSM_c_hits;
 
@@ -932,14 +935,58 @@ struct __pyx_obj_7bundler_10extensions_3FSM_FSM {
 };
 
 
-/* "bundler/extensions/FSM.pyx":107
+/* "bundler/extensions/FSM.pyx":59
+ * 
+ *     @classmethod
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):             # <<<<<<<<<<<<<<
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ */
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts {
+  PyObject_HEAD
+  PyObject *__pyx_v_hits;
+  PyObject *__pyx_v_state_names;
+  PyObject *__pyx_v_state_names_index;
+};
+
+
+/* "bundler/extensions/FSM.pyx":65
+ * 
+ *         state_names = list(machine)
+ *         state_names_index = dict((name, place) for place, name in enumerate(state_names))             # <<<<<<<<<<<<<<
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ */
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr {
+  PyObject_HEAD
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *__pyx_outer_scope;
+  PyObject *__pyx_v_name;
+  PyObject *__pyx_v_place;
+};
+
+
+/* "bundler/extensions/FSM.pyx":68
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))             # <<<<<<<<<<<<<<
+ * 
+ *     def __call__(self, tuple word, int state=0):
+ */
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr {
+  PyObject_HEAD
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *__pyx_outer_scope;
+  PyObject *__pyx_v_state;
+};
+
+
+/* "bundler/extensions/FSM.pyx":119
  *         return returns
  * 
  *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  */
-struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits {
+struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits {
   PyObject_HEAD
   int __pyx_v__;
   int __pyx_v_i;
@@ -1301,6 +1348,48 @@ static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key);
         __Pyx__ArgTypeTest(obj, type, name, exact))
 static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
 
+/* None.proto */
+static CYTHON_INLINE void __Pyx_RaiseClosureNameError(const char *varname);
+
+/* IterFinish.proto */
+static CYTHON_INLINE int __Pyx_IterFinish(void);
+
+/* PyObjectCallMethod0.proto */
+static PyObject* __Pyx_PyObject_CallMethod0(PyObject* obj, PyObject* method_name);
+
+/* RaiseNeedMoreValuesToUnpack.proto */
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index);
+
+/* RaiseTooManyValuesToUnpack.proto */
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected);
+
+/* UnpackItemEndCheck.proto */
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected);
+
+/* RaiseNoneIterError.proto */
+static CYTHON_INLINE void __Pyx_RaiseNoneNotIterableError(void);
+
+/* UnpackTupleError.proto */
+static void __Pyx_UnpackTupleError(PyObject *, Py_ssize_t index);
+
+/* UnpackTuple2.proto */
+#define __Pyx_unpack_tuple2(tuple, value1, value2, is_tuple, has_known_size, decref_tuple)\
+    (likely(is_tuple || PyTuple_Check(tuple)) ?\
+        (likely(has_known_size || PyTuple_GET_SIZE(tuple) == 2) ?\
+            __Pyx_unpack_tuple2_exact(tuple, value1, value2, decref_tuple) :\
+            (__Pyx_UnpackTupleError(tuple, 2), -1)) :\
+        __Pyx_unpack_tuple2_generic(tuple, value1, value2, has_known_size, decref_tuple))
+static CYTHON_INLINE int __Pyx_unpack_tuple2_exact(
+    PyObject* tuple, PyObject** value1, PyObject** value2, int decref_tuple);
+static int __Pyx_unpack_tuple2_generic(
+    PyObject* tuple, PyObject** value1, PyObject** value2, int has_known_size, int decref_tuple);
+
+/* dict_iter.proto */
+static CYTHON_INLINE PyObject* __Pyx_dict_iterator(PyObject* dict, int is_dict, PyObject* method_name,
+                                                   Py_ssize_t* p_orig_length, int* p_is_dict);
+static CYTHON_INLINE int __Pyx_dict_iter_next(PyObject* dict_or_iter, Py_ssize_t orig_length, Py_ssize_t* ppos,
+                                              PyObject** pkey, PyObject** pvalue, PyObject** pitem, int is_dict);
+
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1407,6 +1496,14 @@ enum __Pyx_ImportType_CheckSize {
 };
 static PyTypeObject *__Pyx_ImportType(PyObject* module, const char *module_name, const char *class_name, size_t size, enum __Pyx_ImportType_CheckSize check_size);
 #endif
+
+/* ClassMethod.proto */
+#include "descrobject.h"
+static CYTHON_UNUSED PyObject* __Pyx_Method_ClassMethod(PyObject *method);
+
+/* GetNameInClass.proto */
+#define __Pyx_GetNameInClass(var, nmspace, name)  (var) = __Pyx__GetNameInClass(nmspace, name)
+static PyObject *__Pyx__GetNameInClass(PyObject *nmspace, PyObject *name);
 
 /* CLineInTraceback.proto */
 #ifdef CYTHON_CLINE_IN_TRACEBACK
@@ -1836,7 +1933,10 @@ static CYTHON_INLINE int __pyx_f_7cpython_5array_extend_buffer(arrayobject *, ch
 
 /* Module declarations from 'bundler.extensions.FSM' */
 static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM_FSM = 0;
-static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__hits = 0;
+static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts = 0;
+static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr = 0;
+static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr = 0;
+static PyTypeObject *__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits = 0;
 static PyObject *__pyx_f_7bundler_10extensions_3FSM___pyx_unpickle_FSM__set_state(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *, PyObject *); /*proto*/
 static PyObject *__pyx_convert_vector_to_py_int(const std::vector<int>  &); /*proto*/
 static PyObject *__pyx_convert_vector_to_py___pyx_t_7bundler_10extensions_3FSM_IWord(const std::vector<__pyx_t_7bundler_10extensions_3FSM_IWord>  &); /*proto*/
@@ -1848,6 +1948,7 @@ int __pyx_module_is_main_bundler__extensions__FSM = 0;
 
 /* Implementation of 'bundler.extensions.FSM' */
 static PyObject *__pyx_builtin_range;
+static PyObject *__pyx_builtin_enumerate;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_MemoryError;
 static const char __pyx_k_i[] = "i";
@@ -1879,18 +1980,22 @@ static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_update[] = "update";
+static const char __pyx_k_genexpr[] = "genexpr";
 static const char __pyx_k_machine[] = "machine";
 static const char __pyx_k_FSM_hits[] = "FSM.hits";
 static const char __pyx_k_alphabet[] = "alphabet";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_pyx_type[] = "__pyx_type";
 static const char __pyx_k_setstate[] = "__setstate__";
+static const char __pyx_k_enumerate[] = "enumerate";
 static const char __pyx_k_pyx_state[] = "__pyx_state";
 static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_ValueError[] = "ValueError";
+static const char __pyx_k_from_dicts[] = "from_dicts";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_MemoryError[] = "MemoryError";
+static const char __pyx_k_OrderedDict[] = "OrderedDict";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_defaultdict[] = "defaultdict";
@@ -1903,6 +2008,7 @@ static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_pyx_unpickle_FSM[] = "__pyx_unpickle_FSM";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_bundler_extensions_FSM[] = "bundler.extensions.FSM";
+static const char __pyx_k_from_dicts_locals_genexpr[] = "from_dicts.<locals>.genexpr";
 static const char __pyx_k_Invalid_transition_to_state[] = "Invalid transition to state {}";
 static const char __pyx_k_Incompatible_checksums_s_vs_0x0e[] = "Incompatible checksums (%s vs 0x0ee84e7 = (alphabet, alphabet_len, distance_to_yield, has_yield, machine, machine_len, yield_states, yield_states2, yield_states2_starts))";
 static PyObject *__pyx_n_s_FSM;
@@ -1910,6 +2016,7 @@ static PyObject *__pyx_n_s_FSM_hits;
 static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0x0e;
 static PyObject *__pyx_kp_u_Invalid_transition_to_state;
 static PyObject *__pyx_n_s_MemoryError;
+static PyObject *__pyx_n_s_OrderedDict;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_n_s_Queue;
 static PyObject *__pyx_n_s_ValueError;
@@ -1925,7 +2032,11 @@ static PyObject *__pyx_n_s_defaultdict;
 static PyObject *__pyx_n_s_depth;
 static PyObject *__pyx_n_s_dict;
 static PyObject *__pyx_n_s_empty;
+static PyObject *__pyx_n_s_enumerate;
 static PyObject *__pyx_n_s_format;
+static PyObject *__pyx_n_s_from_dicts;
+static PyObject *__pyx_n_s_from_dicts_locals_genexpr;
+static PyObject *__pyx_n_s_genexpr;
 static PyObject *__pyx_n_s_get;
 static PyObject *__pyx_n_s_getstate;
 static PyObject *__pyx_n_s_hits;
@@ -1961,22 +2072,29 @@ static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_word;
 static PyObject *__pyx_n_s_yield_states;
 static int __pyx_pf_7bundler_10extensions_3FSM_3FSM___init__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_alphabet, PyObject *__pyx_v_machine, PyObject *__pyx_v_yield_states); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_state); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_depth); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13__reduce_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_15__setstate_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_genexpr(PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_3genexpr(PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2from_dicts(PyTypeObject *__pyx_v_cls, PyObject *__pyx_v_alphabet, PyObject *__pyx_v_machine, PyObject *__pyx_v_hits); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4__call__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_state); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6distance(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13has_cycle(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_depth); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_15__reduce_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_17__setstate_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_7bundler_10extensions_3FSM___pyx_unpickle_FSM(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static int __pyx_pf_7cpython_5array_5array___getbuffer__(arrayobject *__pyx_v_self, Py_buffer *__pyx_v_info, CYTHON_UNUSED int __pyx_v_flags); /* proto */
 static void __pyx_pf_7cpython_5array_5array_2__releasebuffer__(CYTHON_UNUSED arrayobject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM_FSM(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__hits(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_get = {0, &__pyx_n_s_get, 0, 0, 0};
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_15631591;
+static PyObject *__pyx_int_neg_1;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_codeobj__2;
 /* Late includes */
@@ -2977,7 +3095,7 @@ static int __pyx_pf_7bundler_10extensions_3FSM_3FSM___init__(struct __pyx_obj_7b
  *                     self.distance_to_yield[adjacent] = self.distance_to_yield[current] + 1
  *                     to_check.put(adjacent)             # <<<<<<<<<<<<<<
  * 
- *     def __call__(self, tuple word, int state=0):
+ *     @classmethod
  */
         __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_to_check, __pyx_n_s_put); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
@@ -3050,8 +3168,559 @@ static int __pyx_pf_7bundler_10extensions_3FSM_3FSM___init__(struct __pyx_obj_7b
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":58
- *                     to_check.put(adjacent)
+/* "bundler/extensions/FSM.pyx":59
+ * 
+ *     @classmethod
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):             # <<<<<<<<<<<<<<
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3from_dicts(PyObject *__pyx_v_cls, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_2from_dicts[] = " Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. ";
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3from_dicts(PyObject *__pyx_v_cls, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_alphabet = 0;
+  PyObject *__pyx_v_machine = 0;
+  PyObject *__pyx_v_hits = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("from_dicts (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_alphabet,&__pyx_n_s_machine,&__pyx_n_s_hits,0};
+    PyObject* values[3] = {0,0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_alphabet)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_machine)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("from_dicts", 1, 3, 3, 1); __PYX_ERR(0, 59, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_hits)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("from_dicts", 1, 3, 3, 2); __PYX_ERR(0, 59, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "from_dicts") < 0)) __PYX_ERR(0, 59, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
+    }
+    __pyx_v_alphabet = ((PyObject*)values[0]);
+    __pyx_v_machine = values[1];
+    __pyx_v_hits = ((PyObject*)values[2]);
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("from_dicts", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 59, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("bundler.extensions.FSM.FSM.from_dicts", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_alphabet), (&PyList_Type), 1, "alphabet", 1))) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_hits), (&PyDict_Type), 1, "hits", 1))) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_2from_dicts(((PyTypeObject*)__pyx_v_cls), __pyx_v_alphabet, __pyx_v_machine, __pyx_v_hits);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_2generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+
+/* "bundler/extensions/FSM.pyx":65
+ * 
+ *         state_names = list(machine)
+ *         state_names_index = dict((name, place) for place, name in enumerate(state_names))             # <<<<<<<<<<<<<<
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ */
+
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_genexpr(PyObject *__pyx_self) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *__pyx_cur_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr(__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr, __pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 65, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF(__pyx_cur_scope);
+  }
+  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *) __pyx_self;
+  __Pyx_INCREF(((PyObject *)__pyx_cur_scope->__pyx_outer_scope));
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_outer_scope);
+  {
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_2generator1, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_from_dicts_locals_genexpr, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_cur_scope);
+    __Pyx_RefNannyFinishContext();
+    return (PyObject *) gen;
+  }
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("bundler.extensions.FSM.FSM.from_dicts.genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_DECREF(((PyObject *)__pyx_cur_scope));
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_2generator1(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+{
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)__pyx_generator->closure);
+  PyObject *__pyx_r = NULL;
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  Py_ssize_t __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  switch (__pyx_generator->resume_label) {
+    case 0: goto __pyx_L3_first_run;
+    default: /* CPython raises the right error here */
+    __Pyx_RefNannyFinishContext();
+    return NULL;
+  }
+  __pyx_L3_first_run:;
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_r = PyDict_New(); if (unlikely(!__pyx_r)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_r);
+  __Pyx_INCREF(__pyx_int_0);
+  __pyx_t_1 = __pyx_int_0;
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_state_names)) { __Pyx_RaiseClosureNameError("state_names"); __PYX_ERR(0, 65, __pyx_L1_error) }
+  __pyx_t_2 = __pyx_cur_scope->__pyx_outer_scope->__pyx_v_state_names; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
+  for (;;) {
+    if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
+    #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    __pyx_t_4 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_4); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 65, __pyx_L1_error)
+    #else
+    __pyx_t_4 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    #endif
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_name);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_name, __pyx_t_4);
+    __Pyx_GIVEREF(__pyx_t_4);
+    __pyx_t_4 = 0;
+    __Pyx_INCREF(__pyx_t_1);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_place);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_place, __pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_1);
+    __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __Pyx_DECREF(__pyx_t_1);
+    __pyx_t_1 = __pyx_t_4;
+    __pyx_t_4 = 0;
+    if (unlikely(PyDict_SetItem(__pyx_r, (PyObject*)__pyx_cur_scope->__pyx_v_name, (PyObject*)__pyx_cur_scope->__pyx_v_place))) __PYX_ERR(0, 65, __pyx_L1_error)
+  }
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  #if !CYTHON_USE_EXC_INFO_STACK
+  __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
+  #endif
+  __pyx_generator->resume_label = -1;
+  __Pyx_Coroutine_clear((PyObject*)__pyx_generator);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_5generator2(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+
+/* "bundler/extensions/FSM.pyx":68
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))             # <<<<<<<<<<<<<<
+ * 
+ *     def __call__(self, tuple word, int state=0):
+ */
+
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_3genexpr(PyObject *__pyx_self) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *__pyx_cur_scope;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr(__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr, __pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 68, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF(__pyx_cur_scope);
+  }
+  __pyx_cur_scope->__pyx_outer_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *) __pyx_self;
+  __Pyx_INCREF(((PyObject *)__pyx_cur_scope->__pyx_outer_scope));
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_outer_scope);
+  {
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_5generator2, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_genexpr, __pyx_n_s_from_dicts_locals_genexpr, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_cur_scope);
+    __Pyx_RefNannyFinishContext();
+    return (PyObject *) gen;
+  }
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("bundler.extensions.FSM.FSM.from_dicts.genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __Pyx_DECREF(((PyObject *)__pyx_cur_scope));
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10from_dicts_5generator2(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+{
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *__pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)__pyx_generator->closure);
+  PyObject *__pyx_r = NULL;
+  PyObject *__pyx_t_1 = NULL;
+  Py_ssize_t __pyx_t_2;
+  Py_ssize_t __pyx_t_3;
+  int __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  int __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("genexpr", 0);
+  switch (__pyx_generator->resume_label) {
+    case 0: goto __pyx_L3_first_run;
+    default: /* CPython raises the right error here */
+    __Pyx_RefNannyFinishContext();
+    return NULL;
+  }
+  __pyx_L3_first_run:;
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_r = PyDict_New(); if (unlikely(!__pyx_r)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_r);
+  __pyx_t_2 = 0;
+  if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits)) { __Pyx_RaiseClosureNameError("hits"); __PYX_ERR(0, 68, __pyx_L1_error) }
+  if (unlikely(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+    __PYX_ERR(0, 68, __pyx_L1_error)
+  }
+  __pyx_t_5 = __Pyx_dict_iterator(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits, 1, ((PyObject *)NULL), (&__pyx_t_3), (&__pyx_t_4)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_1);
+  __pyx_t_1 = __pyx_t_5;
+  __pyx_t_5 = 0;
+  while (1) {
+    __pyx_t_6 = __Pyx_dict_iter_next(__pyx_t_1, __pyx_t_3, &__pyx_t_2, &__pyx_t_5, NULL, NULL, __pyx_t_4);
+    if (unlikely(__pyx_t_6 == 0)) break;
+    if (unlikely(__pyx_t_6 == -1)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_XGOTREF(__pyx_cur_scope->__pyx_v_state);
+    __Pyx_XDECREF_SET(__pyx_cur_scope->__pyx_v_state, __pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_5);
+    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_state_names_index)) { __Pyx_RaiseClosureNameError("state_names_index"); __PYX_ERR(0, 68, __pyx_L1_error) }
+    if (unlikely(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_state_names_index == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 68, __pyx_L1_error)
+    }
+    __pyx_t_5 = __Pyx_PyDict_GetItem(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_state_names_index, __pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (unlikely(!__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits)) { __Pyx_RaiseClosureNameError("hits"); __PYX_ERR(0, 68, __pyx_L1_error) }
+    if (unlikely(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 68, __pyx_L1_error)
+    }
+    __pyx_t_7 = __Pyx_PyDict_GetItem(__pyx_cur_scope->__pyx_outer_scope->__pyx_v_hits, __pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 68, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    if (unlikely(PyDict_SetItem(__pyx_r, (PyObject*)__pyx_t_5, (PyObject*)__pyx_t_7))) __PYX_ERR(0, 68, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_r); __pyx_r = 0;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_AddTraceback("genexpr", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  #if !CYTHON_USE_EXC_INFO_STACK
+  __Pyx_Coroutine_ResetAndClearException(__pyx_generator);
+  #endif
+  __pyx_generator->resume_label = -1;
+  __Pyx_Coroutine_clear((PyObject*)__pyx_generator);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bundler/extensions/FSM.pyx":59
+ * 
+ *     @classmethod
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):             # <<<<<<<<<<<<<<
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ */
+
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2from_dicts(PyTypeObject *__pyx_v_cls, PyObject *__pyx_v_alphabet, PyObject *__pyx_v_machine, PyObject *__pyx_v_hits) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *__pyx_cur_scope;
+  PyObject *__pyx_v_flattened_machine = NULL;
+  PyObject *__pyx_8genexpr2__pyx_v_state_name = NULL;
+  PyObject *__pyx_8genexpr2__pyx_v_letter = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  int __pyx_t_2;
+  PyObject *__pyx_t_3 = NULL;
+  Py_ssize_t __pyx_t_4;
+  PyObject *__pyx_t_5 = NULL;
+  Py_ssize_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("from_dicts", 0);
+  __pyx_cur_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts, __pyx_empty_tuple, NULL);
+  if (unlikely(!__pyx_cur_scope)) {
+    __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)Py_None);
+    __Pyx_INCREF(Py_None);
+    __PYX_ERR(0, 59, __pyx_L1_error)
+  } else {
+    __Pyx_GOTREF(__pyx_cur_scope);
+  }
+  __pyx_cur_scope->__pyx_v_hits = __pyx_v_hits;
+  __Pyx_INCREF(__pyx_cur_scope->__pyx_v_hits);
+  __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_hits);
+
+  /* "bundler/extensions/FSM.pyx":62
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ *         assert isinstance(machine, OrderedDict)             # <<<<<<<<<<<<<<
+ * 
+ *         state_names = list(machine)
+ */
+  #ifndef CYTHON_WITHOUT_ASSERTIONS
+  if (unlikely(!Py_OptimizeFlag)) {
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_OrderedDict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_2 = PyObject_IsInstance(__pyx_v_machine, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 62, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(!(__pyx_t_2 != 0))) {
+      PyErr_SetNone(PyExc_AssertionError);
+      __PYX_ERR(0, 62, __pyx_L1_error)
+    }
+  }
+  #endif
+
+  /* "bundler/extensions/FSM.pyx":64
+ *         assert isinstance(machine, OrderedDict)
+ * 
+ *         state_names = list(machine)             # <<<<<<<<<<<<<<
+ *         state_names_index = dict((name, place) for place, name in enumerate(state_names))
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ */
+  __pyx_t_1 = PySequence_List(__pyx_v_machine); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_1);
+  __pyx_cur_scope->__pyx_v_state_names = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "bundler/extensions/FSM.pyx":65
+ * 
+ *         state_names = list(machine)
+ *         state_names_index = dict((name, place) for place, name in enumerate(state_names))             # <<<<<<<<<<<<<<
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ */
+  __pyx_t_1 = __pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_Generator_Next(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_GIVEREF(__pyx_t_3);
+  __pyx_cur_scope->__pyx_v_state_names_index = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "bundler/extensions/FSM.pyx":66
+ *         state_names = list(machine)
+ *         state_names_index = dict((name, place) for place, name in enumerate(state_names))
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]             # <<<<<<<<<<<<<<
+ * 
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
+ */
+  { /* enter inner scope */
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L5_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_1 = __pyx_cur_scope->__pyx_v_state_names; __Pyx_INCREF(__pyx_t_1); __pyx_t_4 = 0;
+    for (;;) {
+      if (__pyx_t_4 >= PyList_GET_SIZE(__pyx_t_1)) break;
+      #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+      __pyx_t_5 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_4); __Pyx_INCREF(__pyx_t_5); __pyx_t_4++; if (unlikely(0 < 0)) __PYX_ERR(0, 66, __pyx_L5_error)
+      #else
+      __pyx_t_5 = PySequence_ITEM(__pyx_t_1, __pyx_t_4); __pyx_t_4++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L5_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      #endif
+      __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_state_name, __pyx_t_5);
+      __pyx_t_5 = 0;
+      if (unlikely(__pyx_v_alphabet == Py_None)) {
+        PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+        __PYX_ERR(0, 66, __pyx_L5_error)
+      }
+      __pyx_t_5 = __pyx_v_alphabet; __Pyx_INCREF(__pyx_t_5); __pyx_t_6 = 0;
+      for (;;) {
+        if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_5)) break;
+        #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_7); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 66, __pyx_L5_error)
+        #else
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        #endif
+        __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_letter, __pyx_t_7);
+        __pyx_t_7 = 0;
+        if (unlikely(__pyx_cur_scope->__pyx_v_state_names_index == Py_None)) {
+          PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "get");
+          __PYX_ERR(0, 66, __pyx_L5_error)
+        }
+        __pyx_t_7 = __Pyx_PyObject_GetItem(__pyx_v_machine, __pyx_8genexpr2__pyx_v_state_name); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __pyx_t_8 = __Pyx_PyObject_GetItem(__pyx_t_7, __pyx_8genexpr2__pyx_v_letter); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __pyx_t_7 = __Pyx_PyDict_GetItemDefault(__pyx_cur_scope->__pyx_v_state_names_index, __pyx_t_8, __pyx_int_neg_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_GOTREF(__pyx_t_7);
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_t_7))) __PYX_ERR(0, 66, __pyx_L5_error)
+        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      }
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_letter); __pyx_8genexpr2__pyx_v_letter = 0;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_state_name); __pyx_8genexpr2__pyx_v_state_name = 0;
+    goto __pyx_L10_exit_scope;
+    __pyx_L5_error:;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_letter); __pyx_8genexpr2__pyx_v_letter = 0;
+    __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_state_name); __pyx_8genexpr2__pyx_v_state_name = 0;
+    goto __pyx_L1_error;
+    __pyx_L10_exit_scope:;
+  } /* exit inner scope */
+  __pyx_v_flattened_machine = ((PyObject*)__pyx_t_3);
+  __pyx_t_3 = 0;
+
+  /* "bundler/extensions/FSM.pyx":68
+ *         flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+ * 
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))             # <<<<<<<<<<<<<<
+ * 
+ *     def __call__(self, tuple word, int state=0):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_3 = __pyx_pf_7bundler_10extensions_3FSM_3FSM_10from_dicts_3genexpr(((PyObject*)__pyx_cur_scope)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = __Pyx_Generator_Next(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_INCREF(__pyx_v_alphabet);
+  __Pyx_GIVEREF(__pyx_v_alphabet);
+  PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_v_alphabet);
+  __Pyx_INCREF(__pyx_v_flattened_machine);
+  __Pyx_GIVEREF(__pyx_v_flattened_machine);
+  PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_v_flattened_machine);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_t_1);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)__pyx_v_cls), __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "bundler/extensions/FSM.pyx":59
+ * 
+ *     @classmethod
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):             # <<<<<<<<<<<<<<
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("bundler.extensions.FSM.FSM.from_dicts", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_flattened_machine);
+  __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_state_name);
+  __Pyx_XDECREF(__pyx_8genexpr2__pyx_v_letter);
+  __Pyx_DECREF(((PyObject *)__pyx_cur_scope));
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "bundler/extensions/FSM.pyx":70
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
  * 
  *     def __call__(self, tuple word, int state=0):             # <<<<<<<<<<<<<<
  *         cdef int letter
@@ -3059,8 +3728,8 @@ static int __pyx_pf_7bundler_10extensions_3FSM_3FSM___init__(struct __pyx_obj_7b
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_5__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_5__call__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_word = 0;
   int __pyx_v_state;
   int __pyx_lineno = 0;
@@ -3096,7 +3765,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__(PyObject *__
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 58, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__call__") < 0)) __PYX_ERR(0, 70, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3109,21 +3778,21 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__(PyObject *__
     }
     __pyx_v_word = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_state = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_state == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 58, __pyx_L3_error)
+      __pyx_v_state = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_state == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
     } else {
       __pyx_v_state = ((int)0);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 58, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__call__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 70, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bundler.extensions.FSM.FSM.__call__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 58, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_state);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_4__call__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_state);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3134,7 +3803,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__(PyObject *__
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_state) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4__call__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_state) {
   int __pyx_v_letter;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3151,7 +3820,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__call__", 0);
 
-  /* "bundler/extensions/FSM.pyx":60
+  /* "bundler/extensions/FSM.pyx":72
  *     def __call__(self, tuple word, int state=0):
  *         cdef int letter
  *         for letter in word:             # <<<<<<<<<<<<<<
@@ -3160,22 +3829,22 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
  */
   if (unlikely(__pyx_v_word == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
-    __PYX_ERR(0, 60, __pyx_L1_error)
+    __PYX_ERR(0, 72, __pyx_L1_error)
   }
   __pyx_t_1 = __pyx_v_word; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
   for (;;) {
     if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_3); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 72, __pyx_L1_error)
     #else
-    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     #endif
-    __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_v_letter = __pyx_t_4;
 
-    /* "bundler/extensions/FSM.pyx":61
+    /* "bundler/extensions/FSM.pyx":73
  *         cdef int letter
  *         for letter in word:
  *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
@@ -3184,7 +3853,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
  */
     __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + __pyx_v_letter)]);
 
-    /* "bundler/extensions/FSM.pyx":62
+    /* "bundler/extensions/FSM.pyx":74
  *         for letter in word:
  *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -3194,16 +3863,16 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
     __pyx_t_5 = ((__pyx_v_state < 0) != 0);
     if (unlikely(__pyx_t_5)) {
 
-      /* "bundler/extensions/FSM.pyx":63
+      /* "bundler/extensions/FSM.pyx":75
  *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
  * 
  *         return state
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_8 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3218,17 +3887,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
       __pyx_t_3 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_8, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7);
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 63, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __PYX_ERR(0, 63, __pyx_L1_error)
+      __PYX_ERR(0, 75, __pyx_L1_error)
 
-      /* "bundler/extensions/FSM.pyx":62
+      /* "bundler/extensions/FSM.pyx":74
  *         for letter in word:
  *             state = self.machine.data.as_ints[state * self.alphabet_len + letter]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -3237,7 +3906,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
  */
     }
 
-    /* "bundler/extensions/FSM.pyx":60
+    /* "bundler/extensions/FSM.pyx":72
  *     def __call__(self, tuple word, int state=0):
  *         cdef int letter
  *         for letter in word:             # <<<<<<<<<<<<<<
@@ -3247,7 +3916,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "bundler/extensions/FSM.pyx":65
+  /* "bundler/extensions/FSM.pyx":77
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  * 
  *         return state             # <<<<<<<<<<<<<<
@@ -3255,14 +3924,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
  *     def distance(self, tuple word):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":58
- *                     to_check.put(adjacent)
+  /* "bundler/extensions/FSM.pyx":70
+ *         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
  * 
  *     def __call__(self, tuple word, int state=0):             # <<<<<<<<<<<<<<
  *         cdef int letter
@@ -3284,7 +3953,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":67
+/* "bundler/extensions/FSM.pyx":79
  *         return state
  * 
  *     def distance(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3293,16 +3962,16 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_2__call__(struct __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_5distance(PyObject *__pyx_v_self, PyObject *__pyx_v_word); /*proto*/
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_5distance(PyObject *__pyx_v_self, PyObject *__pyx_v_word) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7distance(PyObject *__pyx_v_self, PyObject *__pyx_v_word); /*proto*/
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7distance(PyObject *__pyx_v_self, PyObject *__pyx_v_word) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("distance (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 67, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject*)__pyx_v_word));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_6distance(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject*)__pyx_v_word));
 
   /* function exit code */
   goto __pyx_L0;
@@ -3313,7 +3982,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_5distance(PyObject *__
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6distance(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -3324,7 +3993,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("distance", 0);
 
-  /* "bundler/extensions/FSM.pyx":68
+  /* "bundler/extensions/FSM.pyx":80
  * 
  *     def distance(self, tuple word):
  *         return self.distance_to_yield[self(word)]             # <<<<<<<<<<<<<<
@@ -3334,7 +4003,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(__pyx_v_self->distance_to_yield == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 68, __pyx_L1_error)
+    __PYX_ERR(0, 80, __pyx_L1_error)
   }
   __Pyx_INCREF(((PyObject *)__pyx_v_self));
   __pyx_t_2 = ((PyObject *)__pyx_v_self); __pyx_t_3 = NULL;
@@ -3349,17 +4018,17 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_word) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_word);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_self->distance_to_yield, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_GetItem(__pyx_v_self->distance_to_yield, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":67
+  /* "bundler/extensions/FSM.pyx":79
  *         return state
  * 
  *     def distance(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3380,7 +4049,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_4distance(struct __pyx
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":70
+/* "bundler/extensions/FSM.pyx":82
  *         return self.distance_to_yield[self(word)]
  * 
  *     cdef bint c_hit(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
@@ -3414,7 +4083,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":71
+  /* "bundler/extensions/FSM.pyx":83
  * 
  *     cdef bint c_hit(self, IWord& word, int run=-1):
  *         cdef int index = 0             # <<<<<<<<<<<<<<
@@ -3423,7 +4092,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
   __pyx_v_index = 0;
 
-  /* "bundler/extensions/FSM.pyx":72
+  /* "bundler/extensions/FSM.pyx":84
  *     cdef bint c_hit(self, IWord& word, int run=-1):
  *         cdef int index = 0
  *         cdef int state = 0             # <<<<<<<<<<<<<<
@@ -3432,7 +4101,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
   __pyx_v_state = 0;
 
-  /* "bundler/extensions/FSM.pyx":73
+  /* "bundler/extensions/FSM.pyx":85
  *         cdef int index = 0
  *         cdef int state = 0
  *         cdef int length = word.size()             # <<<<<<<<<<<<<<
@@ -3441,7 +4110,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
   __pyx_v_length = __pyx_v_word.size();
 
-  /* "bundler/extensions/FSM.pyx":74
+  /* "bundler/extensions/FSM.pyx":86
  *         cdef int state = 0
  *         cdef int length = word.size()
  *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
@@ -3457,7 +4126,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v__ = __pyx_t_3;
 
-    /* "bundler/extensions/FSM.pyx":75
+    /* "bundler/extensions/FSM.pyx":87
  *         cdef int length = word.size()
  *         for _ in range(length if run < 0 else run):
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
@@ -3466,7 +4135,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
     __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + (__pyx_v_word[__pyx_v_index]))]);
 
-    /* "bundler/extensions/FSM.pyx":76
+    /* "bundler/extensions/FSM.pyx":88
  *         for _ in range(length if run < 0 else run):
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -3476,16 +4145,16 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
     __pyx_t_4 = ((__pyx_v_state < 0) != 0);
     if (unlikely(__pyx_t_4)) {
 
-      /* "bundler/extensions/FSM.pyx":77
+      /* "bundler/extensions/FSM.pyx":89
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
  *             if self.has_yield.data.as_ints[state]:
  *                 return True
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 77, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 89, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 77, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_state); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 89, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __pyx_t_8 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3500,17 +4169,17 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
       __pyx_t_5 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_8, __pyx_t_7) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7);
       __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 89, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 77, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 89, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __PYX_ERR(0, 77, __pyx_L1_error)
+      __PYX_ERR(0, 89, __pyx_L1_error)
 
-      /* "bundler/extensions/FSM.pyx":76
+      /* "bundler/extensions/FSM.pyx":88
  *         for _ in range(length if run < 0 else run):
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -3519,7 +4188,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
     }
 
-    /* "bundler/extensions/FSM.pyx":78
+    /* "bundler/extensions/FSM.pyx":90
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:             # <<<<<<<<<<<<<<
@@ -3529,7 +4198,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
     __pyx_t_4 = ((__pyx_v_self->has_yield->data.as_ints[__pyx_v_state]) != 0);
     if (__pyx_t_4) {
 
-      /* "bundler/extensions/FSM.pyx":79
+      /* "bundler/extensions/FSM.pyx":91
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:
  *                 return True             # <<<<<<<<<<<<<<
@@ -3539,7 +4208,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "bundler/extensions/FSM.pyx":78
+      /* "bundler/extensions/FSM.pyx":90
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             if self.has_yield.data.as_ints[state]:             # <<<<<<<<<<<<<<
@@ -3548,7 +4217,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
     }
 
-    /* "bundler/extensions/FSM.pyx":80
+    /* "bundler/extensions/FSM.pyx":92
  *             if self.has_yield.data.as_ints[state]:
  *                 return True
  *             index += 1             # <<<<<<<<<<<<<<
@@ -3557,7 +4226,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
     __pyx_v_index = (__pyx_v_index + 1);
 
-    /* "bundler/extensions/FSM.pyx":81
+    /* "bundler/extensions/FSM.pyx":93
  *                 return True
  *             index += 1
  *             if index == length: index = 0             # <<<<<<<<<<<<<<
@@ -3570,7 +4239,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":83
+  /* "bundler/extensions/FSM.pyx":95
  *             if index == length: index = 0
  * 
  *         return False             # <<<<<<<<<<<<<<
@@ -3580,7 +4249,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":70
+  /* "bundler/extensions/FSM.pyx":82
  *         return self.distance_to_yield[self(word)]
  * 
  *     cdef bint c_hit(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
@@ -3601,7 +4270,7 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":85
+/* "bundler/extensions/FSM.pyx":97
  *         return False
  * 
  *     def hit(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3610,17 +4279,17 @@ static int __pyx_f_7bundler_10extensions_3FSM_3FSM_c_hit(struct __pyx_obj_7bundl
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7hit(PyObject *__pyx_v_self, PyObject *__pyx_v_word); /*proto*/
-static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_6hit[] = " Return whether word meets any state that yields. ";
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7hit(PyObject *__pyx_v_self, PyObject *__pyx_v_word) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hit(PyObject *__pyx_v_self, PyObject *__pyx_v_word); /*proto*/
+static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_8hit[] = " Return whether word meets any state that yields. ";
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hit(PyObject *__pyx_v_self, PyObject *__pyx_v_word) {
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("hit (wrapper)", 0);
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 85, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject*)__pyx_v_word));
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_8hit(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject*)__pyx_v_word));
 
   /* function exit code */
   goto __pyx_L0;
@@ -3631,7 +4300,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_7hit(PyObject *__pyx_v
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hit(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   __pyx_t_7bundler_10extensions_3FSM_IWord __pyx_t_1;
@@ -3641,7 +4310,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("hit", 0);
 
-  /* "bundler/extensions/FSM.pyx":88
+  /* "bundler/extensions/FSM.pyx":100
  *         ''' Return whether word meets any state that yields. '''
  *         # return any(self.hits(word))
  *         return self.c_hit(word)             # <<<<<<<<<<<<<<
@@ -3649,14 +4318,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
  *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 88, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->c_hit(__pyx_v_self, __pyx_t_1, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_vector_from_py_int(__pyx_v_word); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyBool_FromLong(((struct __pyx_vtabstruct_7bundler_10extensions_3FSM_FSM *)__pyx_v_self->__pyx_vtab)->c_hit(__pyx_v_self, __pyx_t_1, NULL)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":85
+  /* "bundler/extensions/FSM.pyx":97
  *         return False
  * 
  *     def hit(self, tuple word):             # <<<<<<<<<<<<<<
@@ -3675,7 +4344,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_6hit(struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":90
+/* "bundler/extensions/FSM.pyx":102
  *         return self.c_hit(word)
  * 
  *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
@@ -3712,7 +4381,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":92
+  /* "bundler/extensions/FSM.pyx":104
  *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0             # <<<<<<<<<<<<<<
@@ -3721,7 +4390,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
   __pyx_v_index = 0;
 
-  /* "bundler/extensions/FSM.pyx":93
+  /* "bundler/extensions/FSM.pyx":105
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0
  *         cdef int state = 0             # <<<<<<<<<<<<<<
@@ -3730,7 +4399,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
   __pyx_v_state = 0;
 
-  /* "bundler/extensions/FSM.pyx":94
+  /* "bundler/extensions/FSM.pyx":106
  *         cdef int index = 0
  *         cdef int state = 0
  *         cdef int length = word.size()             # <<<<<<<<<<<<<<
@@ -3739,7 +4408,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
   __pyx_v_length = __pyx_v_word.size();
 
-  /* "bundler/extensions/FSM.pyx":95
+  /* "bundler/extensions/FSM.pyx":107
  *         cdef int state = 0
  *         cdef int length = word.size()
  *         cdef int i = 0, j             # <<<<<<<<<<<<<<
@@ -3748,7 +4417,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
   __pyx_v_i = 0;
 
-  /* "bundler/extensions/FSM.pyx":97
+  /* "bundler/extensions/FSM.pyx":109
  *         cdef int i = 0, j
  *         cdef vector[pair[int, IWord]] returns
  *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
@@ -3764,7 +4433,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v__ = __pyx_t_3;
 
-    /* "bundler/extensions/FSM.pyx":98
+    /* "bundler/extensions/FSM.pyx":110
  *         cdef vector[pair[int, IWord]] returns
  *         for _ in range(length if run < 0 else run):
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
@@ -3773,7 +4442,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
     __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + (__pyx_v_word[__pyx_v_index]))]);
 
-    /* "bundler/extensions/FSM.pyx":99
+    /* "bundler/extensions/FSM.pyx":111
  *         for _ in range(length if run < 0 else run):
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             i += 1             # <<<<<<<<<<<<<<
@@ -3782,7 +4451,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "bundler/extensions/FSM.pyx":100
+    /* "bundler/extensions/FSM.pyx":112
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             i += 1
  *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):             # <<<<<<<<<<<<<<
@@ -3794,7 +4463,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
     for (__pyx_t_6 = (__pyx_v_self->yield_states2_starts[__pyx_v_state]); __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_j = __pyx_t_6;
 
-      /* "bundler/extensions/FSM.pyx":101
+      /* "bundler/extensions/FSM.pyx":113
  *             i += 1
  *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
  *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))             # <<<<<<<<<<<<<<
@@ -3805,17 +4474,17 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
         __pyx_t_7 = std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> (__pyx_v_i, (__pyx_v_self->yield_states2[__pyx_v_j]));
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 101, __pyx_L1_error)
+        __PYX_ERR(0, 113, __pyx_L1_error)
       }
       try {
         __pyx_v_returns.push_back(__pyx_t_7);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 101, __pyx_L1_error)
+        __PYX_ERR(0, 113, __pyx_L1_error)
       }
     }
 
-    /* "bundler/extensions/FSM.pyx":102
+    /* "bundler/extensions/FSM.pyx":114
  *             for j in range(self.yield_states2_starts[state], self.yield_states2_starts[state+1]):
  *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
  *             index += 1             # <<<<<<<<<<<<<<
@@ -3824,7 +4493,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
  */
     __pyx_v_index = (__pyx_v_index + 1);
 
-    /* "bundler/extensions/FSM.pyx":103
+    /* "bundler/extensions/FSM.pyx":115
  *                 returns.push_back(pair[int, IWord](i, self.yield_states2[j]))
  *             index += 1
  *             if index == length: index = 0             # <<<<<<<<<<<<<<
@@ -3837,7 +4506,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":105
+  /* "bundler/extensions/FSM.pyx":117
  *             if index == length: index = 0
  * 
  *         return returns             # <<<<<<<<<<<<<<
@@ -3847,7 +4516,7 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   __pyx_r = __pyx_v_returns;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":90
+  /* "bundler/extensions/FSM.pyx":102
  *         return self.c_hit(word)
  * 
  *     cdef vector[pair[int, IWord]] c_hits(self, IWord& word, int run=-1):             # <<<<<<<<<<<<<<
@@ -3863,9 +4532,9 @@ static std::vector<std::pair<int,__pyx_t_7bundler_10extensions_3FSM_IWord> >  __
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_12generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value); /* proto */
 
-/* "bundler/extensions/FSM.pyx":107
+/* "bundler/extensions/FSM.pyx":119
  *         return returns
  * 
  *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
@@ -3874,9 +4543,9 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_8hits[] = " Process word and yield (index, x) for all states that word hits that have things to yield. ";
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_11hits(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_10hits[] = " Process word and yield (index, x) for all states that word hits that have things to yield. ";
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_11hits(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_word = 0;
   int __pyx_v_run;
   int __pyx_lineno = 0;
@@ -3912,7 +4581,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hits") < 0)) __PYX_ERR(0, 107, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "hits") < 0)) __PYX_ERR(0, 119, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -3925,21 +4594,21 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
     }
     __pyx_v_word = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_run = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_run == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 107, __pyx_L3_error)
+      __pyx_v_run = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_run == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 119, __pyx_L3_error)
     } else {
       __pyx_v_run = ((int)-1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("hits", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 107, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("hits", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 119, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bundler.extensions.FSM.FSM.hits", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 107, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_run);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_10hits(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_run);
 
   /* function exit code */
   goto __pyx_L0;
@@ -3950,19 +4619,19 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run) {
-  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *__pyx_cur_scope;
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_10hits(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_run) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *__pyx_cur_scope;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("hits", 0);
-  __pyx_cur_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__hits(__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__hits, __pyx_empty_tuple, NULL);
+  __pyx_cur_scope = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits(__pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits, __pyx_empty_tuple, NULL);
   if (unlikely(!__pyx_cur_scope)) {
-    __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)Py_None);
+    __pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)Py_None);
     __Pyx_INCREF(Py_None);
-    __PYX_ERR(0, 107, __pyx_L1_error)
+    __PYX_ERR(0, 119, __pyx_L1_error)
   } else {
     __Pyx_GOTREF(__pyx_cur_scope);
   }
@@ -3974,7 +4643,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj
   __Pyx_GIVEREF(__pyx_cur_scope->__pyx_v_word);
   __pyx_cur_scope->__pyx_v_run = __pyx_v_run;
   {
-    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_hits, __pyx_n_s_FSM_hits, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 107, __pyx_L1_error)
+    __pyx_CoroutineObject *gen = __Pyx_Generator_New((__pyx_coroutine_body_t) __pyx_gb_7bundler_10extensions_3FSM_3FSM_12generator, NULL, (PyObject *) __pyx_cur_scope, __pyx_n_s_hits, __pyx_n_s_FSM_hits, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!gen)) __PYX_ERR(0, 119, __pyx_L1_error)
     __Pyx_DECREF(__pyx_cur_scope);
     __Pyx_RefNannyFinishContext();
     return (PyObject *) gen;
@@ -3990,9 +4659,9 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_8hits(struct __pyx_obj
   return __pyx_r;
 }
 
-static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
+static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_12generator(__pyx_CoroutineObject *__pyx_generator, CYTHON_UNUSED PyThreadState *__pyx_tstate, PyObject *__pyx_sent_value) /* generator body */
 {
-  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *__pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)__pyx_generator->closure);
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *__pyx_cur_scope = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)__pyx_generator->closure);
   PyObject *__pyx_r = NULL;
   Py_ssize_t __pyx_t_1;
   int __pyx_t_2;
@@ -4017,9 +4686,9 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
     return NULL;
   }
   __pyx_L3_first_run:;
-  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 119, __pyx_L1_error)
 
-  /* "bundler/extensions/FSM.pyx":109
+  /* "bundler/extensions/FSM.pyx":121
  *     def hits(self, tuple word, int run=-1):
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter             # <<<<<<<<<<<<<<
@@ -4028,7 +4697,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
   __pyx_cur_scope->__pyx_v_index = 0;
 
-  /* "bundler/extensions/FSM.pyx":110
+  /* "bundler/extensions/FSM.pyx":122
  *         ''' Process word and yield (index, x) for all states that word hits that have things to yield. '''
  *         cdef int index = 0, letter
  *         cdef int state = 0             # <<<<<<<<<<<<<<
@@ -4037,7 +4706,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
   __pyx_cur_scope->__pyx_v_state = 0;
 
-  /* "bundler/extensions/FSM.pyx":111
+  /* "bundler/extensions/FSM.pyx":123
  *         cdef int index = 0, letter
  *         cdef int state = 0
  *         cdef int length = len(word)             # <<<<<<<<<<<<<<
@@ -4046,12 +4715,12 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
   if (unlikely(__pyx_cur_scope->__pyx_v_word == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 111, __pyx_L1_error)
+    __PYX_ERR(0, 123, __pyx_L1_error)
   }
-  __pyx_t_1 = PyTuple_GET_SIZE(__pyx_cur_scope->__pyx_v_word); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_GET_SIZE(__pyx_cur_scope->__pyx_v_word); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 123, __pyx_L1_error)
   __pyx_cur_scope->__pyx_v_length = __pyx_t_1;
 
-  /* "bundler/extensions/FSM.pyx":112
+  /* "bundler/extensions/FSM.pyx":124
  *         cdef int state = 0
  *         cdef int length = len(word)
  *         cdef int i = 0             # <<<<<<<<<<<<<<
@@ -4060,7 +4729,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
   __pyx_cur_scope->__pyx_v_i = 0;
 
-  /* "bundler/extensions/FSM.pyx":113
+  /* "bundler/extensions/FSM.pyx":125
  *         cdef int length = len(word)
  *         cdef int i = 0
  *         for _ in range(length if run < 0 else run):             # <<<<<<<<<<<<<<
@@ -4076,7 +4745,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_cur_scope->__pyx_v__ = __pyx_t_4;
 
-    /* "bundler/extensions/FSM.pyx":114
+    /* "bundler/extensions/FSM.pyx":126
  *         cdef int i = 0
  *         for _ in range(length if run < 0 else run):
  *             i += 1             # <<<<<<<<<<<<<<
@@ -4085,30 +4754,30 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
     __pyx_cur_scope->__pyx_v_i = (__pyx_cur_scope->__pyx_v_i + 1);
 
-    /* "bundler/extensions/FSM.pyx":115
+    /* "bundler/extensions/FSM.pyx":127
  *         for _ in range(length if run < 0 else run):
  *             i += 1
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]             # <<<<<<<<<<<<<<
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int((__pyx_cur_scope->__pyx_v_state * __pyx_cur_scope->__pyx_v_self->alphabet_len)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int((__pyx_cur_scope->__pyx_v_state * __pyx_cur_scope->__pyx_v_self->alphabet_len)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (unlikely(__pyx_cur_scope->__pyx_v_word == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 115, __pyx_L1_error)
+      __PYX_ERR(0, 127, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_cur_scope->__pyx_v_word, __pyx_cur_scope->__pyx_v_index, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_cur_scope->__pyx_v_word, __pyx_cur_scope->__pyx_v_index, int, 1, __Pyx_PyInt_From_int, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_1 = __Pyx_PyIndex_AsSsize_t(__pyx_t_7); if (unlikely((__pyx_t_1 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyIndex_AsSsize_t(__pyx_t_7); if (unlikely((__pyx_t_1 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_cur_scope->__pyx_v_state = (__pyx_cur_scope->__pyx_v_self->machine->data.as_ints[__pyx_t_1]);
 
-    /* "bundler/extensions/FSM.pyx":116
+    /* "bundler/extensions/FSM.pyx":128
  *             i += 1
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -4118,16 +4787,16 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
     __pyx_t_8 = ((__pyx_cur_scope->__pyx_v_state < 0) != 0);
     if (unlikely(__pyx_t_8)) {
 
-      /* "bundler/extensions/FSM.pyx":117
+      /* "bundler/extensions/FSM.pyx":129
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))             # <<<<<<<<<<<<<<
  *             for x in self.yield_states.get(state, []):
  *                 yield (i, x)
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_kp_u_Invalid_transition_to_state, __pyx_n_s_format); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __pyx_t_9 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -4142,17 +4811,17 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
       __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_9, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5);
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 117, __pyx_L1_error)
+      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 117, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_ValueError, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_Raise(__pyx_t_6, 0, 0, 0);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __PYX_ERR(0, 117, __pyx_L1_error)
+      __PYX_ERR(0, 129, __pyx_L1_error)
 
-      /* "bundler/extensions/FSM.pyx":116
+      /* "bundler/extensions/FSM.pyx":128
  *             i += 1
  *             state = self.machine.data.as_ints[state * self.alphabet_len + word[index]]
  *             if state < 0:             # <<<<<<<<<<<<<<
@@ -4161,7 +4830,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
     }
 
-    /* "bundler/extensions/FSM.pyx":118
+    /* "bundler/extensions/FSM.pyx":130
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
@@ -4170,13 +4839,13 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
     if (unlikely(__pyx_cur_scope->__pyx_v_self->yield_states == Py_None)) {
       PyErr_Format(PyExc_AttributeError, "'NoneType' object has no attribute '%.30s'", "get");
-      __PYX_ERR(0, 118, __pyx_L1_error)
+      __PYX_ERR(0, 130, __pyx_L1_error)
     }
-    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_state); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __pyx_t_7 = PyList_New(0); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_5 = __Pyx_PyDict_GetItemDefault(__pyx_cur_scope->__pyx_v_self->yield_states, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyDict_GetItemDefault(__pyx_cur_scope->__pyx_v_self->yield_states, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -4184,9 +4853,9 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
       __pyx_t_7 = __pyx_t_5; __Pyx_INCREF(__pyx_t_7); __pyx_t_1 = 0;
       __pyx_t_10 = NULL;
     } else {
-      __pyx_t_1 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __pyx_t_1 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 118, __pyx_L1_error)
+      __pyx_t_10 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 130, __pyx_L1_error)
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     for (;;) {
@@ -4194,17 +4863,17 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
         if (likely(PyList_CheckExact(__pyx_t_7))) {
           if (__pyx_t_1 >= PyList_GET_SIZE(__pyx_t_7)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __pyx_t_5 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 130, __pyx_L1_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         } else {
           if (__pyx_t_1 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_1); __Pyx_INCREF(__pyx_t_5); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 130, __pyx_L1_error)
           #else
-          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 118, __pyx_L1_error)
+          __pyx_t_5 = PySequence_ITEM(__pyx_t_7, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 130, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_5);
           #endif
         }
@@ -4214,7 +4883,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 118, __pyx_L1_error)
+            else __PYX_ERR(0, 130, __pyx_L1_error)
           }
           break;
         }
@@ -4225,16 +4894,16 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
       __Pyx_GIVEREF(__pyx_t_5);
       __pyx_t_5 = 0;
 
-      /* "bundler/extensions/FSM.pyx":119
+      /* "bundler/extensions/FSM.pyx":131
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             for x in self.yield_states.get(state, []):
  *                 yield (i, x)             # <<<<<<<<<<<<<<
  *             index += 1
  *             if index == length: index = 0
  */
-      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_i); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_cur_scope->__pyx_v_i); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 119, __pyx_L1_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GIVEREF(__pyx_t_5);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_5);
@@ -4266,9 +4935,9 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
       __pyx_cur_scope->__pyx_t_4 = 0;
       __Pyx_XGOTREF(__pyx_t_7);
       __pyx_t_10 = __pyx_cur_scope->__pyx_t_5;
-      if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 119, __pyx_L1_error)
+      if (unlikely(!__pyx_sent_value)) __PYX_ERR(0, 131, __pyx_L1_error)
 
-      /* "bundler/extensions/FSM.pyx":118
+      /* "bundler/extensions/FSM.pyx":130
  *             if state < 0:
  *                 raise ValueError('Invalid transition to state {}'.format(state))
  *             for x in self.yield_states.get(state, []):             # <<<<<<<<<<<<<<
@@ -4278,7 +4947,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
     }
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "bundler/extensions/FSM.pyx":120
+    /* "bundler/extensions/FSM.pyx":132
  *             for x in self.yield_states.get(state, []):
  *                 yield (i, x)
  *             index += 1             # <<<<<<<<<<<<<<
@@ -4287,7 +4956,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
     __pyx_cur_scope->__pyx_v_index = (__pyx_cur_scope->__pyx_v_index + 1);
 
-    /* "bundler/extensions/FSM.pyx":121
+    /* "bundler/extensions/FSM.pyx":133
  *                 yield (i, x)
  *             index += 1
  *             if index == length: index = 0             # <<<<<<<<<<<<<<
@@ -4301,7 +4970,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   }
   CYTHON_MAYBE_UNUSED_VAR(__pyx_cur_scope);
 
-  /* "bundler/extensions/FSM.pyx":107
+  /* "bundler/extensions/FSM.pyx":119
  *         return returns
  * 
  *     def hits(self, tuple word, int run=-1):             # <<<<<<<<<<<<<<
@@ -4329,7 +4998,7 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
   return __pyx_r;
 }
 
-/* "bundler/extensions/FSM.pyx":123
+/* "bundler/extensions/FSM.pyx":135
  *             if index == length: index = 0
  * 
  *     def has_cycle(self, tuple word, int depth=-1):             # <<<<<<<<<<<<<<
@@ -4338,9 +5007,9 @@ static PyObject *__pyx_gb_7bundler_10extensions_3FSM_3FSM_10generator(__pyx_Coro
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_11has_cycle[] = " Return whether there is a state such that self(word, state) == state. ";
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_14has_cycle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7bundler_10extensions_3FSM_3FSM_13has_cycle[] = " Return whether there is a state such that self(word, state) == state. ";
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_14has_cycle(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_word = 0;
   int __pyx_v_depth;
   int __pyx_lineno = 0;
@@ -4376,7 +5045,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "has_cycle") < 0)) __PYX_ERR(0, 123, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "has_cycle") < 0)) __PYX_ERR(0, 135, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4389,21 +5058,21 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *
     }
     __pyx_v_word = ((PyObject*)values[0]);
     if (values[1]) {
-      __pyx_v_depth = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 123, __pyx_L3_error)
+      __pyx_v_depth = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 135, __pyx_L3_error)
     } else {
       __pyx_v_depth = ((int)-1);
     }
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("has_cycle", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 123, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("has_cycle", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 135, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("bundler.extensions.FSM.FSM.has_cycle", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 123, __pyx_L1_error)
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_depth);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_word), (&PyTuple_Type), 1, "word", 1))) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_13has_cycle(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), __pyx_v_word, __pyx_v_depth);
 
   /* function exit code */
   goto __pyx_L0;
@@ -4414,7 +5083,7 @@ static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle(PyObject *
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_depth) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13has_cycle(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v_word, int __pyx_v_depth) {
   arrayobject *__pyx_v_converted_word = 0;
   int __pyx_v_l;
   int __pyx_v_c;
@@ -4438,14 +5107,14 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("has_cycle", 0);
 
-  /* "bundler/extensions/FSM.pyx":125
+  /* "bundler/extensions/FSM.pyx":137
  *     def has_cycle(self, tuple word, int depth=-1):
  *         ''' Return whether there is a state such that self(word, state) == state. '''
  *         cdef array.array converted_word = array.array('i', word)             # <<<<<<<<<<<<<<
  *         cdef int l = len(word)
  *         cdef int c, state, letter, i
  */
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_u_i);
   __Pyx_GIVEREF(__pyx_n_u_i);
@@ -4453,13 +5122,13 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   __Pyx_INCREF(__pyx_v_word);
   __Pyx_GIVEREF(__pyx_v_word);
   PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_v_word);
-  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(((PyObject *)__pyx_ptype_7cpython_5array_array), __pyx_t_1, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 137, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_converted_word = ((arrayobject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "bundler/extensions/FSM.pyx":126
+  /* "bundler/extensions/FSM.pyx":138
  *         ''' Return whether there is a state such that self(word, state) == state. '''
  *         cdef array.array converted_word = array.array('i', word)
  *         cdef int l = len(word)             # <<<<<<<<<<<<<<
@@ -4468,12 +5137,12 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
   if (unlikely(__pyx_v_word == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 126, __pyx_L1_error)
+    __PYX_ERR(0, 138, __pyx_L1_error)
   }
-  __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 126, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_GET_SIZE(__pyx_v_word); if (unlikely(__pyx_t_3 == ((Py_ssize_t)-1))) __PYX_ERR(0, 138, __pyx_L1_error)
   __pyx_v_l = __pyx_t_3;
 
-  /* "bundler/extensions/FSM.pyx":129
+  /* "bundler/extensions/FSM.pyx":141
  *         cdef int c, state, letter, i
  * 
  *         if depth < 0: depth = self.machine_len             # <<<<<<<<<<<<<<
@@ -4486,7 +5155,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     __pyx_v_depth = __pyx_t_5;
   }
 
-  /* "bundler/extensions/FSM.pyx":131
+  /* "bundler/extensions/FSM.pyx":143
  *         if depth < 0: depth = self.machine_len
  * 
  *         for c in range(depth):             # <<<<<<<<<<<<<<
@@ -4498,7 +5167,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_c = __pyx_t_7;
 
-    /* "bundler/extensions/FSM.pyx":132
+    /* "bundler/extensions/FSM.pyx":144
  * 
  *         for c in range(depth):
  *             state = c             # <<<<<<<<<<<<<<
@@ -4507,7 +5176,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
     __pyx_v_state = __pyx_v_c;
 
-    /* "bundler/extensions/FSM.pyx":133
+    /* "bundler/extensions/FSM.pyx":145
  *         for c in range(depth):
  *             state = c
  *             for i in range(l):             # <<<<<<<<<<<<<<
@@ -4519,7 +5188,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
       __pyx_v_i = __pyx_t_10;
 
-      /* "bundler/extensions/FSM.pyx":134
+      /* "bundler/extensions/FSM.pyx":146
  *             state = c
  *             for i in range(l):
  *                 letter = converted_word.data.as_ints[i]             # <<<<<<<<<<<<<<
@@ -4528,7 +5197,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
       __pyx_v_letter = (__pyx_v_converted_word->data.as_ints[__pyx_v_i]);
 
-      /* "bundler/extensions/FSM.pyx":135
+      /* "bundler/extensions/FSM.pyx":147
  *             for i in range(l):
  *                 letter = converted_word.data.as_ints[i]
  *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]             # <<<<<<<<<<<<<<
@@ -4537,7 +5206,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
       __pyx_v_state = (__pyx_v_self->machine->data.as_ints[((__pyx_v_state * __pyx_v_self->alphabet_len) + __pyx_v_letter)]);
 
-      /* "bundler/extensions/FSM.pyx":136
+      /* "bundler/extensions/FSM.pyx":148
  *                 letter = converted_word.data.as_ints[i]
  *                 state = self.machine.data.as_ints[state * self.alphabet_len + letter]
  *                 if state < 0: break             # <<<<<<<<<<<<<<
@@ -4551,7 +5220,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     }
     __pyx_L7_break:;
 
-    /* "bundler/extensions/FSM.pyx":138
+    /* "bundler/extensions/FSM.pyx":150
  *                 if state < 0: break
  * 
  *             if state == c:             # <<<<<<<<<<<<<<
@@ -4561,7 +5230,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     __pyx_t_4 = ((__pyx_v_state == __pyx_v_c) != 0);
     if (__pyx_t_4) {
 
-      /* "bundler/extensions/FSM.pyx":139
+      /* "bundler/extensions/FSM.pyx":151
  * 
  *             if state == c:
  *                 return True             # <<<<<<<<<<<<<<
@@ -4573,7 +5242,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
       __pyx_r = Py_True;
       goto __pyx_L0;
 
-      /* "bundler/extensions/FSM.pyx":138
+      /* "bundler/extensions/FSM.pyx":150
  *                 if state < 0: break
  * 
  *             if state == c:             # <<<<<<<<<<<<<<
@@ -4583,7 +5252,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
     }
   }
 
-  /* "bundler/extensions/FSM.pyx":141
+  /* "bundler/extensions/FSM.pyx":153
  *                 return True
  * 
  *         return False             # <<<<<<<<<<<<<<
@@ -4594,7 +5263,7 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "bundler/extensions/FSM.pyx":123
+  /* "bundler/extensions/FSM.pyx":135
  *             if index == length: index = 0
  * 
  *     def has_cycle(self, tuple word, int depth=-1):             # <<<<<<<<<<<<<<
@@ -4622,19 +5291,19 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_11has_cycle(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_14__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_14__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__reduce_cython__(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__reduce_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_13__reduce_cython__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self));
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_15__reduce_cython__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13__reduce_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_15__reduce_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -4925,19 +5594,19 @@ static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_13__reduce_cython__(st
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
-static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_18__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state); /*proto*/
+static PyObject *__pyx_pw_7bundler_10extensions_3FSM_3FSM_18__setstate_cython__(PyObject *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__setstate_cython__ (wrapper)", 0);
-  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_15__setstate_cython__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
+  __pyx_r = __pyx_pf_7bundler_10extensions_3FSM_3FSM_17__setstate_cython__(((struct __pyx_obj_7bundler_10extensions_3FSM_FSM *)__pyx_v_self), ((PyObject *)__pyx_v___pyx_state));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_15__setstate_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_7bundler_10extensions_3FSM_3FSM_17__setstate_cython__(struct __pyx_obj_7bundler_10extensions_3FSM_FSM *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6554,12 +7223,13 @@ static int __pyx_tp_clear_7bundler_10extensions_3FSM_FSM(PyObject *o) {
 }
 
 static PyMethodDef __pyx_methods_7bundler_10extensions_3FSM_FSM[] = {
-  {"distance", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_5distance, METH_O, 0},
-  {"hit", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_7hit, METH_O, __pyx_doc_7bundler_10extensions_3FSM_3FSM_6hit},
-  {"hits", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hits, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_3FSM_3FSM_8hits},
-  {"has_cycle", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_3FSM_3FSM_12has_cycle, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_3FSM_3FSM_11has_cycle},
-  {"__reduce_cython__", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_14__reduce_cython__, METH_NOARGS, 0},
-  {"__setstate_cython__", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__setstate_cython__, METH_O, 0},
+  {"from_dicts", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_3FSM_3FSM_3from_dicts, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_3FSM_3FSM_2from_dicts},
+  {"distance", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_7distance, METH_O, 0},
+  {"hit", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_9hit, METH_O, __pyx_doc_7bundler_10extensions_3FSM_3FSM_8hit},
+  {"hits", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_3FSM_3FSM_11hits, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_3FSM_3FSM_10hits},
+  {"has_cycle", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7bundler_10extensions_3FSM_3FSM_14has_cycle, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7bundler_10extensions_3FSM_3FSM_13has_cycle},
+  {"__reduce_cython__", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_16__reduce_cython__, METH_NOARGS, 0},
+  {"__setstate_cython__", (PyCFunction)__pyx_pw_7bundler_10extensions_3FSM_3FSM_18__setstate_cython__, METH_O, 0},
   {0, 0, 0, 0}
 };
 
@@ -6588,7 +7258,7 @@ static PyTypeObject __pyx_type_7bundler_10extensions_3FSM_FSM = {
   0, /*tp_as_sequence*/
   0, /*tp_as_mapping*/
   0, /*tp_hash*/
-  __pyx_pw_7bundler_10extensions_3FSM_3FSM_3__call__, /*tp_call*/
+  __pyx_pw_7bundler_10extensions_3FSM_3FSM_5__call__, /*tp_call*/
   0, /*tp_str*/
   0, /*tp_getattro*/
   0, /*tp_setattro*/
@@ -6632,14 +7302,14 @@ static PyTypeObject __pyx_type_7bundler_10extensions_3FSM_FSM = {
   #endif
 };
 
-static struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__hits[8];
-static int __pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits = 0;
+static struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts[8];
+static int __pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts = 0;
 
-static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__hits(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
   PyObject *o;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits)))) {
-    o = (PyObject*)__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__hits[--__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits];
-    memset(o, 0, sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits));
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts)))) {
+    o = (PyObject*)__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts[--__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts];
+    memset(o, 0, sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts));
     (void) PyObject_INIT(o, t);
     PyObject_GC_Track(o);
   } else {
@@ -6649,44 +7319,55 @@ static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__hit
   return o;
 }
 
-static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct__hits(PyObject *o) {
-  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)o;
+static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(PyObject *o) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)o;
   PyObject_GC_UnTrack(o);
-  Py_CLEAR(p->__pyx_v_self);
-  Py_CLEAR(p->__pyx_v_word);
-  Py_CLEAR(p->__pyx_v_x);
-  Py_CLEAR(p->__pyx_t_4);
-  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits)))) {
-    __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__hits[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__hits++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)o);
+  Py_CLEAR(p->__pyx_v_hits);
+  Py_CLEAR(p->__pyx_v_state_names);
+  Py_CLEAR(p->__pyx_v_state_names_index);
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts)))) {
+    __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)o);
   } else {
     (*Py_TYPE(o)->tp_free)(o);
   }
 }
 
-static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct__hits(PyObject *o, visitproc v, void *a) {
+static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(PyObject *o, visitproc v, void *a) {
   int e;
-  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits *)o;
-  if (p->__pyx_v_self) {
-    e = (*v)(((PyObject *)p->__pyx_v_self), a); if (e) return e;
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)o;
+  if (p->__pyx_v_hits) {
+    e = (*v)(p->__pyx_v_hits, a); if (e) return e;
   }
-  if (p->__pyx_v_word) {
-    e = (*v)(p->__pyx_v_word, a); if (e) return e;
+  if (p->__pyx_v_state_names) {
+    e = (*v)(p->__pyx_v_state_names, a); if (e) return e;
   }
-  if (p->__pyx_v_x) {
-    e = (*v)(p->__pyx_v_x, a); if (e) return e;
-  }
-  if (p->__pyx_t_4) {
-    e = (*v)(p->__pyx_t_4, a); if (e) return e;
+  if (p->__pyx_v_state_names_index) {
+    e = (*v)(p->__pyx_v_state_names_index, a); if (e) return e;
   }
   return 0;
 }
 
-static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits = {
+static int __pyx_tp_clear_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts(PyObject *o) {
+  PyObject* tmp;
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts *)o;
+  tmp = ((PyObject*)p->__pyx_v_hits);
+  p->__pyx_v_hits = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_state_names);
+  p->__pyx_v_state_names = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  tmp = ((PyObject*)p->__pyx_v_state_names_index);
+  p->__pyx_v_state_names_index = ((PyObject*)Py_None); Py_INCREF(Py_None);
+  Py_XDECREF(tmp);
+  return 0;
+}
+
+static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts = {
   PyVarObject_HEAD_INIT(0, 0)
-  "bundler.extensions.FSM.__pyx_scope_struct__hits", /*tp_name*/
-  sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__hits), /*tp_basicsize*/
+  "bundler.extensions.FSM.__pyx_scope_struct__from_dicts", /*tp_name*/
+  sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct__hits, /*tp_dealloc*/
+  __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -6713,7 +7394,121 @@ static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hi
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
   0, /*tp_doc*/
-  __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct__hits, /*tp_traverse*/
+  __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts, /*tp_traverse*/
+  __pyx_tp_clear_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b1
+  0, /*tp_vectorcall*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
+  0, /*tp_print*/
+  #endif
+};
+
+static struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr[8];
+static int __pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr = 0;
+
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr)))) {
+    o = (PyObject*)__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr[--__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr];
+    memset(o, 0, sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr));
+    (void) PyObject_INIT(o, t);
+    PyObject_GC_Track(o);
+  } else {
+    o = (*t->tp_alloc)(t, 0);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr(PyObject *o) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)o;
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_outer_scope);
+  Py_CLEAR(p->__pyx_v_name);
+  Py_CLEAR(p->__pyx_v_place);
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr)))) {
+    __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)o);
+  } else {
+    (*Py_TYPE(o)->tp_free)(o);
+  }
+}
+
+static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr *)o;
+  if (p->__pyx_outer_scope) {
+    e = (*v)(((PyObject *)p->__pyx_outer_scope), a); if (e) return e;
+  }
+  if (p->__pyx_v_name) {
+    e = (*v)(p->__pyx_v_name, a); if (e) return e;
+  }
+  if (p->__pyx_v_place) {
+    e = (*v)(p->__pyx_v_place, a); if (e) return e;
+  }
+  return 0;
+}
+
+static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "bundler.extensions.FSM.__pyx_scope_struct_1_genexpr", /*tp_name*/
+  sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr, /*tp_dealloc*/
+  #if PY_VERSION_HEX < 0x030800b4
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4
+  0, /*tp_vectorcall_offset*/
+  #endif
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
   0, /*tp_weaklistoffset*/
@@ -6729,7 +7524,235 @@ static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hi
   0, /*tp_dictoffset*/
   0, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct__hits, /*tp_new*/
+  __pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b1
+  0, /*tp_vectorcall*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
+  0, /*tp_print*/
+  #endif
+};
+
+static struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr[8];
+static int __pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr = 0;
+
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr)))) {
+    o = (PyObject*)__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr[--__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr];
+    memset(o, 0, sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr));
+    (void) PyObject_INIT(o, t);
+    PyObject_GC_Track(o);
+  } else {
+    o = (*t->tp_alloc)(t, 0);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr(PyObject *o) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)o;
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_outer_scope);
+  Py_CLEAR(p->__pyx_v_state);
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr)))) {
+    __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)o);
+  } else {
+    (*Py_TYPE(o)->tp_free)(o);
+  }
+}
+
+static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr *)o;
+  if (p->__pyx_outer_scope) {
+    e = (*v)(((PyObject *)p->__pyx_outer_scope), a); if (e) return e;
+  }
+  if (p->__pyx_v_state) {
+    e = (*v)(p->__pyx_v_state, a); if (e) return e;
+  }
+  return 0;
+}
+
+static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "bundler.extensions.FSM.__pyx_scope_struct_2_genexpr", /*tp_name*/
+  sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr, /*tp_dealloc*/
+  #if PY_VERSION_HEX < 0x030800b4
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4
+  0, /*tp_vectorcall_offset*/
+  #endif
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr, /*tp_new*/
+  0, /*tp_free*/
+  0, /*tp_is_gc*/
+  0, /*tp_bases*/
+  0, /*tp_mro*/
+  0, /*tp_cache*/
+  0, /*tp_subclasses*/
+  0, /*tp_weaklist*/
+  0, /*tp_del*/
+  0, /*tp_version_tag*/
+  #if PY_VERSION_HEX >= 0x030400a1
+  0, /*tp_finalize*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b1
+  0, /*tp_vectorcall*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4 && PY_VERSION_HEX < 0x03090000
+  0, /*tp_print*/
+  #endif
+};
+
+static struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits[8];
+static int __pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits = 0;
+
+static PyObject *__pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  PyObject *o;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits > 0) & (t->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits)))) {
+    o = (PyObject*)__pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits[--__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits];
+    memset(o, 0, sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits));
+    (void) PyObject_INIT(o, t);
+    PyObject_GC_Track(o);
+  } else {
+    o = (*t->tp_alloc)(t, 0);
+    if (unlikely(!o)) return 0;
+  }
+  return o;
+}
+
+static void __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits(PyObject *o) {
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)o;
+  PyObject_GC_UnTrack(o);
+  Py_CLEAR(p->__pyx_v_self);
+  Py_CLEAR(p->__pyx_v_word);
+  Py_CLEAR(p->__pyx_v_x);
+  Py_CLEAR(p->__pyx_t_4);
+  if (CYTHON_COMPILING_IN_CPYTHON && ((__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits < 8) & (Py_TYPE(o)->tp_basicsize == sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits)))) {
+    __pyx_freelist_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits[__pyx_freecount_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits++] = ((struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)o);
+  } else {
+    (*Py_TYPE(o)->tp_free)(o);
+  }
+}
+
+static int __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits(PyObject *o, visitproc v, void *a) {
+  int e;
+  struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *p = (struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits *)o;
+  if (p->__pyx_v_self) {
+    e = (*v)(((PyObject *)p->__pyx_v_self), a); if (e) return e;
+  }
+  if (p->__pyx_v_word) {
+    e = (*v)(p->__pyx_v_word, a); if (e) return e;
+  }
+  if (p->__pyx_v_x) {
+    e = (*v)(p->__pyx_v_x, a); if (e) return e;
+  }
+  if (p->__pyx_t_4) {
+    e = (*v)(p->__pyx_t_4, a); if (e) return e;
+  }
+  return 0;
+}
+
+static PyTypeObject __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits = {
+  PyVarObject_HEAD_INIT(0, 0)
+  "bundler.extensions.FSM.__pyx_scope_struct_3_hits", /*tp_name*/
+  sizeof(struct __pyx_obj_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits), /*tp_basicsize*/
+  0, /*tp_itemsize*/
+  __pyx_tp_dealloc_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits, /*tp_dealloc*/
+  #if PY_VERSION_HEX < 0x030800b4
+  0, /*tp_print*/
+  #endif
+  #if PY_VERSION_HEX >= 0x030800b4
+  0, /*tp_vectorcall_offset*/
+  #endif
+  0, /*tp_getattr*/
+  0, /*tp_setattr*/
+  #if PY_MAJOR_VERSION < 3
+  0, /*tp_compare*/
+  #endif
+  #if PY_MAJOR_VERSION >= 3
+  0, /*tp_as_async*/
+  #endif
+  0, /*tp_repr*/
+  0, /*tp_as_number*/
+  0, /*tp_as_sequence*/
+  0, /*tp_as_mapping*/
+  0, /*tp_hash*/
+  0, /*tp_call*/
+  0, /*tp_str*/
+  0, /*tp_getattro*/
+  0, /*tp_setattro*/
+  0, /*tp_as_buffer*/
+  Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_HAVE_GC, /*tp_flags*/
+  0, /*tp_doc*/
+  __pyx_tp_traverse_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits, /*tp_traverse*/
+  0, /*tp_clear*/
+  0, /*tp_richcompare*/
+  0, /*tp_weaklistoffset*/
+  0, /*tp_iter*/
+  0, /*tp_iternext*/
+  0, /*tp_methods*/
+  0, /*tp_members*/
+  0, /*tp_getset*/
+  0, /*tp_base*/
+  0, /*tp_dict*/
+  0, /*tp_descr_get*/
+  0, /*tp_descr_set*/
+  0, /*tp_dictoffset*/
+  0, /*tp_init*/
+  0, /*tp_alloc*/
+  __pyx_tp_new_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -6801,6 +7824,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Incompatible_checksums_s_vs_0x0e, __pyx_k_Incompatible_checksums_s_vs_0x0e, sizeof(__pyx_k_Incompatible_checksums_s_vs_0x0e), 0, 0, 1, 0},
   {&__pyx_kp_u_Invalid_transition_to_state, __pyx_k_Invalid_transition_to_state, sizeof(__pyx_k_Invalid_transition_to_state), 0, 1, 0, 0},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
+  {&__pyx_n_s_OrderedDict, __pyx_k_OrderedDict, sizeof(__pyx_k_OrderedDict), 0, 0, 1, 1},
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_Queue, __pyx_k_Queue, sizeof(__pyx_k_Queue), 0, 0, 1, 1},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
@@ -6816,7 +7840,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_depth, __pyx_k_depth, sizeof(__pyx_k_depth), 0, 0, 1, 1},
   {&__pyx_n_s_dict, __pyx_k_dict, sizeof(__pyx_k_dict), 0, 0, 1, 1},
   {&__pyx_n_s_empty, __pyx_k_empty, sizeof(__pyx_k_empty), 0, 0, 1, 1},
+  {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
   {&__pyx_n_s_format, __pyx_k_format, sizeof(__pyx_k_format), 0, 0, 1, 1},
+  {&__pyx_n_s_from_dicts, __pyx_k_from_dicts, sizeof(__pyx_k_from_dicts), 0, 0, 1, 1},
+  {&__pyx_n_s_from_dicts_locals_genexpr, __pyx_k_from_dicts_locals_genexpr, sizeof(__pyx_k_from_dicts_locals_genexpr), 0, 0, 1, 1},
+  {&__pyx_n_s_genexpr, __pyx_k_genexpr, sizeof(__pyx_k_genexpr), 0, 0, 1, 1},
   {&__pyx_n_s_get, __pyx_k_get, sizeof(__pyx_k_get), 0, 0, 1, 1},
   {&__pyx_n_s_getstate, __pyx_k_getstate, sizeof(__pyx_k_getstate), 0, 0, 1, 1},
   {&__pyx_n_s_hits, __pyx_k_hits, sizeof(__pyx_k_hits), 0, 0, 1, 1},
@@ -6855,7 +7883,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 31, __pyx_L1_error)
-  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(0, 75, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(2, 109, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -6888,6 +7917,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_15631591 = PyInt_FromLong(15631591L); if (unlikely(!__pyx_int_15631591)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_neg_1 = PyInt_FromLong(-1); if (unlikely(!__pyx_int_neg_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -6946,14 +7976,38 @@ static int __Pyx_modinit_type_init_code(void) {
   if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FSM, (PyObject *)&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   if (__Pyx_setup_reduce((PyObject*)&__pyx_type_7bundler_10extensions_3FSM_FSM) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_ptype_7bundler_10extensions_3FSM_FSM = &__pyx_type_7bundler_10extensions_3FSM_FSM;
-  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
-  __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits.tp_print = 0;
+  __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts.tp_print = 0;
   #endif
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits.tp_dictoffset && __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits.tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts.tp_dictoffset && __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
   }
-  __pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__hits = &__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__hits;
+  __pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts = &__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct__from_dicts;
+  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
+  #if PY_VERSION_HEX < 0x030800B1
+  __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr.tp_print = 0;
+  #endif
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr.tp_dictoffset && __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
+  }
+  __pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr = &__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_1_genexpr;
+  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
+  #if PY_VERSION_HEX < 0x030800B1
+  __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr.tp_print = 0;
+  #endif
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr.tp_dictoffset && __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
+  }
+  __pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr = &__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_2_genexpr;
+  if (PyType_Ready(&__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  #if PY_VERSION_HEX < 0x030800B1
+  __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits.tp_print = 0;
+  #endif
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits.tp_dictoffset && __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits.tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits.tp_getattro = __Pyx_PyObject_GenericGetAttrNoDict;
+  }
+  __pyx_ptype_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits = &__pyx_type_7bundler_10extensions_3FSM___pyx_scope_struct_3_hits;
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7237,15 +8291,18 @@ if (!__Pyx_RefNanny) {
   /* "bundler/extensions/FSM.pyx":14
  * from bundler.extensions.FSM cimport FSM
  * 
- * from collections import defaultdict             # <<<<<<<<<<<<<<
+ * from collections import defaultdict, OrderedDict             # <<<<<<<<<<<<<<
  * from queue import Queue
  * 
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_defaultdict);
   __Pyx_GIVEREF(__pyx_n_s_defaultdict);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_defaultdict);
+  __Pyx_INCREF(__pyx_n_s_OrderedDict);
+  __Pyx_GIVEREF(__pyx_n_s_OrderedDict);
+  PyList_SET_ITEM(__pyx_t_1, 1, __pyx_n_s_OrderedDict);
   __pyx_t_2 = __Pyx_Import(__pyx_n_s_collections, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -7253,11 +8310,15 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_defaultdict, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_OrderedDict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_OrderedDict, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "bundler/extensions/FSM.pyx":15
  * 
- * from collections import defaultdict
+ * from collections import defaultdict, OrderedDict
  * from queue import Queue             # <<<<<<<<<<<<<<
  * 
  * cdef class FSM:
@@ -7276,25 +8337,49 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
+  /* "bundler/extensions/FSM.pyx":59
+ * 
+ *     @classmethod
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):             # <<<<<<<<<<<<<<
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ * 
+ */
+  __Pyx_GetNameInClass(__pyx_t_1, (PyObject *)__pyx_ptype_7bundler_10extensions_3FSM_FSM, __pyx_n_s_from_dicts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+
+  /* "bundler/extensions/FSM.pyx":58
+ *                     to_check.put(adjacent)
+ * 
+ *     @classmethod             # <<<<<<<<<<<<<<
+ *     def from_dicts(cls, list alphabet, object machine, dict hits):
+ *         ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+ */
+  __pyx_t_2 = __Pyx_Method_ClassMethod(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_7bundler_10extensions_3FSM_FSM->tp_dict, __pyx_n_s_from_dicts, __pyx_t_2) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  PyType_Modified(__pyx_ptype_7bundler_10extensions_3FSM_FSM);
+
   /* "(tree fragment)":1
  * def __pyx_unpickle_FSM(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7bundler_10extensions_3FSM_1__pyx_unpickle_FSM, NULL, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FSM, __pyx_t_1) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7bundler_10extensions_3FSM_1__pyx_unpickle_FSM, NULL, __pyx_n_s_bundler_extensions_FSM); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FSM, __pyx_t_2) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "bundler/extensions/FSM.pyx":1
  * # distutils: language = c++             # <<<<<<<<<<<<<<
  * 
  * from cpython cimport array
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "vector.from_py":45
  * 
@@ -8429,6 +9514,268 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
     return 0;
 }
 
+/* None */
+static CYTHON_INLINE void __Pyx_RaiseClosureNameError(const char *varname) {
+    PyErr_Format(PyExc_NameError, "free variable '%s' referenced before assignment in enclosing scope", varname);
+}
+
+/* IterFinish */
+static CYTHON_INLINE int __Pyx_IterFinish(void) {
+#if CYTHON_FAST_THREAD_STATE
+    PyThreadState *tstate = __Pyx_PyThreadState_Current;
+    PyObject* exc_type = tstate->curexc_type;
+    if (unlikely(exc_type)) {
+        if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) {
+            PyObject *exc_value, *exc_tb;
+            exc_value = tstate->curexc_value;
+            exc_tb = tstate->curexc_traceback;
+            tstate->curexc_type = 0;
+            tstate->curexc_value = 0;
+            tstate->curexc_traceback = 0;
+            Py_DECREF(exc_type);
+            Py_XDECREF(exc_value);
+            Py_XDECREF(exc_tb);
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    return 0;
+#else
+    if (unlikely(PyErr_Occurred())) {
+        if (likely(PyErr_ExceptionMatches(PyExc_StopIteration))) {
+            PyErr_Clear();
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+    return 0;
+#endif
+}
+
+/* PyObjectCallMethod0 */
+static PyObject* __Pyx_PyObject_CallMethod0(PyObject* obj, PyObject* method_name) {
+    PyObject *method = NULL, *result = NULL;
+    int is_method = __Pyx_PyObject_GetMethod(obj, method_name, &method);
+    if (likely(is_method)) {
+        result = __Pyx_PyObject_CallOneArg(method, obj);
+        Py_DECREF(method);
+        return result;
+    }
+    if (unlikely(!method)) goto bad;
+    result = __Pyx_PyObject_CallNoArg(method);
+    Py_DECREF(method);
+bad:
+    return result;
+}
+
+/* RaiseNeedMoreValuesToUnpack */
+static CYTHON_INLINE void __Pyx_RaiseNeedMoreValuesError(Py_ssize_t index) {
+    PyErr_Format(PyExc_ValueError,
+                 "need more than %" CYTHON_FORMAT_SSIZE_T "d value%.1s to unpack",
+                 index, (index == 1) ? "" : "s");
+}
+
+/* RaiseTooManyValuesToUnpack */
+static CYTHON_INLINE void __Pyx_RaiseTooManyValuesError(Py_ssize_t expected) {
+    PyErr_Format(PyExc_ValueError,
+                 "too many values to unpack (expected %" CYTHON_FORMAT_SSIZE_T "d)", expected);
+}
+
+/* UnpackItemEndCheck */
+static int __Pyx_IternextUnpackEndCheck(PyObject *retval, Py_ssize_t expected) {
+    if (unlikely(retval)) {
+        Py_DECREF(retval);
+        __Pyx_RaiseTooManyValuesError(expected);
+        return -1;
+    } else {
+        return __Pyx_IterFinish();
+    }
+    return 0;
+}
+
+/* RaiseNoneIterError */
+static CYTHON_INLINE void __Pyx_RaiseNoneNotIterableError(void) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not iterable");
+}
+
+/* UnpackTupleError */
+static void __Pyx_UnpackTupleError(PyObject *t, Py_ssize_t index) {
+    if (t == Py_None) {
+      __Pyx_RaiseNoneNotIterableError();
+    } else if (PyTuple_GET_SIZE(t) < index) {
+      __Pyx_RaiseNeedMoreValuesError(PyTuple_GET_SIZE(t));
+    } else {
+      __Pyx_RaiseTooManyValuesError(index);
+    }
+}
+
+/* UnpackTuple2 */
+static CYTHON_INLINE int __Pyx_unpack_tuple2_exact(
+        PyObject* tuple, PyObject** pvalue1, PyObject** pvalue2, int decref_tuple) {
+    PyObject *value1 = NULL, *value2 = NULL;
+#if CYTHON_COMPILING_IN_PYPY
+    value1 = PySequence_ITEM(tuple, 0);  if (unlikely(!value1)) goto bad;
+    value2 = PySequence_ITEM(tuple, 1);  if (unlikely(!value2)) goto bad;
+#else
+    value1 = PyTuple_GET_ITEM(tuple, 0);  Py_INCREF(value1);
+    value2 = PyTuple_GET_ITEM(tuple, 1);  Py_INCREF(value2);
+#endif
+    if (decref_tuple) {
+        Py_DECREF(tuple);
+    }
+    *pvalue1 = value1;
+    *pvalue2 = value2;
+    return 0;
+#if CYTHON_COMPILING_IN_PYPY
+bad:
+    Py_XDECREF(value1);
+    Py_XDECREF(value2);
+    if (decref_tuple) { Py_XDECREF(tuple); }
+    return -1;
+#endif
+}
+static int __Pyx_unpack_tuple2_generic(PyObject* tuple, PyObject** pvalue1, PyObject** pvalue2,
+                                       int has_known_size, int decref_tuple) {
+    Py_ssize_t index;
+    PyObject *value1 = NULL, *value2 = NULL, *iter = NULL;
+    iternextfunc iternext;
+    iter = PyObject_GetIter(tuple);
+    if (unlikely(!iter)) goto bad;
+    if (decref_tuple) { Py_DECREF(tuple); tuple = NULL; }
+    iternext = Py_TYPE(iter)->tp_iternext;
+    value1 = iternext(iter); if (unlikely(!value1)) { index = 0; goto unpacking_failed; }
+    value2 = iternext(iter); if (unlikely(!value2)) { index = 1; goto unpacking_failed; }
+    if (!has_known_size && unlikely(__Pyx_IternextUnpackEndCheck(iternext(iter), 2))) goto bad;
+    Py_DECREF(iter);
+    *pvalue1 = value1;
+    *pvalue2 = value2;
+    return 0;
+unpacking_failed:
+    if (!has_known_size && __Pyx_IterFinish() == 0)
+        __Pyx_RaiseNeedMoreValuesError(index);
+bad:
+    Py_XDECREF(iter);
+    Py_XDECREF(value1);
+    Py_XDECREF(value2);
+    if (decref_tuple) { Py_XDECREF(tuple); }
+    return -1;
+}
+
+/* dict_iter */
+static CYTHON_INLINE PyObject* __Pyx_dict_iterator(PyObject* iterable, int is_dict, PyObject* method_name,
+                                                   Py_ssize_t* p_orig_length, int* p_source_is_dict) {
+    is_dict = is_dict || likely(PyDict_CheckExact(iterable));
+    *p_source_is_dict = is_dict;
+    if (is_dict) {
+#if !CYTHON_COMPILING_IN_PYPY
+        *p_orig_length = PyDict_Size(iterable);
+        Py_INCREF(iterable);
+        return iterable;
+#elif PY_MAJOR_VERSION >= 3
+        static PyObject *py_items = NULL, *py_keys = NULL, *py_values = NULL;
+        PyObject **pp = NULL;
+        if (method_name) {
+            const char *name = PyUnicode_AsUTF8(method_name);
+            if (strcmp(name, "iteritems") == 0) pp = &py_items;
+            else if (strcmp(name, "iterkeys") == 0) pp = &py_keys;
+            else if (strcmp(name, "itervalues") == 0) pp = &py_values;
+            if (pp) {
+                if (!*pp) {
+                    *pp = PyUnicode_FromString(name + 4);
+                    if (!*pp)
+                        return NULL;
+                }
+                method_name = *pp;
+            }
+        }
+#endif
+    }
+    *p_orig_length = 0;
+    if (method_name) {
+        PyObject* iter;
+        iterable = __Pyx_PyObject_CallMethod0(iterable, method_name);
+        if (!iterable)
+            return NULL;
+#if !CYTHON_COMPILING_IN_PYPY
+        if (PyTuple_CheckExact(iterable) || PyList_CheckExact(iterable))
+            return iterable;
+#endif
+        iter = PyObject_GetIter(iterable);
+        Py_DECREF(iterable);
+        return iter;
+    }
+    return PyObject_GetIter(iterable);
+}
+static CYTHON_INLINE int __Pyx_dict_iter_next(
+        PyObject* iter_obj, CYTHON_NCP_UNUSED Py_ssize_t orig_length, CYTHON_NCP_UNUSED Py_ssize_t* ppos,
+        PyObject** pkey, PyObject** pvalue, PyObject** pitem, int source_is_dict) {
+    PyObject* next_item;
+#if !CYTHON_COMPILING_IN_PYPY
+    if (source_is_dict) {
+        PyObject *key, *value;
+        if (unlikely(orig_length != PyDict_Size(iter_obj))) {
+            PyErr_SetString(PyExc_RuntimeError, "dictionary changed size during iteration");
+            return -1;
+        }
+        if (unlikely(!PyDict_Next(iter_obj, ppos, &key, &value))) {
+            return 0;
+        }
+        if (pitem) {
+            PyObject* tuple = PyTuple_New(2);
+            if (unlikely(!tuple)) {
+                return -1;
+            }
+            Py_INCREF(key);
+            Py_INCREF(value);
+            PyTuple_SET_ITEM(tuple, 0, key);
+            PyTuple_SET_ITEM(tuple, 1, value);
+            *pitem = tuple;
+        } else {
+            if (pkey) {
+                Py_INCREF(key);
+                *pkey = key;
+            }
+            if (pvalue) {
+                Py_INCREF(value);
+                *pvalue = value;
+            }
+        }
+        return 1;
+    } else if (PyTuple_CheckExact(iter_obj)) {
+        Py_ssize_t pos = *ppos;
+        if (unlikely(pos >= PyTuple_GET_SIZE(iter_obj))) return 0;
+        *ppos = pos + 1;
+        next_item = PyTuple_GET_ITEM(iter_obj, pos);
+        Py_INCREF(next_item);
+    } else if (PyList_CheckExact(iter_obj)) {
+        Py_ssize_t pos = *ppos;
+        if (unlikely(pos >= PyList_GET_SIZE(iter_obj))) return 0;
+        *ppos = pos + 1;
+        next_item = PyList_GET_ITEM(iter_obj, pos);
+        Py_INCREF(next_item);
+    } else
+#endif
+    {
+        next_item = PyIter_Next(iter_obj);
+        if (unlikely(!next_item)) {
+            return __Pyx_IterFinish();
+        }
+    }
+    if (pitem) {
+        *pitem = next_item;
+    } else if (pkey && pvalue) {
+        if (__Pyx_unpack_tuple2(next_item, pkey, pvalue, source_is_dict, source_is_dict, 1))
+            return -1;
+    } else if (pkey) {
+        *pkey = next_item;
+    } else {
+        *pvalue = next_item;
+    }
+    return 1;
+}
+
 /* PyErrFetchRestore */
 #if CYTHON_FAST_THREAD_STATE
 static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
@@ -9051,6 +10398,67 @@ bad:
     return NULL;
 }
 #endif
+
+/* ClassMethod */
+static PyObject* __Pyx_Method_ClassMethod(PyObject *method) {
+#if CYTHON_COMPILING_IN_PYPY && PYPY_VERSION_NUM <= 0x05080000
+    if (PyObject_TypeCheck(method, &PyWrapperDescr_Type)) {
+        return PyClassMethod_New(method);
+    }
+#else
+#if CYTHON_COMPILING_IN_PYSTON || CYTHON_COMPILING_IN_PYPY
+    if (PyMethodDescr_Check(method))
+#else
+    #if PY_MAJOR_VERSION == 2
+    static PyTypeObject *methoddescr_type = NULL;
+    if (methoddescr_type == NULL) {
+       PyObject *meth = PyObject_GetAttrString((PyObject*)&PyList_Type, "append");
+       if (!meth) return NULL;
+       methoddescr_type = Py_TYPE(meth);
+       Py_DECREF(meth);
+    }
+    #else
+    PyTypeObject *methoddescr_type = &PyMethodDescr_Type;
+    #endif
+    if (__Pyx_TypeCheck(method, methoddescr_type))
+#endif
+    {
+        PyMethodDescrObject *descr = (PyMethodDescrObject *)method;
+        #if PY_VERSION_HEX < 0x03020000
+        PyTypeObject *d_type = descr->d_type;
+        #else
+        PyTypeObject *d_type = descr->d_common.d_type;
+        #endif
+        return PyDescr_NewClassMethod(d_type, descr->d_method);
+    }
+#endif
+    else if (PyMethod_Check(method)) {
+        return PyClassMethod_New(PyMethod_GET_FUNCTION(method));
+    }
+    else {
+        return PyClassMethod_New(method);
+    }
+}
+
+/* GetNameInClass */
+static PyObject *__Pyx_GetGlobalNameAfterAttributeLookup(PyObject *name) {
+    PyObject *result;
+    __Pyx_PyThreadState_declare
+    __Pyx_PyThreadState_assign
+    if (unlikely(!__Pyx_PyErr_ExceptionMatches(PyExc_AttributeError)))
+        return NULL;
+    __Pyx_PyErr_Clear();
+    __Pyx_GetModuleGlobalNameUncached(result, name);
+    return result;
+}
+static PyObject *__Pyx__GetNameInClass(PyObject *nmspace, PyObject *name) {
+    PyObject *result;
+    result = __Pyx_PyObject_GetAttrStr(nmspace, name);
+    if (!result) {
+        result = __Pyx_GetGlobalNameAfterAttributeLookup(name);
+    }
+    return result;
+}
 
 /* CLineInTraceback */
 #ifndef CYTHON_CLINE_IN_TRACEBACK

@@ -3,26 +3,9 @@ from queue import Queue
 from collections import OrderedDict
 
 from .FSM import FSM
-from .automorphism import Automorph
 from .first import FirstInClass
 
 EMPTY_TUPLE = tuple()
-
-def suffixes(word):
-    return set(word[j:] for j in range(len(word)))
-
-def build_c_FSM(alphabet, machine, hits):
-    ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
-    
-    assert isinstance(alphabet, list)
-    assert isinstance(machine, OrderedDict)
-    assert isinstance(hits, dict)
-    
-    state_names = list(machine)
-    state_names_index = dict((name, place) for place, name in enumerate(state_names))
-    flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
-    
-    return FSM(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
 
 def word_accepting_FSM(alphabet, acceptable_words, transform=lambda x: x):
     ''' Given an alphabet and a list of acceptable_words in that alphabet, this
@@ -40,6 +23,8 @@ def word_accepting_FSM(alphabet, acceptable_words, transform=lambda x: x):
     acceptable_words_set = set(acceptable_words)
     acceptable_words_prefixes_set = set(w[:i+1] for w in acceptable_words for i in range(len(w)))
     accepting_states = dict()
+    
+    suffixes = lambda word: set(word[j:] for j in range(len(word)))
     
     # Now grow the machine.
     while not tree.empty():
@@ -64,7 +49,7 @@ def word_accepting_FSM(alphabet, acceptable_words, transform=lambda x: x):
         
         machine[word] = state
     
-    return build_c_FSM(alphabet, machine, accepting_states)
+    return FSM.from_dicts(alphabet, machine, accepting_states)
 
 def action_FSM(actions, seeds, max_depth):
     ''' Generates a FSM detailing how action moves about all states within max_depth of a seed. '''
@@ -91,7 +76,7 @@ def action_FSM(actions, seeds, max_depth):
         
         machine[current] = arrows
     
-    return build_c_FSM(sorted(actions), machine, dict())
+    return FSM.from_dicts(sorted(actions), machine, dict())
 
 def CNF_FSM(alphabet, clauses):
     ''' Generate an FSM that determines whether a CNF is satisfied. '''
@@ -110,5 +95,5 @@ def CNF_FSM(alphabet, clauses):
         
         machine[state] = arrows
     
-    return build_c_FSM(alphabet, machine, accepting_states)
+    return FSM.from_dicts(alphabet, machine, accepting_states)
 

@@ -11,7 +11,7 @@ from libcpp.vector cimport vector
 
 from bundler.extensions.FSM cimport FSM
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from queue import Queue
 
 cdef class FSM:
@@ -54,6 +54,18 @@ cdef class FSM:
                 if adjacent not in self.distance_to_yield:
                     self.distance_to_yield[adjacent] = self.distance_to_yield[current] + 1
                     to_check.put(adjacent)
+    
+    @classmethod
+    def from_dicts(cls, list alphabet, object machine, dict hits):
+        ''' Build a cFSM from an ordered dictionary of dictionaries and a dictionary mapping states to hits. '''
+        
+        assert isinstance(machine, OrderedDict)
+        
+        state_names = list(machine)
+        state_names_index = dict((name, place) for place, name in enumerate(state_names))
+        flattened_machine = [state_names_index.get(machine[state_name][letter], -1) for state_name in state_names for letter in alphabet]
+        
+        return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
     
     def __call__(self, tuple word, int state=0):
         cdef int letter
