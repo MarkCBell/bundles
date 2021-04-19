@@ -51,7 +51,7 @@ class WordGenerator():
                 relators.append(((a, b, a, b), (b, a, b, a)))
                 for l, r in product(self.generators, repeat=2):
                     ll, rl = self.letter_generators[l], self.letter_generators[r]
-                    if self.surfaces.flipper(al+bl+al+bl) == self.surfaces.flipper(ll+rl):
+                    if self.surfaces.curver(al+bl+al+bl) == self.surfaces.curver(ll+rl):
                         L, R = self.inverse_lookup[l], self.inverse_lookup[r]
                         relators.append(((a, b, a), (l, B, r)))
                         relators.append(((b, a, b), (l, A, r)))
