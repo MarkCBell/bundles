@@ -22,7 +22,6 @@ class WordGenerator():
         self.letter_lookup = {letter: index for index, letter in enumerate(self.letter_generators)}
         
         self.inverse_lookup = [self.letter_lookup[letter] for letter in self.letter_inverse_generators]
-        self.inverse = lambda word: tuple(self.inverse_lookup[letter] for letter in word[::-1])
         
         self.MCG_must_contain = set(frozenset(self.repr_word(clause)) for clause in MCG_must_contain.split('^'))
         
@@ -170,6 +169,9 @@ class WordGenerator():
             nodes = [child for node in nodes for child in children[node]]
         
         self.first_child.update((node, next((letter,) for letter in self.generators if not self.bad_prefix_FSM.hit(node + (letter,)))) for node in nodes)
+    
+    def inverse(self, word):
+        return tuple(self.inverse_lookup[letter] for letter in word[::-1])
     
     def str_word(self, word):
         ''' Convert tuple |--> str. '''

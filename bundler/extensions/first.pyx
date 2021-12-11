@@ -51,10 +51,13 @@ cdef bint is_cyclic_ordered(int* A, int* B, int l, int* S, int* f):
     return True  # A == cycled(B)
 
 cdef class FirstInClass:
+    cdef list alphabet
+    cdef list o_inverse
     cdef int longest_relator
     cdef FSM find_balanced_relators_FSM
     cdef FSM bad_prefix_FSM
     cdef FSM simpler_FSM
+    cdef list o_automorphisms
     
     cdef int len_alphabet
     cdef int len_alphabet1
@@ -68,12 +71,15 @@ cdef class FirstInClass:
     def __init__(self, list alphabet, list inverse, int longest_relator, FSM find_balanced_relators_FSM, FSM bad_prefix_FSM, FSM simpler_FSM, list automorphisms):
         cdef list missing, auto
         cdef int i, j
+        self.alphabet = alphabet
+        self.o_inverse = inverse
         self.longest_relator = longest_relator
         self.find_balanced_relators_FSM = find_balanced_relators_FSM
         self.bad_prefix_FSM = bad_prefix_FSM
         self.simpler_FSM = simpler_FSM
+        self.o_automorphisms = automorphisms
         
-        self.len_alphabet = len(alphabet)
+        self.len_alphabet = len(self.alphabet)
         self.len_alphabet1 = self.len_alphabet + 1
         self.stop = self.len_alphabet
         self.inverse = <int *> calloc(self.len_alphabet1, sizeof(int))  # +1 for stop character.
@@ -81,17 +87,20 @@ cdef class FirstInClass:
             self.inverse[i] = inverse[i]
         self.inverse[self.len_alphabet] = self.stop
         
-        self.num_automorphisms = len(automorphisms)
+        self.num_automorphisms = len(self.o_automorphisms)
         self.any_missing = <bint *> calloc(self.num_automorphisms, sizeof(bint))
         self.missing = <bint *> calloc(self.num_automorphisms * self.len_alphabet1, sizeof(bint))
         self.automorphisms = <int *> calloc(self.num_automorphisms * self.len_alphabet1, sizeof(int*))
         for i in range(self.num_automorphisms):
-            if automorphisms[i][0]: self.any_missing[i] = 1
-            for j in automorphisms[i][0]:
+            if self.o_automorphisms[i][0]: self.any_missing[i] = 1
+            for j in self.o_automorphisms[i][0]:
                 self.missing[self.len_alphabet1 * i + j] = 1
             for j in range(self.len_alphabet):
-                self.automorphisms[i * self.len_alphabet1 + j] = automorphisms[i][1][j]
+                self.automorphisms[i * self.len_alphabet1 + j] = self.o_automorphisms[i][1][j]
             self.automorphisms[i * self.len_alphabet1 + self.len_alphabet] = self.stop
+    
+    def __reduce__(self):
+        return (self.__class__, (self.alphabet, self.o_inverse, self.longest_relator, self.find_balanced_relators_FSM, self.bad_prefix_FSM, self.simpler_FSM, self.o_automorphisms))
     
     def __del__(self):
         free(self.inverse)

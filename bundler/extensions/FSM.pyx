@@ -67,6 +67,9 @@ cdef class FSM:
         
         return cls(alphabet, flattened_machine, dict((state_names_index[state], hits[state]) for state in hits))
     
+    def __reduce__(self):
+        return (self.__class__, (self.alphabet, self.machine, self.yield_states))
+    
     def __call__(self, tuple word, int state=0):
         cdef int letter
         for letter in word:
