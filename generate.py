@@ -54,17 +54,14 @@ EXPERIMENTS = {
 }
 
 def setup(**kwargs):
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--name', '-n', required=True, type=str, help='name of experiment to load')
-    parser.add_argument('--depth', '-d', required=True, type=int, help='depth to generate to')
-    parser.add_argument('--prebuilt', '-p', type=int, default=0, help='')
-    args, _ = parser.parse_known_args()
-    
-    options_parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('name', type=str, help='name of experiment to load')
+    parser.add_argument('depth', type=int, help='depth to generate to')
+    parser.add_argument('--prebuilt', '-p', type=int, default=0, help='The amount of steps that have already been completed')
     for key, value in vars(Options()).items():
-        options_parser.add_argument('--{}'.format(key), default=value, type=value.__class__)
-    options_args, _ = options_parser.parse_known_args()
-    options = Options(**vars(options_args))
+        parser.add_argument('--{}'.format(key), default=value, type=value.__class__, help=' ')
+    args = parser.parse_args()
+    options = Options(**vars(args))
     
     experiment = EXPERIMENTS[args.name]
     G = CensusGenerator(

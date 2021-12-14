@@ -1,33 +1,37 @@
 
 from collections import namedtuple
 from glob import glob
-from multiprocessing import Pool
+from multiprocessing import Pool, cpu_count
 from types import SimpleNamespace
 import os
-import pandas as pd
+import shutil
 
 from contexttimer import Timer
-import snappy
-import flipper
 import curver
+import flipper
+import pandas as pd
+import snappy
 
 from .word_generator import WordGenerator
 
 def basic_filter(self, x): return True
 
+def count_lines(path):
+    with open(path) as handle:
+        return sum(1 for line in handle)
+
 class Options():
     def __init__(self, **kwargs):
         self.cores = 1
         self.prefix_depth = 6
-        self.chunksize = 500
+        self.chunksize = 5000  # Max number of manifolds to load at once.
         self.suffix_depth = 3
         self.loop_invariant_fsm_depth = 4
 
         # These affect how the script is displayed.
         self.show_progress = True
-        self.show_timings = True
         self.progress_rate = 100
-        self.log_level = 'info'
+        self.show_timings = True
 
         # File structure.
         self.word_parts = './output/parts/word_{}.csv'
@@ -74,7 +78,7 @@ class CensusGenerator():
             for item in generator:
                 function(*item)
         else:
-            with Pool(processes=self.options.cores) as P:
+            with Pool(processes=self.options.cores if self.options.cores else cpu_count()) as P:
                 P.starmap(function, generator)  # Consider adding chunksize=
     
     @staticmethod
@@ -101,10 +105,18 @@ class CensusGenerator():
         if self.options.show_progress: print('\rTraversing word tree: DONE          ')
         
         if self.options.show_progress: print('Combining files.')
-        word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if not path.endswith('prefixes.csv')], ignore_index=True, sort=False)
-        word_table.to_csv(self.options.word, index=False)
+        # word_table = pd.concat([pd.read_csv(path) for path in glob(self.options.word_parts.format('*')) if not path.endswith('prefixes.csv')], ignore_index=True, sort=False)
+        # word_table.to_csv(self.options.word, index=False)
+
+        with open(self.options.word, 'w') as output_file:
+            for index, path in enumerate(glob(self.options.word_parts.format('*'))):
+                if not path.endswith('prefixes.csv'):
+                    with open(path) as input_file:
+                        if index: next(input_file)  # Skip the header row.
+                        shutil.copyfileobj(input_file, output_file)
         
-        if self.options.show_progress: print('\tWords {}'.format(len(word_table)))
+        if self.options.show_progress:
+            print(f'\tWords {count_lines(self.options.word) - 1}')
     
     def build_properties(self):
         if self.options.show_progress: print('Collecting properties.')
