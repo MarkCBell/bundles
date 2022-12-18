@@ -51,7 +51,7 @@ class Options():
             setattr(self, key, value)
     
     def __str__(self):
-        return '\n'.join('{}: {}'.format(key, value) for key, value in vars(self).items())
+        return '\n'.join(f'{key}: {value}' for key, value in vars(self).items())
 
 class CensusGenerator():
     def __init__(self, surface_name, generators, automorph, MCG_must_contain, word_filter=basic_filter, manifold_filter=basic_filter, options=None):
@@ -92,7 +92,7 @@ class CensusGenerator():
         if not os.path.isfile(self.options.word_parts.format('prefixes')):
             prefixes = valid_suffixes_map(self, '0', self.options.master_prefix, self.options.prefix_depth, depth)
             if self.options.show_progress: print('\rTraversing prefix tree: DONE' + ' ' * depth)
-            if self.options.show_progress: print('{} prefixes to explore'.format(len(prefixes)))
+            if self.options.show_progress: print(f'{len(prefixes)} prefixes to explore')
             pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         load_inputs = (
@@ -135,9 +135,9 @@ class CensusGenerator():
         properties_table.sort_values('volume', inplace=True)
         properties_table.to_csv(self.options.properties, index=False)
         
-        if self.options.show_progress: print('\tHyperbolic {}'.format(properties_table.hyperbolic.sum()))
-        if self.options.show_progress: print('\tLoadable {}'.format(properties_table.loadable.sum()))
-        if self.options.show_progress: print('\tAcceptable {}'.format(properties_table.acceptable.sum()))
+        if self.options.show_progress: print(f'\tHyperbolic {properties_table.hyperbolic.sum()}')
+        if self.options.show_progress: print(f'\tLoadable {properties_table.loadable.sum()}')
+        if self.options.show_progress: print(f'\tAcceptable {properties_table.acceptable.sum()}')
     
     def thin_properties(self):
         if self.options.show_progress: print('Removing duplicates.')
@@ -187,17 +187,17 @@ class CensusGenerator():
             census = pd.read_csv(self.options.census)
             print('\nSummary:')
             print('\tStatistics:')
-            print('\t\tWords:\t{}'.format(len(words)))
-            print('\t\tHyperbolic:\t{}'.format(properties.hyperbolic.sum()))
-            print('\t\tLoadable:\t{}'.format(properties.loadable.sum()))
-            print('\t\tAcceptable:\t{}'.format(properties.acceptable.sum()))
+            print(f'\t\tWords:\t{len(words)}')
+            print(f'\t\tHyperbolic:\t{properties.hyperbolic.sum()}')
+            print(f'\t\tLoadable:\t{properties.loadable.sum()}')
+            print(f'\t\tAcceptable:\t{properties.acceptable.sum()}')
             print('\t\t------------------------------')
-            print('\t\tDistinct:\t{}'.format(len(census)))
+            print(f'\t\tDistinct:\t{len(census)}')
             print('\t\t------------------------------')
             print('\tTimings:')
-            print('\t\tGrow time:\t{:0.2f}s'.format(time_words.elapsed))
-            print('\t\tLoad time:\t{:0.2f}s'.format(time_properties.elapsed))
-            print('\t\tThin time:\t{:0.2f}s'.format(time_census.elapsed))
+            print(f'\t\tGrow time:\t{time_words.elapsed:0.2f}s')
+            print(f'\t\tLoad time:\t{time_properties.elapsed:0.2f}s')
+            print(f'\t\tThin time:\t{time_census.elapsed:0.2f}s')
 
 
 # In order to be able to multiprocess these we need to be able to refer
@@ -206,7 +206,7 @@ class CensusGenerator():
 # around by pickling.
 
 def valid_suffixes_map(self, label, prefix, depth, word_depth):
-    if self.options.show_progress: print('\rFinding suffixes of {} ({})'.format(prefix, label))
+    if self.options.show_progress: print(f'\rFinding suffixes of {prefix} ({label})')
     
     words, prefixes = self.word_generator.valid_suffixes(prefix, depth, word_depth)
     pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format(label), index=False)
@@ -223,6 +223,7 @@ def determine_properties_map(self, label, table):
         ''' Return the properties associated with the mapping class `word`. '''
         word = row.word
         M = self.surfaces.twister.bundle(monodromy='*'.join(word))
+        # M = snappy.Manifold(self.surfaces.flipper('.'.join(word)).bundle(veering=False))
         for _ in range(self.options.max_randomize):  # Try, at most MAX_RANDOMIZE times, to find a solution for M.
             if M.solution_type() == 'all tetrahedra positively oriented': break
             M.randomize()  # There needs to be a better way to do this.
