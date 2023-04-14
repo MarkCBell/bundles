@@ -202,14 +202,15 @@ class WordGenerator():
         
         return True
     
-    def valid_suffixes(self, prefix, depth, word_depth=None):
-        ''' Returns two lists. The first is a list of all valid words which are an extension of 'prefix'
-         with length at most 'depth' while the second is the sublist consisting of those which have length
-        'depth' and are also valid prefixes. Note we require that len(prefix) < depth <= word_depth. '''
+    def valid_suffixes(self, prefix, prefix_depth, word_depth):
+        ''' Returns two lists of words all of which begin with `prefix`:
+        - The first is the list of all valid words of length at most `prefix_depth`.
+        - The second is the list of all words of length `prefix_depth` that are valid prefixes of words of length `word_depth`.
+        
+        Note we require that len(prefix) < depth <= word_depth. '''
         
         prefix = self.repr_word(prefix)
-        if word_depth is None: word_depth = depth
-        assert len(prefix) < depth <= word_depth
+        assert len(prefix) < prefix_depth <= word_depth
         
         def backtrack(word):
             ''' Gets the next feasible vertex in the tree of words based on suffix (DFT). '''
@@ -231,17 +232,15 @@ class WordGenerator():
             
             # Testing validity is the slowest bit.
             strn_valid_word = self.valid_word(strn)
+            strn_valid_prefix = strn_valid_word or self.valid_prefix(strn, word_depth)
             
             if strn_valid_word: output_words.append(self.str_word(strn))
-            
-            if len(strn) == word_depth:
-                strn = backtrack(strn)
-            elif strn_valid_word or self.valid_prefix(strn, word_depth):  # valid_word ==> valid_prefix.
-                if len(strn) == depth:
+            if strn_valid_prefix:
+                if len(strn) < prefix_depth:  # Go deeper.
+                    strn += self.first_child[strn[-self.options.suffix_depth:]]
+                else:
                     output_prefixes.append(self.str_word(strn))
                     strn = backtrack(strn)
-                else:
-                    strn += self.first_child[strn[-self.options.suffix_depth:]]
             else:
                 strn = backtrack(strn)
         

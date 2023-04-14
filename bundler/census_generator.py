@@ -96,7 +96,7 @@ class CensusGenerator():
             pd.DataFrame({'word': prefixes}).to_csv(self.options.word_parts.format('prefixes'), index=False)
         
         load_inputs = (
-            (self, str(index+1), row.word, depth, None)
+            (self, str(index+1), row.word, depth, depth)
             for index, row in pd.read_csv(self.options.word_parts.format('prefixes')).iterrows()
             if not os.path.isfile(self.options.word_parts.format(index+1))
             )
@@ -205,10 +205,10 @@ class CensusGenerator():
 # an instance copy of the function and so lost when the objects are passed
 # around by pickling.
 
-def valid_suffixes_map(self, label, prefix, depth, word_depth):
+def valid_suffixes_map(self, label, prefix, prefix_depth, word_depth):
     if self.options.show_progress: print(f'\rFinding suffixes of {prefix} ({label})')
     
-    words, prefixes = self.word_generator.valid_suffixes(prefix, depth, word_depth)
+    words, prefixes = self.word_generator.valid_suffixes(prefix, prefix_depth, word_depth)
     pd.DataFrame({'word': words}).to_csv(self.options.word_parts.format(label), index=False)
     
     return prefixes
