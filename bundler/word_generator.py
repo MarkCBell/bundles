@@ -119,25 +119,24 @@ class WordGenerator():
         
         # Firstly, the simpler FSM detects relations whose output is shorter than its input.
         # Any word which contains one such input cannot be first_in_class.
-        if self.options.show_progress: print('Building FSMs')
-        if self.options.show_progress: print('Simpler FSM')
+        if self.options.show_progress: print('Building simpler FSM')
         self.simpler_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: len(a) < len(b)))
         
         # Secondly, the bad_prefix FSM detects relations whose output is earlier than its input.
         # These cannot appear in any first_in_class word or prefix.
-        if self.options.show_progress: print('Bad prefix FSM')
+        if self.options.show_progress: print('Building bad_prefix FSM')
         self.bad_prefix_FSM = word_accepting_FSM(self.generators, find_bad(length=5, comparison=lambda a, b: (len(a), a) < (len(b), b)))
         
         # Now construct a machine for determining whether a word is first in its class.
         MCG_automorphisms = [automorphism.rpartition(':') for automorphism in MCG_automorphisms.split('|')]
         self.FIC = FirstInClass(self.generators, self.inverse_lookup, self.longest_relator, self.find_balanced_relators_FSM, self.bad_prefix_FSM, self.simpler_FSM, [(list(self.repr_word(missing)), list(self.repr_word(output))) for missing, _, output in MCG_automorphisms])
         
-        if self.options.show_progress: print('Loop invariant FSM')
+        if self.options.show_progress: print('Building loop_invariant FSM')
         seeds = self.surfaces.curver.triangulation.edge_curves()
         self.loop_invariant_FSM = action_FSM(self.curver_action, seeds, self.options.loop_invariant_fsm_depth)
         
         # Set up rules for what a word must contain.
-        if self.options.show_progress: print('CNF FSM')
+        if self.options.show_progress: print('Building CNF FSM')
         self.cnf_FSM = CNF_FSM(self.generators, self.MCG_must_contain)
         
         # Now build some dictionaries for looking up the next characters in generators.
