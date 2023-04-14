@@ -235,12 +235,10 @@ class WordGenerator():
             strn_valid_prefix = strn_valid_word or self.valid_prefix(strn, word_depth)
             
             if strn_valid_word: output_words.append(self.str_word(strn))
-            if strn_valid_prefix:
-                if len(strn) < prefix_depth:  # Go deeper.
-                    strn += self.first_child[strn[-self.options.suffix_depth:]]
-                else:
-                    output_prefixes.append(self.str_word(strn))
-                    strn = backtrack(strn)
+            if strn_valid_prefix and len(strn) == prefix_depth: output_prefixes.append(self.str_word(strn))
+            
+            if strn_valid_prefix and len(strn) < prefix_depth:  # Go deeper.
+                strn += self.first_child[strn[-self.options.suffix_depth:]]
             else:
                 strn = backtrack(strn)
         
